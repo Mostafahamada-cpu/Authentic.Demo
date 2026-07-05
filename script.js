@@ -106,17 +106,48 @@
     // Curated romantic/wedding-toned stock photos (swap in your own anytime —
     // this is demo content like everything else here). Two slots use a
     // generic placeholder service since they're the easiest to spot and swap.
-    gallery: [
-      { src: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80", alt: "Golden hour together", caption: "Golden Hour" },
-      { src: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=800&q=80", alt: "The proposal", caption: "The Proposal" },
-      { src: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=800&q=80", alt: "Rooftop dinner where it began", caption: "Where It Began" },
-      { src: "https://picsum.photos/800/600?random=4", alt: "The venue", caption: "The Rosewood Estate" },
-      { src: "https://images.unsplash.com/photo-1747956895112-4b1ed4dc24fb?auto=format&fit=crop&w=800&q=80", alt: "A quiet evening together", caption: "Quiet Evenings" },
-      { src: "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=800&q=80", alt: "Lisbon getaway", caption: "Lisbon, 2021" },
-      { src: "https://picsum.photos/800/600?random=7", alt: "Wedding details", caption: "The Details" },
-      { src: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=800&q=80", alt: "Forever starts here", caption: "Forever Starts Here" }
-    ],
-
+  gallery: [
+  {
+    src: "./Gallery/photo1jpg",
+    alt: "Golden hour together",
+    caption: "Golden Hour"
+  },
+  {
+    src: "./Gallery/photo2.jpg",
+    alt: "The proposal",
+    caption: "The Proposal"
+  },
+  {
+    src: "./Gallery/photo3.jpg",
+    alt: "Where it began",
+    caption: "Where It Began"
+  },
+  {
+    src: "./Gallery/photo4.jpg",
+    alt: "The venue",
+    caption: "The Rosewood Estate"
+  },
+  {
+    src: "./Gallery/photo5.jpg",
+    alt: "Quiet evenings",
+    caption: "Quiet Evenings"
+  },
+  {
+    src: "./Gallery/photo6.jpg",
+    alt: "Lisbon getaway",
+    caption: "Lisbon, 2021"
+  },
+  {
+    src: "./Gallery/photo7.jpg",
+    alt: "Wedding details",
+    caption: "The Details"
+  },
+  {
+    src: "./Gallery/photo8.jpg",
+    alt: "Forever starts here",
+    caption: "Forever Starts Here"
+  }
+],
     // ---- RSVP -----------------------------------------------------------------------
     rsvpDeadline: "2026-11-01",
     socialLinks: {
