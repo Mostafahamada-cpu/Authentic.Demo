@@ -1,0 +1,437 @@
+/* =========================================================================
+   ENVELOPE OPENING EXPERIENCE — envelope.css
+   Self-contained styling for the markup envelope.js injects at runtime.
+
+   Portability contract: every rule below reads the HOST THEME's existing
+   design tokens (--accent, --accent-deep, --accent-light, --color-ivory,
+   --color-champagne, --color-white, --color-beige, --color-blush,
+   --font-heading, --font-script, --font-eyebrow, --font-body, --fs-*,
+   --space-*, --ease-luxury, --ease-out-soft, --dur-*, --shadow-soft,
+   --shadow-elevated, --ls-eyebrow) instead of inventing its own palette —
+   so dropping this file (+ envelope.js) into another invitation theme
+   re-themes it automatically, as long as that theme defines the same
+   token names. A couple of the less-universal tokens get inline fallback
+   values via var(--token, fallback) as a safety net.
+   ========================================================================= */
+
+.envelope-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 250;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--bg-base, #faf6ef) 78%, transparent);
+  backdrop-filter: blur(20px) saturate(115%);
+  -webkit-backdrop-filter: blur(20px) saturate(115%);
+  opacity: 0;
+  transition: opacity 1.2s var(--ease-luxury, ease), backdrop-filter 1.4s var(--ease-luxury, ease);
+}
+.envelope-overlay.is-visible { opacity: 1; }
+.envelope-overlay.is-done {
+  opacity: 0;
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  pointer-events: none;
+  transition: opacity 1s var(--ease-luxury, ease), backdrop-filter 1s var(--ease-luxury, ease);
+}
+
+.envelope-scene {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+  width: 100%;
+  padding: var(--space-md, 2rem);
+}
+
+/* ---- Ambient: light rays / glow / drifting particles -------------------- */
+.envelope-light-rays {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 160vmax;
+  height: 160vmax;
+  margin: -80vmax 0 0 -80vmax;
+  background: repeating-conic-gradient(
+    from 0deg,
+    color-mix(in srgb, var(--accent-light) 16%, transparent) 0deg 5deg,
+    transparent 5deg 32deg
+  );
+  animation: envelope-spin 70s linear infinite;
+  opacity: 0.45;
+  filter: blur(12px);
+  pointer-events: none;
+}
+@keyframes envelope-spin { to { transform: rotate(360deg); } }
+
+.envelope-glow {
+  position: absolute;
+  width: 46vmax;
+  height: 46vmax;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent-light) 0%, transparent 70%);
+  filter: blur(40px);
+  opacity: 0.35;
+  pointer-events: none;
+  animation: soft-glow 7s var(--ease-luxury, ease) infinite;
+}
+.envelope-glow-a { top: -8%; left: -12%; }
+.envelope-glow-b { bottom: -14%; right: -10%; animation-delay: 2.4s; }
+/* soft-glow keyframe: falls back to a local copy if the host theme (which
+   already defines this in style.css) somehow isn't loaded. */
+@keyframes soft-glow { 0%, 100% { opacity: 0.35; transform: scale(1); } 50% { opacity: 0.6; transform: scale(1.08); } }
+
+.envelope-particles { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.envelope-particle {
+  position: absolute;
+  bottom: -20px;
+  width: var(--size, 4px);
+  height: var(--size, 4px);
+  background: var(--accent-light);
+  border-radius: 50%;
+  opacity: 0;
+  animation: envelope-float-up var(--dur, 12s) linear var(--delay, 0s) infinite;
+  box-shadow: 0 0 6px 1px color-mix(in srgb, var(--accent-light) 65%, transparent);
+}
+@keyframes envelope-float-up {
+  0%   { transform: translateY(0) translateX(0); opacity: 0; }
+  12%  { opacity: 0.7; }
+  88%  { opacity: 0.7; }
+  100% { transform: translateY(-105vh) translateX(var(--drift, 20px)); opacity: 0; }
+}
+
+/* ---- Copy: "You have received..." / "Click to Open" --------------------- */
+.envelope-copy { position: relative; z-index: 2; text-align: center; }
+.envelope-line {
+  font-family: var(--font-eyebrow, sans-serif);
+  font-size: var(--fs-sm, 0.9rem);
+  letter-spacing: var(--ls-eyebrow, 0.2em);
+  text-transform: uppercase;
+  color: var(--accent-deep);
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.9s var(--ease-out-soft, ease), transform 0.9s var(--ease-out-soft, ease);
+  transition-delay: 0.5s;
+}
+.envelope-line-2 {
+  margin-top: clamp(1.25rem, 1rem + 1.5vw, 2rem);
+  font-family: var(--font-body, sans-serif);
+  font-size: var(--fs-xs, 0.75rem);
+  letter-spacing: 0.14em;
+  color: var(--text-soft);
+  transition-delay: 1.5s;
+  animation: envelope-pulse 2.6s ease-in-out infinite;
+  animation-play-state: paused;
+}
+.envelope-overlay.is-visible .envelope-line { opacity: 1; transform: translateY(0); }
+.envelope-overlay.is-visible .envelope-line-2 { animation-play-state: running; }
+.envelope-overlay.is-opening .envelope-line {
+  opacity: 0;
+  transition-duration: 0.35s;
+  transition-delay: 0s;
+}
+@keyframes envelope-pulse { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+
+/* ---- Envelope shell ------------------------------------------------------ */
+.envelope-scale {
+  position: relative;
+  z-index: 2;
+  opacity: 0;
+  transform: translateY(26px) scale(0.94);
+  transition: opacity 1.1s var(--ease-out-soft, ease), transform 1.1s var(--ease-out-soft, ease);
+  transition-delay: 0.2s;
+}
+.envelope-overlay.is-visible .envelope-scale { opacity: 1; transform: translateY(0) scale(1); }
+
+.envelope {
+  position: relative;
+  display: block;
+  width: min(420px, 84vw);
+  aspect-ratio: 3 / 2;
+  padding: 0;
+  margin: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  perspective: 1500px;
+  transform: scale(1);
+  transition: transform 1.4s var(--ease-luxury, ease);
+}
+.envelope:focus-visible { outline: 2px solid var(--accent); outline-offset: 10px; border-radius: 10px; }
+.envelope:disabled { cursor: default; }
+.envelope-overlay.is-lifting .envelope,
+.envelope-overlay.is-unfolding .envelope,
+.envelope-overlay.is-unfolded .envelope { transform: scale(1.08); }
+
+.envelope-shadow {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  bottom: -16%;
+  height: 22%;
+  background: radial-gradient(ellipse at center, rgba(20, 17, 13, 0.35), transparent 72%);
+  filter: blur(12px);
+  transition: opacity 1s var(--ease-luxury, ease);
+  transition-delay: 0.45s;
+}
+
+.envelope-back,
+.envelope-front,
+.envelope-flap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background-color: var(--color-ivory);
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.45'/%3E%3C/svg%3E"),
+    linear-gradient(155deg, rgba(255, 255, 255, 0.55), transparent 45%);
+  background-blend-mode: overlay, normal;
+  box-shadow:
+    inset 0 0 0 1px var(--accent-light),
+    inset 0 0 0 3px var(--accent),
+    inset 0 0 0 4px color-mix(in srgb, var(--accent-light) 55%, transparent);
+}
+
+.envelope-back {
+  inset: 0;
+  z-index: 1;
+  border-radius: 6px;
+  box-shadow:
+    inset 0 0 0 1px var(--accent-light),
+    inset 0 0 0 3px var(--accent),
+    0 24px 55px -14px rgba(46, 42, 34, 0.4);
+}
+
+.envelope-front {
+  top: 36%;
+  bottom: 0;
+  z-index: 3;
+  border-radius: 0 0 6px 6px;
+  transition: opacity 1s var(--ease-luxury, ease);
+  transition-delay: 0.45s;
+}
+
+.envelope-flap {
+  top: 0;
+  height: 60%;
+  z-index: 4;
+  clip-path: polygon(0 0, 100% 0, 62% 100%, 38% 100%);
+  border-radius: 6px 6px 0 0;
+  transform-origin: top center;
+  transform: rotateX(0deg);
+  backface-visibility: hidden;
+  box-shadow: inset 0 -3px 6px rgba(46, 42, 34, 0.08);
+  transition: transform 1s var(--ease-luxury, ease), opacity 1s var(--ease-luxury, ease);
+}
+.envelope-overlay.is-opening .envelope-flap,
+.envelope-overlay.is-lifting .envelope-flap,
+.envelope-overlay.is-unfolding .envelope-flap,
+.envelope-overlay.is-unfolded .envelope-flap { transform: rotateX(178deg); }
+
+.envelope-overlay.is-lifting .envelope-back,
+.envelope-overlay.is-lifting .envelope-front,
+.envelope-overlay.is-lifting .envelope-flap,
+.envelope-overlay.is-lifting .envelope-shadow { opacity: 0; }
+
+/* ---- Wax seal -------------------------------------------------------------- */
+.envelope-seal {
+  position: absolute;
+  bottom: -25px;
+  left: 50%;
+  width: 56px;
+  height: 56px;
+  transform: translateX(-50%);
+  z-index: 5;
+}
+.envelope-seal-half {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 28%, var(--accent-light), var(--accent) 46%, var(--accent-deep) 100%);
+  box-shadow:
+    0 3px 10px rgba(20, 17, 13, 0.4),
+    inset 0 -3px 6px rgba(20, 17, 13, 0.28),
+    inset 0 2px 3px rgba(255, 255, 255, 0.35);
+  transition: transform 0.6s var(--ease-luxury, ease), opacity 0.6s ease;
+}
+.envelope-seal-left  { clip-path: inset(0 50% 0 0); }
+.envelope-seal-right { clip-path: inset(0 0 0 50%); }
+.envelope-seal-initials {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-script, cursive);
+  font-size: 1.3rem;
+  color: var(--color-ivory);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.45), 0 -1px 0 rgba(255, 255, 255, 0.18);
+  transition: opacity 0.4s ease;
+}
+.envelope-overlay.is-opening .envelope-seal-left  { transform: translate(-8px, -3px) rotate(-16deg); opacity: 0; }
+.envelope-overlay.is-opening .envelope-seal-right { transform: translate(8px, 4px) rotate(14deg); opacity: 0; }
+.envelope-overlay.is-opening .envelope-seal-initials { opacity: 0; transition-duration: 0.2s; }
+
+/* ---- Sparks (seal-break + card-emerge bursts) ------------------------------ */
+.envelope-spark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: var(--accent-light);
+  border-radius: 50%;
+  box-shadow: 0 0 6px 1px color-mix(in srgb, var(--accent-light) 70%, transparent);
+  transform: translate(-50%, -50%) scale(0.4);
+  opacity: 1;
+  animation: envelope-spark-burst 1.5s var(--ease-out-soft, ease) forwards;
+  animation-delay: var(--sdelay, 0s);
+  pointer-events: none;
+}
+@keyframes envelope-spark-burst {
+  0%   { transform: translate(-50%, -50%) scale(0.4); opacity: 1; }
+  65%  { opacity: 1; }
+  100% { transform: translate(calc(-50% + var(--tx, 20px)), calc(-50% + var(--ty, 20px))) scale(0); opacity: 0; }
+}
+
+/* ---- Card + paper-fold panels ----------------------------------------------- */
+.envelope-card {
+  position: absolute;
+  left: 7%;
+  right: 7%;
+  top: 27%;
+  height: 56%;
+  z-index: 2;
+  display: block;
+  border-radius: 4px;
+  background: linear-gradient(160deg, var(--color-white), var(--color-champagne));
+  box-shadow: var(--shadow-soft, 0 10px 40px -10px rgba(46, 42, 34, 0.18));
+  perspective: 1300px;
+  transform: translateY(18%) scale(0.92);
+  opacity: 0.92;
+  /* z-index is included with a 0s duration purely so its delay can be timed
+     to match "transform" below — it flips the instant the card actually
+     starts moving, not before, so it never flashes above the front panel
+     while still sitting in its closed position. */
+  transition: transform 1.2s var(--ease-luxury, ease), opacity 0.6s ease, box-shadow 1s var(--ease-luxury, ease), z-index 0s;
+}
+.envelope-overlay.is-opening .envelope-card {
+  z-index: 6;
+  transform: translateY(-145%) scale(0.99) rotate(-2deg);
+  transition-delay: 0.7s, 0s, 0.7s, 0.7s;
+}
+.envelope-overlay.is-lifting .envelope-card {
+  transform: translateY(-230%) scale(1.05) rotateX(-10deg);
+  box-shadow: var(--shadow-elevated, 0 25px 70px -15px rgba(46, 42, 34, 0.28));
+  transition-delay: 0s;
+}
+.envelope-overlay.is-unfolded .envelope-card {
+  transform: translateY(-230%) scale(1.24) rotateX(0deg);
+  transition: transform 1.3s var(--ease-luxury, ease);
+}
+
+.envelope-fold-base {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+.envelope-fold-base > .envelope-fold-face {
+  position: absolute;
+  top: auto; /* cancel the general .envelope-fold-face rule's inset-derived top:0 */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 33.4%;
+  border-radius: 0 0 4px 4px;
+}
+.envelope-fold-monogram {
+  font-family: var(--font-script, cursive);
+  font-size: clamp(1.1rem, 1rem + 1vw, 1.5rem);
+  color: var(--accent-deep);
+}
+
+.envelope-fold-mid {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 33.4%;
+  height: 33.4%;
+  transform-style: preserve-3d;
+  transform-origin: bottom center;
+  transform: rotateX(-176deg);
+  transition: transform 0.9s var(--ease-luxury, ease);
+}
+.envelope-fold-date {
+  font-family: var(--font-body, sans-serif);
+  font-size: var(--fs-xs, 0.75rem);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+.envelope-fold-top {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transform-origin: bottom center;
+  transform: rotateX(-176deg);
+  transition: transform 0.9s var(--ease-luxury, ease);
+  transition-delay: 0.32s;
+}
+.envelope-fold-eyebrow {
+  display: block;
+  font-family: var(--font-eyebrow, sans-serif);
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent-deep);
+  margin-bottom: 0.3em;
+}
+.envelope-fold-names {
+  display: block;
+  font-family: var(--font-heading, serif);
+  font-style: italic;
+  font-size: clamp(1rem, 0.8rem + 1.2vw, 1.5rem);
+  color: var(--text-main);
+}
+.envelope-fold-amp { padding-inline: 0.25em; color: var(--accent); font-family: var(--font-script, cursive); }
+
+.envelope-fold-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0.4em;
+}
+.envelope-fold-face-back { background: var(--color-champagne); transform: rotateX(180deg); }
+.envelope-fold-top > .envelope-fold-face { border-radius: 4px 4px 0 0; }
+
+.envelope-overlay.is-unfolding .envelope-fold-mid,
+.envelope-overlay.is-unfolding .envelope-fold-top,
+.envelope-overlay.is-unfolded .envelope-fold-mid,
+.envelope-overlay.is-unfolded .envelope-fold-top { transform: rotateX(0deg); }
+
+/* ---- Responsive ------------------------------------------------------------- */
+@media (max-width: 520px) {
+  .envelope { width: min(320px, 88vw); }
+  .envelope-seal { width: 46px; height: 46px; bottom: -19px; }
+  .envelope-seal-initials { font-size: 1.05rem; }
+}
+
+/* ---- Reduced motion safety net (envelope.js already skips mounting this
+   entirely when prefers-reduced-motion is set — this is just a backstop) ---- */
+@media (prefers-reduced-motion: reduce) {
+  .envelope-overlay { display: none !important; }
+}

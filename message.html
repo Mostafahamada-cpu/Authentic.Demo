@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Guest Messages — Isabella &amp; Alexander</title>
+<meta name="description" content="Sweet notes and well-wishes for Isabella &amp; Alexander from family and friends.">
+<meta name="theme-color" content="#AD8A4E">
+<meta name="robots" content="noindex, nofollow">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+
+<!-- Fonts: same set as index.html, for a consistent look -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Beau+Rivage&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<noscript><div style="padding:2rem;font-family:sans-serif;text-align:center;">Please enable JavaScript to view these messages.</div></noscript>
+
+<header class="simple-nav">
+  <div class="container simple-nav-inner">
+    <a href="index.html" class="nav-monogram" id="nav-monogram" aria-label="Back to invitation"></a>
+    <a href="index.html" class="back-link">
+      <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Back to Invitation</span>
+    </a>
+  </div>
+</header>
+
+<main id="main">
+  <section class="messages-hero container">
+    <p class="eyebrow">With Love</p>
+    <h1 class="section-title">Messages From Our Friends</h1>
+    <p>Every note here means more to us than we can say. Thank you for being part of our story.</p>
+  </section>
+
+  <section class="messages-gate container" id="messages-gate">
+    <p>This page is just for us — enter the password to read your notes.</p>
+    <div class="messages-gate-row">
+      <input type="password" id="messages-pass-input" placeholder="Password (hint: love)" autocomplete="off">
+      <button type="button" id="messages-pass-submit" class="btn btn-primary">Unlock</button>
+    </div>
+    <p class="messages-gate-error" id="messages-pass-error" hidden>Incorrect password. Try again.</p>
+  </section>
+
+  <section class="messages-list-section container" id="messages-list-section" hidden>
+    <div class="messages-grid" id="messages-grid"></div>
+  </section>
+</main>
+
+<footer class="site-footer" id="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-monogram" id="footer-monogram"></div>
+    <p class="footer-names" id="footer-names"></p>
+    <p class="footer-date" id="footer-date"></p>
+    <p class="footer-thanks">With love and gratitude for being part of our story.</p>
+    <p class="footer-credit">Crafted with love &middot; <span id="footer-year"></span></p>
+  </div>
+</footer>
+
+<script defer src="script.js"></script>
+<script>
+  // script.js's renderHero() sets document.title generically for the whole
+  // site — restore a page-specific title once it (and the rest of init())
+  // has had its turn.
+  window.addEventListener("load", function () {
+    var cfg = window.WS && window.WS.config;
+    if (cfg && cfg.brideName && cfg.groomName) {
+      document.title = "Guest Messages — " + cfg.brideName + " & " + cfg.groomName;
+    }
+  });
+</script>
+</body>
+</html>

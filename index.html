@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Isabella &amp; Alexander — Wedding Invitation</title>
+<meta name="description" content="Join us as we celebrate the wedding of Isabella & Alexander, December 12, 2026 at The Rosewood Estate, Napa Valley.">
+<meta name="theme-color" content="#AD8A4E">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Isabella & Alexander are getting married">
+<meta property="og:description" content="Join us in Napa Valley on December 12, 2026.">
+<meta property="og:type" content="website">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+
+<!-- Fonts: Italiana (eyebrows), Cormorant Garamond (headings), Beau Rivage (calligraphy), Jost (body) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Beau+Rivage&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<!-- Styles (order matters: tokens → base → animation utilities → components → layout → responsive) -->
+<link rel="stylesheet" href="style.css">
+<!-- Envelope opening experience (self-contained; reads style.css's tokens) -->
+<link rel="stylesheet" href="envelope.css">
+</head>
+<body>
+<noscript><div style="padding:2rem;font-family:sans-serif;text-align:center;">Please enable JavaScript to view this invitation.</div></noscript>
+
+<!-- ============ PRELOADER ============ -->
+<div id="preloader">
+  <div class="preloader-inner">
+    <svg class="preloader-seal" id="preloader-seal" viewBox="0 0 200 200" aria-hidden="true">
+      <circle class="seal-ring seal-ring-outer" cx="100" cy="100" r="90"></circle>
+      <circle class="seal-ring seal-ring-inner" cx="100" cy="100" r="78"></circle>
+      <text class="seal-initials" id="seal-initials" x="100" y="118" text-anchor="middle">I&amp;A</text>
+    </svg>
+    <div class="preloader-bar"><div class="preloader-bar-fill" id="preloader-fill"></div></div>
+    <p class="preloader-text">Preparing something beautiful<span class="preloader-dots"><span>.</span><span>.</span><span>.</span></span></p>
+  </div>
+</div>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ============ NAV ============ -->
+<header class="site-nav" id="site-nav">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-monogram" id="nav-monogram" aria-label="Back to top"></a>
+    <nav class="nav-links" id="nav-links" aria-label="Primary"></nav>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-drawer">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="nav-scrim" id="nav-scrim"></div>
+<div class="nav-drawer" id="nav-drawer">
+  <nav class="drawer-links" id="drawer-links" aria-label="Mobile"></nav>
+</div>
+
+<main id="main">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="hero">
+    <div class="hero-bg" id="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-particles" id="hero-particles" aria-hidden="true"></div>
+    <div class="hero-content">
+      <p class="eyebrow" data-reveal="fade-up">The Wedding Of</p>
+      <h1 class="hero-names">
+        <span class="hero-name" id="hero-name-a" data-reveal="fade-up" data-reveal-delay="80"></span>
+        <span class="hero-amp" data-reveal="scale-in" data-reveal-delay="200">&amp;</span>
+        <span class="hero-name" id="hero-name-b" data-reveal="fade-up" data-reveal-delay="160"></span>
+      </h1>
+      <div class="hero-date" id="hero-date" data-reveal="fade-up" data-reveal-delay="280"></div>
+      <p class="hero-subtitle" id="hero-subtitle" data-reveal="fade-up" data-reveal-delay="340"></p>
+      <a href="#rsvp" class="btn btn-primary" data-reveal="fade-up" data-reveal-delay="420">
+        <span>Reserve Your Seat</span>
+      </a>
+    </div>
+    <button class="scroll-indicator" id="scroll-indicator" aria-label="Scroll to explore">
+      <span class="scroll-indicator-line"></span>
+      <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </section>
+
+  <!-- ============ COUNTDOWN ============ -->
+  <section class="countdown-section" id="countdown-section">
+    <div class="container">
+      <p class="eyebrow" data-reveal="fade-up">Counting Down To Forever</p>
+      <div class="countdown" id="countdown">
+        <div class="countdown-item">
+          <span class="countdown-num" id="cd-days" data-unit="days">00</span>
+          <span class="countdown-label">Days</span>
+        </div>
+        <span class="countdown-divider" aria-hidden="true">&#183;</span>
+        <div class="countdown-item">
+          <span class="countdown-num" id="cd-hours" data-unit="hours">00</span>
+          <span class="countdown-label">Hours</span>
+        </div>
+        <span class="countdown-divider" aria-hidden="true">&#183;</span>
+        <div class="countdown-item">
+          <span class="countdown-num" id="cd-mins" data-unit="mins">00</span>
+          <span class="countdown-label">Minutes</span>
+        </div>
+        <span class="countdown-divider" aria-hidden="true">&#183;</span>
+        <div class="countdown-item">
+          <span class="countdown-num" id="cd-secs" data-unit="secs">00</span>
+          <span class="countdown-label">Seconds</span>
+        </div>
+      </div>
+      <p class="countdown-arrived" id="countdown-arrived" hidden>Today is the day — we're married!</p>
+    </div>
+  </section>
+
+  <div class="divider-sprig" id="sprig-1" aria-hidden="true"></div>
+
+  <!-- ============ STORY ============ -->
+  <section class="story-section" id="story">
+    <div class="container">
+      <p class="eyebrow" data-reveal="fade-up">Our Story</p>
+      <h2 class="section-title" data-reveal="fade-up">How It All Began</h2>
+      <div class="timeline" id="timeline"></div>
+    </div>
+  </section>
+
+  <!-- ============ LOCATION ============ -->
+  <section class="location-section" id="location">
+    <div class="container location-grid">
+      <div class="location-info" data-reveal="fade-right">
+        <p class="eyebrow">The Celebration</p>
+        <h2 class="section-title" id="venue-name"></h2>
+        <p class="location-address" id="venue-address"></p>
+        <p class="location-datetime" id="location-datetime"></p>
+        <a href="#" class="btn btn-outline" id="maps-link" target="_blank" rel="noopener noreferrer">
+          <span>Get Directions</span>
+        </a>
+      </div>
+      <div class="location-map" data-reveal="fade-left">
+        <iframe id="map-embed" title="Venue map" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GUIDELINES ============ -->
+  <section class="guidelines-section" id="guidelines">
+    <div class="container">
+      <p class="eyebrow" data-reveal="fade-up">Good To Know</p>
+      <h2 class="section-title" data-reveal="fade-up">A Few Details</h2>
+      <div class="guidelines-grid" id="guidelines-grid"></div>
+    </div>
+  </section>
+
+  <div class="divider-sprig" id="sprig-2" aria-hidden="true"></div>
+
+  <!-- ============ GALLERY ============ -->
+  <section class="gallery-section" id="gallery">
+    <div class="container">
+      <p class="eyebrow" data-reveal="fade-up">Moments</p>
+      <h2 class="section-title" data-reveal="fade-up">Our Gallery</h2>
+      <div class="gallery-grid" id="gallery-grid"></div>
+    </div>
+  </section>
+
+  <!-- ============ COUPLE ============ -->
+  <section class="couple-section" id="couple">
+    <div class="container couple-container">
+      <div class="couple-image-wrapper" data-reveal="fade-right">
+        <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Isabella and Alexander" class="couple-image" loading="lazy">
+      </div>
+      <div class="couple-content" data-reveal="fade-left">
+        <p class="eyebrow">The Couple</p>
+        <h2 class="section-title">Isabella &amp; Alexander</h2>
+        <p class="couple-desc">"We can't wait to <a href="#rsvp" class="couple-link" style="text-decoration: underline; font-weight: 500;">celebrate</a> our special day with all of our favorite people. Thank you for being a part of our journey and our lives."</p>
+        <a href="message.html" id="view-messages-link" style="display: inline-block; margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); text-decoration: underline;">View Messages (Couples Only)</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider-sprig" id="sprig-3" aria-hidden="true"></div>
+
+  <!-- ============ RSVP ============ -->
+  <section class="rsvp-section" id="rsvp">
+    <div class="container rsvp-container">
+      <p class="eyebrow" data-reveal="fade-up">Join Us</p>
+      <h2 class="section-title" data-reveal="fade-up">Kindly Respond</h2>
+      <p class="rsvp-deadline" id="rsvp-deadline" data-reveal="fade-up"></p>
+
+      <form class="rsvp-form" id="rsvp-form" data-reveal="fade-up" novalidate>
+        <div class="form-row">
+          <label for="rsvp-name">Full Name</label>
+          <input type="text" id="rsvp-name" name="name" autocomplete="name" required>
+          <span class="form-error" id="err-name" role="alert"></span>
+        </div>
+
+        <div class="form-row">
+          <label for="rsvp-phone">Phone Number</label>
+          <input type="tel" id="rsvp-phone" name="phone" autocomplete="tel" required>
+          <span class="form-error" id="err-phone" role="alert"></span>
+        </div>
+
+        <div class="form-row">
+          <label for="rsvp-guests">Number of Guests</label>
+          <input type="number" id="rsvp-guests" name="guests" min="1" max="10" value="1" required>
+          <span class="form-error" id="err-guests" role="alert"></span>
+        </div>
+
+        <div class="form-row">
+          <span class="form-label-static" id="attendance-label">Will You Attend?</span>
+          <div class="attendance-toggle" role="radiogroup" aria-labelledby="attendance-label">
+            <button type="button" class="attend-btn" data-value="attending" role="radio" aria-checked="false">
+              <span>Joyfully Accepts</span>
+            </button>
+            <button type="button" class="attend-btn" data-value="declining" role="radio" aria-checked="false">
+              <span>Regretfully Declines</span>
+            </button>
+          </div>
+          <span class="form-error" id="err-attendance" role="alert"></span>
+        </div>
+
+        <div class="form-row">
+          <label for="rsvp-message">Message <span class="optional">(optional)</span></label>
+          <textarea id="rsvp-message" name="message" rows="3"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary rsvp-submit" id="rsvp-submit">
+          <span class="btn-text">Send RSVP</span>
+          <span class="btn-spinner" aria-hidden="true"></span>
+        </button>
+      </form>
+
+      <div class="rsvp-success" id="rsvp-success" hidden>
+        <svg viewBox="0 0 24 24" class="rsvp-success-icon" aria-hidden="true"><path d="M12 21s-7.5-4.6-10-9.3C.5 8.4 2.3 5 5.8 5c2 0 3.4 1 6.2 4 2.8-3 4.2-4 6.2-4 3.5 0 5.3 3.4 3.8 6.7C19.5 16.4 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        <h3>Thank You</h3>
+        <p id="rsvp-success-msg"></p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer" id="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-monogram" id="footer-monogram"></div>
+    <p class="footer-names" id="footer-names"></p>
+    <p class="footer-date" id="footer-date"></p>
+    <p class="footer-thanks">With love and gratitude for being part of our story.</p>
+    <div class="footer-social" id="footer-social"></div>
+    <p class="footer-credit">Crafted with love &middot; <span id="footer-year"></span></p>
+  </div>
+</footer>
+
+<!-- ============ MUSIC PLAYER ============ -->
+<div class="music-player" id="music-player">
+  <audio id="bg-audio" loop preload="none"></audio>
+  <button class="music-toggle" id="music-toggle" aria-label="Play background music">
+    <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+    <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 5h4v14H6zM14 5h4v14h-4z" fill="currentColor"/></svg>
+    <span class="music-disc-ring"></span>
+  </button>
+  <div class="music-panel" id="music-panel">
+    <span class="music-title" id="music-title"></span>
+    <input type="range" class="music-progress" id="music-progress" min="0" max="100" value="0" aria-label="Song progress">
+    <div class="music-volume-row">
+      <svg viewBox="0 0 24 24" class="music-vol-icon"><path d="M3 10v4h4l5 5V5L7 10H3z" fill="currentColor"/><path d="M16.5 8.5a5 5 0 010 7" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      <input type="range" class="music-volume" id="music-volume" min="0" max="100" value="45" aria-label="Volume">
+    </div>
+  </div>
+</div>
+
+<!-- ============ BACK TO TOP ============ -->
+<button class="back-to-top" id="back-to-top" aria-label="Back to top">
+  <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
+<!-- ============ LIGHTBOX ============ -->
+<div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Gallery image viewer">
+  <button class="lightbox-close" id="lightbox-close" aria-label="Close">
+    <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </button>
+  <button class="lightbox-prev" id="lightbox-prev" aria-label="Previous image">
+    <svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+  <div class="lightbox-stage">
+    <img class="lightbox-img" id="lightbox-img" src="" alt="">
+    <p class="lightbox-caption" id="lightbox-caption"></p>
+  </div>
+  <button class="lightbox-next" id="lightbox-next" aria-label="Next image">
+    <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+</div>
+
+<div class="sr-live" id="sr-live" aria-live="polite"></div>
+
+<!-- Scripts: dependency order matters. Config first, main.js orchestrates init last. -->
+<script defer src="envelope.js"></script>
+<script defer src="script.js"></script>
+</body>
+</html>
