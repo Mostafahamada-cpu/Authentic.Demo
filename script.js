@@ -42,7 +42,7 @@
     },
 
     // ---- Music -----------------------------------------------------------------
-    backgroundMusic: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+    backgroundMusic: "https://open.spotify.com/track/6yrZoKcoa7EIx7e7uCCmPW?si=ceb5aa27ec6f4813",
     musicTitle: "Our Romantic Song",
 
     // ---- Envelope opening experience (see envelope.js) ---------------------------
