@@ -42,7 +42,7 @@
     },
 
     // ---- Music -----------------------------------------------------------------
-    backgroundMusic: "https://open.spotify.com/track/6yrZoKcoa7EIx7e7uCCmPW?si=ceb5aa27ec6f4813",
+    backgroundMusic: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
     musicTitle: "Our Romantic Song",
 
     // ---- Envelope opening experience (see envelope.js) ---------------------------
@@ -108,7 +108,7 @@
     // generic placeholder service since they're the easiest to spot and swap.
   gallery: [
   {
-    src: "./Gallery/photo1jpg",
+    src: "./Gallery/photo1.jpg",
     alt: "Golden hour together",
     caption: "Golden Hour"
   },
@@ -572,11 +572,22 @@
     }, 90);
 
     function revealHero() {
-      utils.$all(".hero [data-reveal]").forEach(function (el) {
+      var els = utils.$all(".hero [data-reveal]");
+      els.forEach(function (el) {
         var delay = el.getAttribute("data-reveal-delay") || "0";
         el.style.setProperty("--reveal-delay", delay + "ms");
-        requestAnimationFrame(function () { el.classList.add("is-visible"); });
       });
+      // Add the class a beat later so the transition from the hidden state
+      // animates. rAF for the normal case, plus a timer fallback because
+      // throttled/background tabs can suspend rAF indefinitely.
+      var shown = false;
+      function show() {
+        if (shown) { return; }
+        shown = true;
+        els.forEach(function (el) { el.classList.add("is-visible"); });
+      }
+      requestAnimationFrame(show);
+      setTimeout(show, 120);
     }
 
     function finish() {
@@ -1142,7 +1153,9 @@
     }
 
     function closeDrawer() {
-      if (!drawer) { return; }
+      // No-op unless actually open — this also runs on every anchor click,
+      // and must not steal focus to the (hidden) hamburger on desktop.
+      if (!drawer || !drawer.classList.contains("is-open")) { return; }
       drawer.classList.remove("is-open");
       scrim.classList.remove("is-open");
       toggle.setAttribute("aria-expanded", "false");
@@ -1181,6 +1194,7 @@
       window.scrollTo({ top: top, behavior: reduce ? "auto" : "smooth" });
       setTimeout(function () {
         history.replaceState(null, "", hash);
+        if (!target.hasAttribute("tabindex")) { target.setAttribute("tabindex", "-1"); }
         target.focus({ preventScroll: true });
       }, reduce ? 0 : 700);
     });
@@ -1288,12 +1302,16 @@
 
       // These cards are created after the page's own scroll-reveal observer
       // already ran its initial pass, so reveal them directly rather than
-      // relying on an observer that was never told they exist.
-      requestAnimationFrame(function () {
-        requestAnimationFrame(function () {
-          utils.$all("[data-reveal]", grid).forEach(function (el) { el.classList.add("is-visible"); });
-        });
-      });
+      // relying on an observer that was never told they exist. rAF with a
+      // timer fallback (throttled tabs can suspend rAF).
+      var shown = false;
+      function show() {
+        if (shown) { return; }
+        shown = true;
+        utils.$all("[data-reveal]", grid).forEach(function (el) { el.classList.add("is-visible"); });
+      }
+      requestAnimationFrame(function () { requestAnimationFrame(show); });
+      setTimeout(show, 150);
     }
 
     function unlock() {
@@ -1311,6 +1329,113 @@
     passInput.addEventListener("keypress", function (e) {
       if (errorMsg) { errorMsg.hidden = true; }
       if (e.key === "Enter") { e.preventDefault(); unlock(); }
+    });
+  };
+})();
+
+/* =========================================================================
+   RSVP FORM
+   Client-side validation (name, phone, guest count, attendance choice),
+   a spinner beat on submit, and a personalized thank-you card. Any
+   optional message is saved to localStorage under 'guestMessages' so it
+   appears on the Guest Messages page (message.html) alongside the
+   curated notes.
+   ========================================================================= */
+(function () {
+  window.WS = window.WS || {};
+
+  window.WS.initRsvp = function () {
+    var config = window.WS.config;
+    var utils = window.WS.utils;
+    if (!config || config.rsvpEnabled === false) { return; }
+
+    var form = document.getElementById("rsvp-form");
+    if (!form) { return; } // not on this page
+
+    var nameInput    = document.getElementById("rsvp-name");
+    var phoneInput   = document.getElementById("rsvp-phone");
+    var guestsInput  = document.getElementById("rsvp-guests");
+    var messageInput = document.getElementById("rsvp-message");
+    var submitBtn    = document.getElementById("rsvp-submit");
+    var success      = document.getElementById("rsvp-success");
+    var successMsg   = document.getElementById("rsvp-success-msg");
+    var deadline     = document.getElementById("rsvp-deadline");
+    var attendance   = "";
+
+    /* ---- Attendance toggle (radiogroup) ------------------------------------ */
+    var attendBtns = utils.$all(".attend-btn", form);
+    attendBtns.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        attendance = btn.getAttribute("data-value");
+        attendBtns.forEach(function (b) {
+          var active = b === btn;
+          b.classList.toggle("is-active", active);
+          b.setAttribute("aria-checked", active ? "true" : "false");
+        });
+        setError("err-attendance", "");
+      });
+    });
+
+    /* ---- Validation --------------------------------------------------------- */
+    function setError(id, msg) {
+      var el = document.getElementById(id);
+      if (!el) { return !!msg; }
+      el.textContent = msg;
+      var row = el.closest(".form-row");
+      if (row) { row.classList.toggle("has-error", !!msg); }
+      return !!msg;
+    }
+
+    function validate() {
+      var bad = false;
+      bad = setError("err-name", nameInput.value.trim() ? "" : "Please enter your full name.") || bad;
+      bad = setError("err-phone", phoneInput.value.trim() ? "" : "Please enter your phone number.") || bad;
+      var guests = parseInt(guestsInput.value, 10);
+      bad = setError("err-guests", (guests >= 1 && guests <= 10) ? "" : "Please enter between 1 and 10 guests.") || bad;
+      bad = setError("err-attendance", attendance ? "" : "Please choose an option.") || bad;
+      return !bad;
+    }
+
+    // Clear a field's error as soon as the guest starts fixing it
+    [nameInput, phoneInput, guestsInput].forEach(function (input) {
+      if (!input) { return; }
+      input.addEventListener("input", function () {
+        var row = input.closest(".form-row");
+        if (row) { row.classList.remove("has-error"); }
+        var err = row && row.querySelector(".form-error");
+        if (err) { err.textContent = ""; }
+      });
+    });
+
+    /* ---- Submit ------------------------------------------------------------- */
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (!validate()) { return; }
+
+      submitBtn.disabled = true;
+      submitBtn.classList.add("is-loading");
+
+      var name = nameInput.value.trim();
+      var msg = messageInput ? messageInput.value.trim() : "";
+      if (msg) {
+        try {
+          var saved = JSON.parse(localStorage.getItem("guestMessages") || "[]");
+          saved.push({ name: name || "Guest", text: msg, date: new Date().toLocaleDateString() });
+          localStorage.setItem("guestMessages", JSON.stringify(saved));
+        } catch (err) { /* private mode — skip persisting */ }
+      }
+
+      // Brief beat so the spinner reads as a real confirmation
+      setTimeout(function () {
+        form.hidden = true;
+        if (deadline) { deadline.hidden = true; }
+        if (successMsg) {
+          successMsg.textContent = attendance === "attending"
+            ? "We can't wait to celebrate with you, " + name + "!"
+            : "Thank you for letting us know, " + name + ". You'll be missed.";
+        }
+        if (success) { success.hidden = false; }
+      }, 700);
     });
   };
 })();
@@ -1368,32 +1493,298 @@
   }
 })();
 
-// RSVP form: saves any optional message to localStorage so it can appear
-// on the Guest Messages page (message.html) alongside the curated notes.
-(function() {
-  var rsvpForm = document.getElementById('rsvp-form');
-  var rsvpSuccess = document.getElementById('rsvp-success');
-  var rsvpNameInput = document.getElementById('rsvp-name');
-  var rsvpMessageInput = document.getElementById('rsvp-message');
+/* =============================================================================
+   ENVELOPE OPENING EXPERIENCE (inlined component)
+   Injects the envelope overlay, runs the opening sequence, then reveals the
+   page. Dependency-free.
 
-  if (rsvpForm) {
-    rsvpForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      var name = rsvpNameInput && rsvpNameInput.value ? rsvpNameInput.value.trim() : 'Guest';
-      var msg = rsvpMessageInput && rsvpMessageInput.value ? rsvpMessageInput.value.trim() : '';
-      
-      if (msg) {
-        var savedMessages = JSON.parse(localStorage.getItem('guestMessages') || '[]');
-        savedMessages.push({ name: name, text: msg, date: new Date().toLocaleDateString() });
-        localStorage.setItem('guestMessages', JSON.stringify(savedMessages));
+   - Reads window.ENVELOPE_CONFIG { groomName, brideName, displayDate,
+     initials, hideSeal, theme, sounds: { seal, flap, unfold } }.
+   - Exposes window.WS.initEnvelope(onDone) for templates that orchestrate the
+     hand-off themselves. Returns true if the envelope takes over, false if
+     skipped (reduced motion / already seen this session) so the caller can
+     reveal directly.
+   - Auto-runs only on pages that define ENVELOPE_CONFIG: immediately on
+     DOMContentLoaded when there is no #preloader, otherwise once the
+     preloader hides.
+   - On completion: unhides #invitation (if present), dispatches
+     "envelope:opened" on document, and invokes any registered callbacks.
+   ============================================================================= */
+(function () {
+  "use strict";
+
+  var SEEN_KEY = "envlp-seen";
+  var initialized = false;
+  var finished = false;
+  var callbacks = [];
+  var overlay = null;
+
+  /* ---------------------------------------------------------------- helpers */
+
+  function getConfig() {
+    var c = window.ENVELOPE_CONFIG || {};
+    return {
+      groom: c.groomName || "",
+      bride: c.brideName || "",
+      date: c.displayDate || "",
+      initials: c.initials || "",
+      hideSeal: !!c.hideSeal,
+      theme: /^[a-z][a-z-]*$/.test(c.theme || "") ? c.theme : "",
+      sounds: c.sounds || c.envelopeSounds || {}
+    };
+  }
+
+  function prefersReducedMotion() {
+    return !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  }
+
+  function seenThisSession() {
+    try { return sessionStorage.getItem(SEEN_KEY) === "1"; } catch (e) { return false; }
+  }
+
+  function markSeen() {
+    try { sessionStorage.setItem(SEEN_KEY, "1"); } catch (e) { /* private mode */ }
+  }
+
+  function playSound(src) {
+    if (!src) { return; }
+    try {
+      var a = new Audio(src);
+      a.volume = 0.55;
+      var p = a.play();
+      if (p && p.catch) { p.catch(function () {}); }
+    } catch (e) { /* autoplay blocked or bad src — silent */ }
+  }
+
+  function el(tag, className, text) {
+    var node = document.createElement(tag);
+    if (className) { node.className = className; }
+    if (text) { node.textContent = text; }
+    return node;
+  }
+
+  /* ------------------------------------------------------------- completion */
+
+  function revealSite() {
+    if (finished) { return; }
+    finished = true;
+    markSeen();
+
+    var main = document.getElementById("invitation");
+    if (main) { main.classList.remove("hidden"); }
+
+    var evt;
+    try {
+      evt = new CustomEvent("envelope:opened");
+    } catch (e) {
+      evt = document.createEvent("Event");
+      evt.initEvent("envelope:opened", true, true);
+    }
+    document.dispatchEvent(evt);
+
+    for (var i = 0; i < callbacks.length; i++) {
+      try { callbacks[i](); } catch (err) { console.error("[envelope] onDone callback failed:", err); }
+    }
+    callbacks = [];
+  }
+
+  /* ------------------------------------------------------------------ build */
+
+  function buildOverlay(cfg) {
+    var root = el("div", "envlp-overlay");
+    if (cfg.theme) { root.classList.add("envlp-theme-" + cfg.theme); }
+    root.appendChild(el("div", "envlp-vignette"));
+
+    var stage = el("div", "envlp-stage");
+    var scene = el("div", "envlp-scene");
+
+    var env = el("div", "envlp");
+    env.setAttribute("role", "button");
+    env.setAttribute("tabindex", "0");
+    env.setAttribute("aria-label", "Open the wedding invitation");
+
+    env.appendChild(el("div", "envlp-back"));
+
+    /* Letter card */
+    var letter = el("div", "envlp-letter");
+    var inner = el("div", "envlp-letter-inner");
+    inner.appendChild(el("p", "envlp-kicker", "Together with their families"));
+
+    var names = el("h1", "envlp-names");
+    names.appendChild(el("span", null, cfg.groom));
+    names.appendChild(el("span", "envlp-amp", "&"));
+    names.appendChild(el("span", null, cfg.bride));
+    inner.appendChild(names);
+
+    var rule = el("div", "envlp-rule");
+    rule.appendChild(el("span"));
+    rule.appendChild(el("i"));
+    rule.appendChild(el("span"));
+    inner.appendChild(rule);
+
+    if (cfg.date) { inner.appendChild(el("p", "envlp-date", cfg.date)); }
+    inner.appendChild(el("p", "envlp-line", "request the honour of your presence"));
+    letter.appendChild(inner);
+    env.appendChild(letter);
+
+    /* Pocket folds */
+    var pocket = el("div", "envlp-pocket");
+    pocket.appendChild(el("div", "envlp-fold envlp-fold-left"));
+    pocket.appendChild(el("div", "envlp-fold envlp-fold-right"));
+    pocket.appendChild(el("div", "envlp-fold envlp-fold-bottom"));
+    env.appendChild(pocket);
+
+    env.appendChild(el("div", "envlp-flap"));
+
+    if (cfg.hideSeal) {
+      if (cfg.initials) { env.appendChild(el("div", "envlp-monogram", cfg.initials)); }
+    } else {
+      env.appendChild(el("div", "envlp-seal", cfg.initials));
+    }
+
+    scene.appendChild(env);
+    stage.appendChild(scene);
+    stage.appendChild(el("p", "envlp-hint", "Tap to open your invitation"));
+    root.appendChild(stage);
+
+    return { root: root, env: env };
+  }
+
+  /* --------------------------------------------------------------- sequence */
+
+  function open(cfg) {
+    if (overlay.classList.contains("is-opening")) { return; }
+    overlay.classList.add("is-opening");
+
+    var env = overlay.querySelector(".envlp");
+    var hasSeal = !cfg.hideSeal && !!cfg.initials;
+    var t = 0;
+
+    if (hasSeal) {
+      env.classList.add("stage-seal");
+      playSound(cfg.sounds.seal);
+      t += 450;
+    } else {
+      env.classList.add("stage-seal"); /* fades the monogram */
+    }
+
+    setTimeout(function () {
+      env.classList.add("stage-flap");
+      playSound(cfg.sounds.flap);
+    }, t);
+
+    setTimeout(function () {
+      env.classList.add("stage-letter");
+      playSound(cfg.sounds.unfold);
+    }, t + 950);
+
+    setTimeout(function () {
+      env.classList.add("stage-card");
+    }, t + 1950);
+
+    /* Hold the card, then fade the overlay and reveal the site */
+    setTimeout(function () {
+      overlay.classList.add("is-leaving");
+      revealSite();
+    }, t + 3600);
+
+    setTimeout(function () {
+      if (overlay && overlay.parentNode) { overlay.parentNode.removeChild(overlay); }
+      overlay = null;
+    }, t + 4600);
+  }
+
+  function start() {
+    if (initialized) { return true; }
+    initialized = true;
+
+    var cfg = getConfig();
+    var built = buildOverlay(cfg);
+    overlay = built.root;
+    document.body.appendChild(overlay);
+
+    var trigger = function () { open(cfg); };
+    built.env.addEventListener("click", trigger);
+    built.env.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " " || e.keyCode === 13 || e.keyCode === 32) {
+        e.preventDefault();
+        trigger();
       }
-      
-      rsvpForm.style.display = 'none';
-      if (rsvpSuccess) rsvpSuccess.style.display = 'block';
-      // Hide the instruction texts too
-      var dLine = document.getElementById('rsvp-deadline');
-      if (dLine) dLine.style.display = 'none';
     });
+    try { built.env.focus({ preventScroll: true }); } catch (e) { /* older browsers */ }
+    return true;
+  }
+
+  /* ------------------------------------------------------------- public API */
+
+  window.WS = window.WS || {};
+  window.WS.initEnvelope = function (onDone) {
+    /* Decline before registering the callback: when we return false the
+       caller reveals the page itself, and holding its callback too would
+       fire the reveal twice once autoStart() settles. */
+    if (!initialized && (prefersReducedMotion() || seenThisSession())) { return false; }
+    if (typeof onDone === "function") {
+      if (finished) { onDone(); } else { callbacks.push(onDone); }
+    }
+    if (initialized) { return true; }
+    return start();
+  };
+
+  /* -------------------------------------------------------------- auto-init */
+
+  function autoStart() {
+    if (initialized || finished) { return; }
+    if (prefersReducedMotion() || seenThisSession()) {
+      revealSite();
+      return;
+    }
+    start();
+  }
+
+  function watchPreloader(pre) {
+    var done = false;
+    var kick = function () {
+      if (done) { return; }
+      done = true;
+      /* Small beat so the preloader's fade-out and the envelope don't fight */
+      setTimeout(autoStart, 150);
+    };
+
+    var isHidden = function () {
+      return pre.classList.contains("hide") ||
+             pre.classList.contains("is-hidden") ||
+             pre.getAttribute("aria-hidden") === "true" ||
+             getComputedStyle(pre).display === "none" ||
+             getComputedStyle(pre).opacity === "0";
+    };
+
+    if (isHidden()) { kick(); return; }
+
+    if (window.MutationObserver) {
+      var mo = new MutationObserver(function () {
+        if (isHidden()) { mo.disconnect(); kick(); }
+      });
+      mo.observe(pre, { attributes: true, attributeFilter: ["class", "style", "aria-hidden"] });
+    }
+    /* Safety net: never leave the page stuck behind a wedged preloader */
+    setTimeout(kick, 8000);
+  }
+
+  function boot() {
+    /* Only auto-run on pages that configure the envelope — secondary pages
+       (guest messages) share this bundle but must never show it. */
+    if (!window.ENVELOPE_CONFIG) { return; }
+    var pre = document.getElementById("preloader");
+    if (pre) {
+      watchPreloader(pre);
+    } else {
+      autoStart();
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
   }
 })();

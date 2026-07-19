@@ -138,6 +138,10 @@ a { color: inherit; text-decoration: none; }
 input, textarea { font: inherit; color: inherit; background: none; }
 ul, ol { list-style: none; }
 
+/* The hidden attribute must always win, even over display:flex components
+   (the RSVP form, the countdown row, toggled-off sections). */
+[hidden] { display: none !important; }
+
 /* Preloader engaged: freeze the page beneath it */
 body.is-loading { overflow: hidden; height: 100vh; }
 
@@ -265,7 +269,8 @@ p { color: var(--text-soft); }
   height: 64px;
   margin-inline: auto;
   max-width: 220px;
-  background: var(--sprig-svg, none) center / contain no-repeat;
+  /* Hairline-and-diamond ornament in the accent gold */
+  background: var(--sprig-svg, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 64'%3E%3Cg fill='none' stroke='%23AD8A4E' stroke-width='1'%3E%3Cpath d='M14 32h82'/%3E%3Cpath d='M124 32h82'/%3E%3Crect x='105.5' y='27.5' width='9' height='9' transform='rotate(45 110 32)'/%3E%3C/g%3E%3C/svg%3E")) center / contain no-repeat;
   opacity: 0.85;
 }
 
@@ -809,7 +814,8 @@ p { color: var(--text-soft); }
 .guideline-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-soft), var(--shadow-inset-hairline); }
 .guideline-icon {
   width: 46px; height: 46px;
-  margin-inline: auto var(--space-sm);
+  margin-inline: auto;
+  margin-bottom: var(--space-sm);
   color: var(--accent);
 }
 .guideline-card h3 { font-size: var(--fs-lg); font-style: italic; margin-bottom: var(--space-2xs); }
@@ -968,7 +974,7 @@ p { color: var(--text-soft); }
 .rsvp-submit:disabled { cursor: default; }
 
 .rsvp-success { text-align: center; padding-block: var(--space-lg); }
-.rsvp-success-icon { width: 40px; height: 40px; margin-inline: auto var(--space-sm); color: var(--accent); }
+.rsvp-success-icon { width: 40px; height: 40px; margin-inline: auto; margin-bottom: var(--space-sm); color: var(--accent); }
 .rsvp-success h3 { font-size: var(--fs-2xl); font-style: italic; margin-bottom: var(--space-2xs); }
 
 /* =========================================================================
@@ -1070,7 +1076,7 @@ p { color: var(--text-soft); }
 .back-to-top svg { width: 18px; height: 18px; }
 
 /* ============ COUPLE SECTION ============ */
-.couple-section { padding-block: var(--space-2xl) var(--space-xl); background-color: var(--bg-primary); }
+.couple-section { padding-block: var(--space-2xl) var(--space-xl); background-color: var(--bg-base); }
 .couple-container { display: flex; flex-direction: column; gap: var(--space-xl); align-items: center; text-align: center; }
 @media (min-width: 768px) {
   .couple-container { flex-direction: row; text-align: left; align-items: center; justify-content: space-between; }
@@ -1081,9 +1087,9 @@ p { color: var(--text-soft); }
 }
 .couple-image-wrapper {
   position: relative;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   overflow: hidden;
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-elevated);
   aspect-ratio: 4 / 5;
   width: 100%;
 }
@@ -1096,10 +1102,21 @@ p { color: var(--text-soft); }
 .couple-image-wrapper:hover .couple-image { transform: scale(1.05); }
 .couple-content .eyebrow { margin-bottom: var(--space-xs); }
 .couple-content .section-title { margin-bottom: var(--space-md); }
-.couple-desc { font-style: italic; color: var(--text-secondary); max-width: 400px; line-height: 1.6; margin: 0 auto; }
+.couple-desc { font-style: italic; color: var(--text-soft); max-width: 400px; line-height: 1.6; margin: 0 auto; }
 @media (min-width: 768px) {
   .couple-desc { margin: 0; }
 }
+.couple-link { text-decoration: underline; text-underline-offset: 2px; font-weight: 500; color: var(--accent-deep); }
+.couple-messages-link {
+  display: inline-block;
+  margin-top: var(--space-sm);
+  font-size: var(--fs-sm);
+  color: var(--text-soft);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color var(--dur-fast) var(--ease-luxury);
+}
+.couple-messages-link:hover { color: var(--accent-deep); }
 
 /* =========================================================================
    MESSAGES PAGE (message.html)
@@ -1187,4 +1204,612 @@ p { color: var(--text-soft); }
 
 @media (min-width: 640px) {
   .messages-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* =========================================================================
+   RESPONSIVE LAYER
+   Mobile-first: everything above is the phone layout; these breakpoints
+   open the layout up on tablet and desktop.
+   ========================================================================= */
+@media (min-width: 640px) {
+  .gallery-grid { column-count: 2; }
+  .guidelines-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 900px) {
+  .nav-links { display: flex; }
+  .nav-toggle { display: none; }
+  .location-grid { grid-template-columns: 1.05fr 1fr; }
+  .timeline::before { left: 28px; }
+  .timeline-item { padding-left: 88px; }
+  .timeline-dot { left: 4px; }
+}
+
+@media (min-width: 1024px) {
+  .gallery-grid { column-count: 3; }
+  .guidelines-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* =============================================================================
+   ENVELOPE OPENING EXPERIENCE (inlined component)
+   Luxury stationery intro. The overlay is built and driven by the envelope
+   script at the bottom of this template's JS.
+
+   Design language: ivory cotton paper, restrained gold foil, deep cinematic
+   backdrop, soft realistic shadows. Colors are themed for this template by
+   the .envlp-theme-* block at the end of this section.
+   ============================================================================= */
+
+.envlp-overlay {
+  /* ---- Palette (overridden by the theme block below) ---- */
+  --env-paper:        #F7F2E8;
+  --env-paper-deep:   #EBE3D2;
+  --env-paper-edge:   #DDD2BC;
+  --env-liner:        #322C24;
+  --env-liner-deep:   #241F19;
+  --env-ink:          #3B342A;
+  --env-ink-soft:     #6E6355;
+  --env-gold:         #C2A15E;
+  --env-gold-deep:    #97783F;
+  --env-gold-light:   #EBD9AC;
+  --env-seal:         #8E2F3C;
+  --env-seal-deep:    #5E1B26;
+  --env-backdrop:     #191611;
+  --env-backdrop-lit: #2B261D;
+
+  /* ---- Geometry ---- */
+  --env-flap-tip: 62%;   /* how far down the flap's point reaches */
+  --env-radius: 6px;
+
+  /* ---- Type (falls back gracefully across the template's fonts) ---- */
+  --env-font-serif:  "Cormorant Garamond", "Fraunces", "Italiana", Georgia, "Times New Roman", serif;
+  --env-font-script: "Great Vibes", "Beau Rivage", "Brush Script MT", cursive;
+  --env-font-caps:   "Jost", "Montserrat", "Trebuchet MS", sans-serif;
+
+  position: fixed;
+  inset: 0;
+  z-index: 9600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 38%, var(--env-backdrop-lit) 0%, var(--env-backdrop) 68%, #100E0A 100%);
+  opacity: 1;
+  transition: opacity 0.85s ease;
+}
+
+.envlp-overlay.is-leaving {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Soft cinematic vignette over the backdrop */
+.envlp-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 120% 90% at 50% 110%, rgba(0, 0, 0, 0.55), transparent 60%),
+    radial-gradient(ellipse 140% 100% at 50% -20%, rgba(0, 0, 0, 0.4), transparent 55%);
+}
+
+.envlp-stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(1.6rem, 4vh, 2.6rem);
+  padding: 1.5rem;
+}
+
+/* =========================================================================
+   ENVELOPE
+   Classic 100:66 commercial proportions, perfectly symmetrical construction:
+   liner back, letter, side + bottom folds, top flap, wax seal.
+   ========================================================================= */
+
+.envlp-scene {
+  position: relative;
+  perspective: 1400px;
+  transition: transform 0.5s cubic-bezier(0.22, 0.9, 0.3, 1);
+}
+
+/* Gentle lift on hover — the envelope responds before it's even touched.
+   Disabled once the opening sequence starts. */
+@media (hover: hover) {
+  .envlp-overlay:not(.is-opening) .envlp-scene:hover {
+    transform: translateY(-4px) scale(1.015);
+  }
+  .envlp-overlay:not(.is-opening) .envlp-scene:hover::after {
+    opacity: 0.8;
+    transform: translateX(-50%) scale(1.05);
+  }
+  .envlp-overlay:not(.is-opening) .envlp-scene:hover .envlp-back {
+    box-shadow:
+      inset 0 0 40px rgba(0, 0, 0, 0.55),
+      0 34px 62px rgba(0, 0, 0, 0.5),
+      0 10px 20px rgba(0, 0, 0, 0.32);
+  }
+}
+
+/* Soft elliptical ground shadow — static, so the floating envelope never
+   forces per-frame shadow re-rasterization (filters here are too costly) */
+.envlp-scene::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -9%;
+  width: 86%;
+  height: 12%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.22) 45%, transparent 72%);
+  pointer-events: none;
+  transition: opacity 0.7s ease, transform 0.5s cubic-bezier(0.22, 0.9, 0.3, 1);
+}
+
+.is-opening .envlp-scene::after {
+  opacity: 0.55;
+}
+
+.envlp {
+  position: relative;
+  /* Cap by viewport height too: the letter rises a full envelope-height
+     above the pocket during stage-letter, so short/landscape screens need
+     headroom or the card clips offscreen. */
+  width: min(520px, 88vw, 64vh);
+  aspect-ratio: 100 / 66;
+  cursor: pointer;
+  outline: none;
+  transform-style: preserve-3d;
+  animation: envlp-bob 3.2s ease-in-out infinite;
+  transition: opacity 0.7s ease;
+}
+
+/* Hint the compositor only while the sequence is actually animating */
+.is-opening .envlp-flap,
+.is-opening .envlp-letter {
+  will-change: transform;
+}
+
+.envlp:focus-visible .envlp-back {
+  box-shadow:
+    0 0 0 2px var(--env-gold),
+    0 26px 50px rgba(0, 0, 0, 0.45),
+    0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.is-opening .envlp {
+  animation: none;
+  transform: none;
+  cursor: default;
+}
+
+@keyframes envlp-bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-9px); }
+}
+
+/* Shared cotton-paper texture (subtle SVG fractal noise, ~4% strength) */
+.envlp-back::after,
+.envlp-flap::after,
+.envlp-fold::after,
+.envlp-letter::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  clip-path: inherit;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.24 0 0 0 0 0.2 0 0 0 0 0.14 0 0 0 0.045 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
+  background-size: 240px 240px;
+}
+
+/* ---- Back panel: the envelope interior liner ---- */
+.envlp-back {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: var(--env-radius);
+  background:
+    linear-gradient(180deg, var(--env-liner) 0%, var(--env-liner-deep) 100%);
+  box-shadow:
+    inset 0 0 40px rgba(0, 0, 0, 0.55),
+    0 26px 50px rgba(0, 0, 0, 0.45),
+    0 8px 16px rgba(0, 0, 0, 0.3);
+  transition: box-shadow 0.5s ease;
+}
+
+/* Fine gold pinstripe on the liner — a quiet premium detail */
+.envlp-back::before {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  border-radius: 3px;
+  border: 1px solid rgba(194, 161, 94, 0.28);
+  pointer-events: none;
+}
+
+/* ---- Letter card (rises out on open) ---- */
+.envlp-letter {
+  position: absolute;
+  left: 50%;
+  bottom: 4.5%;
+  z-index: 2;
+  width: 86%;
+  height: 88%;
+  transform: translateX(-50%);
+  border-radius: 4px;
+  background:
+    linear-gradient(168deg, #FFFDF7 0%, var(--env-paper) 46%, var(--env-paper-deep) 100%);
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.18),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+  transition:
+    transform 1s cubic-bezier(0.22, 0.9, 0.3, 1),
+    box-shadow 0.9s ease;
+  overflow: hidden;
+}
+
+.envlp-letter-inner {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.35rem, 1.4vw, 0.7rem);
+  padding: clamp(1rem, 4vw, 2rem) clamp(1.2rem, 5vw, 2.4rem);
+  text-align: center;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.9s ease 0.35s, transform 0.9s ease 0.35s;
+}
+
+/* Hairline gold frame on the card */
+.envlp-letter::before {
+  content: "";
+  position: absolute;
+  inset: clamp(7px, 1.6vw, 11px);
+  border: 1px solid rgba(194, 161, 94, 0.55);
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ---- Letter typography ---- */
+.envlp-kicker {
+  font-family: var(--env-font-script);
+  font-size: clamp(1.05rem, 3.4vw, 1.5rem);
+  line-height: 1.3;
+  color: var(--env-gold-deep);
+  margin: 0;
+}
+
+.envlp-names {
+  font-family: var(--env-font-serif);
+  font-weight: 500;
+  font-size: clamp(1.35rem, 5vw, 2.15rem);
+  line-height: 1.18;
+  letter-spacing: 0.05em;
+  color: var(--env-ink);
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  flex-wrap: wrap;
+  column-gap: 0.45em;
+}
+
+.envlp-amp {
+  font-family: var(--env-font-script);
+  font-weight: 400;
+  font-size: 0.82em;
+  color: var(--env-gold);
+  transform: translateY(-0.04em);
+}
+
+.envlp-rule {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: min(200px, 55%);
+  margin: clamp(0.15rem, 1vw, 0.45rem) 0;
+  color: var(--env-gold);
+}
+
+.envlp-rule span {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--env-gold) 45%, var(--env-gold) 55%, transparent);
+}
+
+.envlp-rule i {
+  font-style: normal;
+  font-size: 0.5rem;
+  line-height: 1;
+  transform: rotate(45deg);
+  border: 1px solid var(--env-gold);
+  width: 7px;
+  height: 7px;
+  flex: none;
+}
+
+.envlp-date {
+  font-family: var(--env-font-caps);
+  font-weight: 400;
+  font-size: clamp(0.68rem, 2.2vw, 0.85rem);
+  letter-spacing: 0.34em;
+  text-indent: 0.34em; /* balances the trailing tracking so text centers optically */
+  text-transform: uppercase;
+  color: var(--env-ink);
+  margin: 0;
+}
+
+.envlp-line {
+  font-family: var(--env-font-serif);
+  font-style: italic;
+  font-size: clamp(0.78rem, 2.4vw, 0.95rem);
+  letter-spacing: 0.04em;
+  color: var(--env-ink-soft);
+  margin: 0;
+}
+
+/* ---- Pocket: symmetrical side + bottom folds ---- */
+.envlp-pocket {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: var(--env-radius);
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.envlp-fold {
+  position: absolute;
+  inset: 0;
+}
+
+.envlp-fold-left {
+  clip-path: polygon(0 0, 50% 50%, 0 100%);
+  background: linear-gradient(105deg, var(--env-paper) 52%, var(--env-paper-deep) 86%, var(--env-paper-edge) 97%, rgba(0, 0, 0, 0.16) 100%);
+}
+
+.envlp-fold-right {
+  clip-path: polygon(100% 0, 100% 100%, 50% 50%);
+  background: linear-gradient(255deg, var(--env-paper) 52%, var(--env-paper-deep) 86%, var(--env-paper-edge) 97%, rgba(0, 0, 0, 0.16) 100%);
+}
+
+.envlp-fold-bottom {
+  clip-path: polygon(0 100%, 100% 100%, 50% 42%);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.14) 0%, var(--env-paper-edge) 2.5%, var(--env-paper-deep) 12%, var(--env-paper) 44%, #FDFAF2 100%);
+}
+
+/* ---- Top flap ---- */
+.envlp-flap {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  clip-path: polygon(0 0, 100% 0, 50% var(--env-flap-tip));
+  background: linear-gradient(180deg, #FDFAF2 0%, var(--env-paper) 55%, var(--env-paper-deep) 96%, var(--env-paper-edge) 100%);
+  transform-origin: 50% 0;
+  transform: rotateX(0deg);
+  transition: transform 0.95s cubic-bezier(0.55, 0.06, 0.28, 0.99), z-index 0s 0.95s;
+  border-radius: var(--env-radius) var(--env-radius) 0 0;
+}
+
+/* Crisp crease at the fold plus a soft cast edge along the flap's point */
+.envlp-flap::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  clip-path: inherit;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.07) 0%, transparent 9%),
+    linear-gradient(180deg, transparent calc(var(--env-flap-tip) - 10%), rgba(0, 0, 0, 0.12) var(--env-flap-tip));
+  pointer-events: none;
+}
+
+/* ---- Gold-foil monogram on the flap (used when the seal is hidden) ---- */
+.envlp-monogram {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  z-index: 5;
+  transform: translateX(-50%);
+  font-family: var(--env-font-serif);
+  font-weight: 500;
+  font-size: clamp(1.05rem, 3.6vw, 1.5rem);
+  letter-spacing: 0.22em;
+  text-indent: 0.22em;
+  color: var(--env-gold-deep);
+  background: linear-gradient(115deg, var(--env-gold-deep) 20%, var(--env-gold-light) 48%, var(--env-gold-deep) 78%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+/* ---- Wax seal ---- */
+.envlp-seal {
+  position: absolute;
+  top: calc(var(--env-flap-tip) - 14%); /* straddles the flap's point */
+  left: 50%;
+  z-index: 5;
+  width: clamp(56px, 15%, 78px);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 47% 53% 51% 49% / 52% 48% 52% 48%; /* slightly organic, hand-poured edge */
+  background:
+    radial-gradient(circle at 34% 30%, #B04A57 0%, var(--env-seal) 42%, var(--env-seal-deep) 100%);
+  box-shadow:
+    inset 0 2px 4px rgba(255, 255, 255, 0.22),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.38),
+    0 3px 8px rgba(0, 0, 0, 0.4);
+  font-family: var(--env-font-serif);
+  font-weight: 600;
+  font-size: clamp(0.85rem, 2.6vw, 1.15rem);
+  letter-spacing: 0.06em;
+  color: rgba(255, 235, 225, 0.9);
+  text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.45), 0 1px 1px rgba(255, 255, 255, 0.18);
+  transition: transform 0.45s cubic-bezier(0.5, 0, 0.6, 1.4), opacity 0.4s ease;
+  pointer-events: none;
+}
+
+/* Embossed inner ring of the seal */
+.envlp-seal::before {
+  content: "";
+  position: absolute;
+  inset: 14%;
+  border-radius: inherit;
+  border: 1px solid rgba(255, 220, 210, 0.28);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* =========================================================================
+   OPENING SEQUENCE — staged by the envelope script
+   stage-seal → stage-flap → stage-letter → stage-card
+   ========================================================================= */
+
+.stage-seal .envlp-seal {
+  transform: translate(-50%, -50%) scale(0.8) rotate(-7deg);
+  opacity: 0;
+}
+
+.stage-seal .envlp-monogram {
+  opacity: 0;
+}
+
+.stage-flap .envlp-flap {
+  transform: rotateX(-180deg);
+}
+
+.stage-letter .envlp-flap {
+  z-index: 1;
+  transition: transform 0.95s cubic-bezier(0.55, 0.06, 0.28, 0.99);
+}
+
+.stage-letter .envlp-letter {
+  transform: translateX(-50%) translateY(-104%);
+  box-shadow:
+    0 14px 30px rgba(0, 0, 0, 0.4),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+.stage-letter .envlp-letter-inner {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Final presentation: card centers and comes forward, envelope recedes */
+.stage-card .envlp-letter {
+  z-index: 7;
+  transform: translateX(-50%) translateY(-58%) scale(1.12);
+  box-shadow:
+    0 34px 70px rgba(0, 0, 0, 0.55),
+    0 8px 20px rgba(0, 0, 0, 0.35),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+.stage-card .envlp-back,
+.stage-card .envlp-pocket,
+.stage-card .envlp-flap,
+.stage-card .envlp-seal,
+.stage-card .envlp-monogram {
+  opacity: 0;
+  transition: opacity 0.7s ease;
+}
+
+.stage-card .envlp-scene::after {
+  opacity: 0;
+}
+
+/* ---- Hint ---- */
+.envlp-hint {
+  font-family: var(--env-font-caps);
+  font-weight: 300;
+  font-size: clamp(0.68rem, 2vw, 0.8rem);
+  letter-spacing: 0.32em;
+  text-indent: 0.32em;
+  text-transform: uppercase;
+  color: var(--env-gold-light);
+  opacity: 0.85;
+  margin: 0;
+  animation: envlp-hint-pulse 2.6s ease-in-out infinite;
+  transition: opacity 0.4s ease;
+}
+
+.is-opening .envlp-hint {
+  opacity: 0;
+  animation: none;
+}
+
+@keyframes envlp-hint-pulse {
+  0%, 100% { opacity: 0.5; }
+  50%      { opacity: 0.95; }
+}
+
+/* ---- Reduced motion: the script skips the sequence entirely, but keep a
+   safe static fallback in case the overlay is ever forced on. ---- */
+@media (prefers-reduced-motion: reduce) {
+  .envlp,
+  .envlp-hint {
+    animation: none;
+  }
+}
+
+/* ---- Compact screens: tighten the stage so envelope + hint always fit ---- */
+@media (max-width: 480px) {
+  .envlp-stage {
+    gap: clamp(1.1rem, 3vh, 1.8rem);
+    padding: 1rem;
+  }
+  .envlp-hint {
+    letter-spacing: 0.24em;
+    text-indent: 0.24em;
+  }
+}
+
+/* ---- THEME: AUTHENTIC — warm champagne ivory, antique-gold wax seal, deep
+   flap. Classic estate stationery to match the template's Italiana/gold
+   styling. Selected via ENVELOPE_CONFIG.theme → .envlp-theme-authentic. ---- */
+.envlp-theme-authentic {
+  --env-paper:        #F6EFE1;
+  --env-paper-deep:   #EADFC7;
+  --env-paper-edge:   #D6C6A2;
+  --env-liner:        #2B2118;
+  --env-liner-deep:   #1D1610;
+  --env-ink:          #3C3223;
+  --env-ink-soft:     #7A6C52;
+  --env-gold:         #B99655;
+  --env-gold-deep:    #8A6A38;
+  --env-gold-light:   #DCC793;
+  --env-seal:         #B08D46;   /* antique gold wax instead of red */
+  --env-seal-deep:    #77592A;
+  --env-backdrop:     #171310;
+  --env-backdrop-lit: #2C2418;
+  --env-flap-tip: 68%;           /* long, stately point */
+  --env-font-script: "Beau Rivage", "Great Vibes", cursive;
+}
+
+.envlp-theme-authentic .envlp-seal {
+  background:
+    radial-gradient(circle at 34% 30%, #E3C87F 0%, var(--env-seal) 46%, var(--env-seal-deep) 100%);
+  color: rgba(50, 36, 14, 0.85);
+  text-shadow: 0 1px 1px rgba(255, 240, 200, 0.35);
+}
+
+.envlp-theme-authentic .envlp-seal::before {
+  border-color: rgba(60, 44, 18, 0.3);
+}
+
+/* Double gold pinstripe on the liner — the estate touch */
+.envlp-theme-authentic .envlp-back::before {
+  outline: 1px solid rgba(185, 150, 85, 0.16);
+  outline-offset: 3px;
 }
