@@ -1,32 +1,147 @@
+﻿/* =========================================================================
+   TRANSLATIONS
+   ========================================================================= */
+(function() {
+  window.WS = window.WS || {};
+  window.WS.translations = {
+    en: {
+      "nav-story": "Our Story",
+      "nav-location": "The Celebration",
+      "nav-guidelines": "Good To Know",
+      "nav-gallery": "Gallery",
+      "nav-rsvp": "RSVP",
+      "hero-eyebrow": "The Wedding Of",
+      "hero-rsvp": "Reserve Your Seat",
+      "cd-eyebrow": "Counting Down To Forever",
+      "cd-days": "Days",
+      "cd-hours": "Hours",
+      "cd-mins": "Minutes",
+      "cd-secs": "Seconds",
+      "cd-arrived": "Today is the day — we're married!",
+      "story-eyebrow": "Our Story",
+      "story-title": "How It All Began",
+      "loc-eyebrow": "The Celebration",
+      "loc-btn": "Get Directions",
+      "guide-eyebrow": "Good To Know",
+      "guide-title": "A Few Details",
+      "gal-eyebrow": "Moments",
+      "gal-title": "Our Gallery",
+      "couple-eyebrow": "The Couple",
+      "couple-desc": "\"We can't wait to celebrate our special day with you. Thank you for being part of our story.\"",
+      "couple-link": "View Guest Messages",
+      "rsvp-eyebrow": "Join Us",
+      "rsvp-title": "Kindly Respond",
+      "rsvp-lbl-name": "Full Name",
+      "rsvp-lbl-phone": "Phone Number",
+      "rsvp-lbl-guests": "Number of Guests",
+      "rsvp-lbl-attend": "Will You Attend?",
+      "rsvp-btn-accept": "Joyfully Accepts",
+      "rsvp-btn-decline": "Regretfully Declines",
+      "rsvp-lbl-msg": "Message",
+      "rsvp-lbl-opt": "(optional)",
+      "rsvp-btn-submit": "Send RSVP",
+      "rsvp-thanks-title": "Thank You",
+      "footer-thanks": "With love and gratitude for being part of our story.",
+      "footer-credit": "Crafted with love"
+    },
+    ar: {
+      "nav-story": "قصتنا",
+      "nav-location": "الاحتفال",
+      "nav-guidelines": "معلومات تهمك",
+      "nav-gallery": "معرض الصور",
+      "nav-rsvp": "تأكيد الحضور",
+      "hero-eyebrow": "حفل زفاف",
+      "hero-rsvp": "تأكيد الحضور",
+      "cd-eyebrow": "عد تنازلي ليومنا المنتظر",
+      "cd-days": "أيام",
+      "cd-hours": "ساعات",
+      "cd-mins": "دقائق",
+      "cd-secs": "ثواني",
+      "cd-arrived": "اليوم هو يومنا — لقد تزوجنا!",
+      "story-eyebrow": "قصتنا",
+      "story-title": "كيف بدأت الحكاية",
+      "loc-eyebrow": "الاحتفال",
+      "loc-btn": "احصل على الاتجاهات",
+      "guide-eyebrow": "معلومات تهمك",
+      "guide-title": "بعض التفاصيل",
+      "gal-eyebrow": "لحظات",
+      "gal-title": "معرض الصور",
+      "couple-eyebrow": "العروسان",
+      "couple-desc": "\"لا نستطيع الانتظار حتى نحتفل بيومنا المميز مع أحبابنا. شكراً من القلب لأنكم جزء من حياتنا وقصتنا.\"",
+      "couple-link": "عرض الرسائل",
+      "rsvp-eyebrow": "شاركنا فرحتنا",
+      "rsvp-title": "نرجو الرد",
+      "rsvp-lbl-name": "الاسم بالكامل",
+      "rsvp-lbl-phone": "رقم الهاتف",
+      "rsvp-lbl-guests": "عدد الضيوف",
+      "rsvp-lbl-attend": "هل ستحضر؟",
+      "rsvp-btn-accept": "سأحضر بكل سرور",
+      "rsvp-btn-decline": "نعتذر عن الحضور",
+      "rsvp-lbl-msg": "رسالة",
+      "rsvp-lbl-opt": "(اختياري)",
+      "rsvp-btn-submit": "إرسال الرد",
+      "rsvp-thanks-title": "شكراً لك",
+      "footer-thanks": "بكل الحب والامتنان لكونكم جزءاً من قصتنا.",
+      "footer-credit": "صُنع بحب"
+    }
+  };
+
+  window.WS.setLanguage = function(lang) {
+    localStorage.setItem('site_lang', lang);
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    var dict = window.WS.translations[lang] || window.WS.translations.en;
+    document.querySelectorAll('[data-i18n]').forEach(function(el) {
+      var key = el.getAttribute('data-i18n');
+      if (dict[key]) {
+        el.textContent = dict[key];
+      }
+    });
+    // For elements with mixed content
+    var optSpan = document.querySelector('[data-i18n-opt]');
+    if (optSpan) optSpan.textContent = dict["rsvp-lbl-opt"];
+    
+    // Dispatch event for other scripts to re-render dates or dynamic content
+    window.dispatchEvent(new CustomEvent('languageChanged', { detail: lang }));
+  };
+
+  window.WS.initLanguage = function() {
+    var savedLang = localStorage.getItem('site_lang') || 'en';
+    window.WS.setLanguage(savedLang);
+    
+    var toggleBtn = document.getElementById('lang-toggle');
+    if (toggleBtn) {
+      toggleBtn.textContent = savedLang === 'en' ? 'AR' : 'EN';
+      toggleBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        var newLang = document.documentElement.lang === 'en' ? 'ar' : 'en';
+        window.WS.setLanguage(newLang);
+        toggleBtn.textContent = newLang === 'en' ? 'AR' : 'EN';
+      });
+    }
+  };
+})();
 /* =========================================================================
    WEDDING CONFIG
-   This is the only file most people customizing the template need to
-   touch. Every section of the site reads from window.WS.config — change
-   a value here and it propagates everywhere automatically (text, the
-   countdown target, the map, the theme colors, which sections even exist).
-
-   Replace the demo content below with your own. See README.md for a
-   field-by-field guide.
    ========================================================================= */
 (function () {
   window.WS = window.WS || {};
 
   window.WS.config = {
-
     // ---- The couple -------------------------------------------------------
-    groomName: "كريم",
-    brideName: "ياسمين",
-    nameOrder: "bride-groom",   // "bride-groom" or "groom-bride" — controls display order everywhere
+    groomName: "Karim",
+    brideName: "Yasmine",
+    nameOrder: "bride-groom",   // "bride-groom" or "groom-bride"
 
     // ---- Hero copy ----------------------------------------------------------
-    tagline: "حفل زفاف",
-    subtitle: "مع عائلتيهما، يتشرفان بدعوتكم للاحتفال بزواجهما وبداية حياتهما المشتركة.",
-    heroImage: "",   // e.g. "assets/images/my-photo.jpg" — leave blank to use the generated backdrop
+    tagline: "The Wedding Of",
+    subtitle: "Together with their families, invite you to celebrate their marriage and the beginning of their life together.",
+    heroImage: "",
 
     // ---- Date & venue ---------------------------------------------------------
     date: "2026-12-12T17:00:00",
-    venue: "ماريوت ميناهاوس",
-    address: "شارع الأهرام، الجيزة، القاهرة، مصر",
+    venue: "Marriott Mena House",
+    address: "Al Haram, Giza, Cairo Governorate, Egypt",
     mapsLink: "https://maps.google.com/?q=Marriott+Mena+House+Giza+Egypt",
     mapEmbedSrc: "https://www.google.com/maps?q=Marriott+Mena+House+Giza+Egypt&output=embed",
 
@@ -39,42 +154,42 @@
 
     // ---- Music -----------------------------------------------------------------
     backgroundMusic: "music.mp3",
-    musicTitle: "معاك — عمرو دياب",
+    musicTitle: "Maak — Amr Diab",
 
     // ---- Love Story timeline --------------------------------------------------
     story: [
       {
-        date: "أغسطس ٢٠١٩",
-        title: "أول لقاء",
-        description: "في حفل عشاء على سطح أحد المنازل بوسط القاهرة — وصل كريم متأخراً، فلم يجد مقعداً إلا بجانب ياسمين، وبقيا يتحدثان حتى أُطفئت الأنوار.",
+        date: "August 2019",
+        title: "First Meeting",
+        description: "At a rooftop dinner in downtown Cairo, Karim arrived late and took the only open seat next to Yasmine. They talked until the lights went out.",
         icon: "sparkle",
         image: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=600&q=80"
       },
       {
-        date: "مارس ٢٠٢١",
-        title: "أول رحلة معاً",
-        description: "رحلة إلى الأقصر والأسوان تحوّلت إلى أسبوعين من الضحكات والذكريات الجميلة على ضفاف النيل.",
+        date: "March 2021",
+        title: "First Trip Together",
+        description: "A trip to Luxor and Aswan turned into two weeks of laughter and beautiful memories along the banks of the Nile.",
         icon: "plane",
         image: "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=600&q=80"
       },
       {
-        date: "يونيو ٢٠٢٣",
-        title: "بيتنا الأول",
-        description: "شقة دافئة في الزمالك بإطلالة على النيل — صارت أول مكان يشعران فيه أنهما في بيتهما معاً.",
+        date: "June 2023",
+        title: "Our First Home",
+        description: "A cozy apartment in Zamalek with a view of the Nile became the first place they truly called home together.",
         icon: "home",
         image: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=600&q=80"
       },
       {
-        date: "فبراير ٢٠٢٦",
-        title: "طلب الزواج",
-        description: "على كورنيش النيل تحت النجوم، طلب كريم يد ياسمين قبل أن تُقدَّم الحلوى، وقبلت ياسمين قبل أن يُكمل الجملة.",
+        date: "February 2026",
+        title: "The Proposal",
+        description: "On the Nile Corniche under the stars, Karim proposed before dessert arrived, and Yasmine said yes before he could finish the sentence.",
         icon: "rings",
         image: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=600&q=80"
       },
       {
-        date: "١٢ ديسمبر ٢٠٢٦",
-        title: "بداية الحكاية",
-        description: "ومحاطَيْن بأحبابهما، يبدآن فصلاً جديداً — وأنتم شهود هذه البداية الجميلة.",
+        date: "December 12, 2026",
+        title: "The Beginning",
+        description: "Surrounded by loved ones, they begin a new chapter — and you are witnesses to this beautiful beginning.",
         icon: "heart",
         image: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80"
       }
@@ -82,24 +197,24 @@
 
     // ---- Guidelines cards -------------------------------------------------------
     guidelines: [
-      { icon: "dress-code", title: "كود الأناقة", description: "السهرة الرسمية. نتمنى أن نراكم في أبهى حلة — الألوان المقترحة: الشامبانيا والأخضر الرمادي والأزرق الفاتح." },
-      { icon: "arrival", title: "موعد الحضور", description: "يُرجى الحضور في موعد أقصاه الساعة ٤:٣٠ مساءً. تبدأ مراسم الزفاف في تمام الساعة ٥:٠٠ مساءً." },
-      { icon: "parking", title: "مواقف السيارات", description: "خدمة الفاليه متاحة مجاناً عند المدخل الرئيسي من الساعة ٤:٠٠ مساءً." },
-      { icon: "no-smoking", title: "منطقة خالية من التدخين", description: "الحدائق قاطبةً خالية من التدخين. توجد منطقة مخصصة للتدخين بالقرب من الباحة الغربية." },
-      { icon: "gift", title: "الهدايا", description: "حضوركم هو أغلى هدية. لمن يرغب في المشاركة، توجد قائمة هدايا مُرفقة ببطاقة الدعوة." },
-      { icon: "contact", title: "للاستفسار", description: "للتواصل مع منسقة حفل الزفاف مريم على الرقم: 01000123456." }
+      { icon: "dress-code", title: "Dress Code", description: "Formal evening attire. We hope to see you looking your best — suggested colors: champagne, sage green, and light blue." },
+      { icon: "arrival", title: "Arrival Time", description: "Please arrive no later than 4:30 PM. The wedding ceremony begins promptly at 5:00 PM." },
+      { icon: "parking", title: "Parking", description: "Complimentary valet service is available at the main entrance starting at 4:00 PM." },
+      { icon: "no-smoking", title: "Non-Smoking Area", description: "All gardens are non-smoking. There is a designated smoking area near the west courtyard." },
+      { icon: "gift", title: "Gifts", description: "Your presence is the greatest gift. For those who wish to contribute, a gift registry is attached to the invitation." },
+      { icon: "contact", title: "Inquiries", description: "To contact the wedding coordinator Maryam, please call: 01000123456." }
     ],
 
     // ---- Gallery ------------------------------------------------------------------
     gallery: [
-      { src: "https://picsum.photos/800/600?random=1", alt: "صورة ١", caption: "ضوء الغروب" },
-      { src: "https://picsum.photos/800/600?random=2", alt: "صورة ٢", caption: "طلب الزواج" },
-      { src: "https://picsum.photos/800/600?random=3", alt: "صورة ٣", caption: "أول لقاء" },
-      { src: "https://picsum.photos/800/600?random=4", alt: "صورة ٤", caption: "ماريوت ميناهاوس" },
-      { src: "https://picsum.photos/800/600?random=5", alt: "صورة ٥", caption: "أمسيات هادئة" },
-      { src: "https://picsum.photos/800/600?random=6", alt: "صورة ٦", caption: "الأقصر، ٢٠٢١" },
-      { src: "https://picsum.photos/800/600?random=7", alt: "صورة ٧", caption: "التفاصيل" },
-      { src: "https://picsum.photos/800/600?random=8", alt: "صورة ٨", caption: "هنا تبدأ الحكاية" }
+      { src: "https://picsum.photos/800/600?random=1", alt: "Photo 1", caption: "Sunset glow" },
+      { src: "https://picsum.photos/800/600?random=2", alt: "Photo 2", caption: "The Proposal" },
+      { src: "https://picsum.photos/800/600?random=3", alt: "Photo 3", caption: "First Meeting" },
+      { src: "https://picsum.photos/800/600?random=4", alt: "Photo 4", caption: "Marriott Mena House" },
+      { src: "https://picsum.photos/800/600?random=5", alt: "Photo 5", caption: "Quiet evenings" },
+      { src: "https://picsum.photos/800/600?random=6", alt: "Photo 6", caption: "Luxor, 2021" },
+      { src: "https://picsum.photos/800/600?random=7", alt: "Photo 7", caption: "Details" },
+      { src: "https://picsum.photos/800/600?random=8", alt: "Photo 8", caption: "Here begins the story" }
     ],
 
     // ---- RSVP -----------------------------------------------------------------------
@@ -109,9 +224,6 @@
       facebook: ""
     },
 
-    // ---- Section toggles ---------------------------------------------------------
-    // Mirrors the brief: disabling any of these removes the section (and its
-    // nav link) entirely — the layout closes the gap automatically.
     countdown: true,
     storyEnabled: true,
     galleryEnabled: true,
@@ -188,26 +300,29 @@
   utils.formatLongDate = function (isoString) {
     var d = new Date(isoString);
     if (isNaN(d.getTime())) { return ""; }
-    return new Intl.DateTimeFormat("ar-EG", { day: "numeric", month: "long", year: "numeric" }).format(d);
+    var lang = document.documentElement.lang === 'ar' ? 'ar-EG' : 'en-US';
+    return new Intl.DateTimeFormat(lang, { day: "numeric", month: "long", year: "numeric" }).format(d);
   };
 
   utils.formatShortDate = function (isoString) {
     var d = new Date(isoString);
     if (isNaN(d.getTime())) { return ""; }
-    return new Intl.DateTimeFormat("ar-EG", { day: "2-digit", month: "2-digit", year: "numeric" }).format(d).replace(/\//g, " . ");
+    var lang = document.documentElement.lang === 'ar' ? 'ar-EG' : 'en-US';
+    return new Intl.DateTimeFormat(lang, { day: "2-digit", month: "2-digit", year: "numeric" }).format(d).replace(/\//g, " . ");
   };
 
   utils.formatTime = function (isoString) {
     var d = new Date(isoString);
     if (isNaN(d.getTime())) { return ""; }
-    return new Intl.DateTimeFormat("ar-EG", { hour: "numeric", minute: "2-digit" }).format(d);
+    var lang = document.documentElement.lang === 'ar' ? 'ar-EG' : 'en-US';
+    return new Intl.DateTimeFormat(lang, { hour: "numeric", minute: "2-digit" }).format(d);
   };
 
   utils.pad2 = function (n) {
     return String(Math.max(0, n)).padStart(2, "0");
   };
 
-  // Runs `fn` safely — one module misbehaving should never take the whole
+  // Runs `fn` safely Ã¢â‚¬â€ one module misbehaving should never take the whole
   // page down. Logs to console so it's still easy to spot during development.
   utils.safeRun = function (label, fn) {
     try {
@@ -228,7 +343,7 @@
    RENDER
    Reads window.WS.config and writes it into the DOM: theme, hero copy,
    monograms, nav, timeline, guidelines, location, footer. Nothing in this
-   file contains wedding-specific text — it is all data-driven, which is
+   file contains wedding-specific text Ã¢â‚¬â€ it is all data-driven, which is
    what makes editing config.js enough to reskin the entire site.
    ========================================================================= */
 (function () {
@@ -253,8 +368,6 @@
     if (colors.accentLight) { root.setProperty("--accent-light", colors.accentLight); }
   }
 
-  // Removes disabled sections entirely (hidden attribute), so the layout
-  // closes the gap automatically instead of leaving empty shells.
   function applyToggles(config) {
     var map = {
       "countdown-section": config.countdown,
@@ -305,11 +418,78 @@
 
     var heroBg = document.getElementById("hero-bg");
     if (heroBg && config.heroImage) {
-      heroBg.style.setProperty("--hero-bg-image", 'url("' + config.heroImage + '")');
+      heroBg.style.setProperty("--hero-bg-image", "url(\"" + config.heroImage + "\")");
     }
 
     if (names.first && names.second) {
       document.title = names.first + " & " + names.second + " — Wedding Invitation";
+      var metaDesc = utils.$("meta[name=""description""]");
+      if (metaDesc) {
+        metaDesc.setAttribute("content", "Join us as we celebrate the wedding of " + names.first + " & " + names.second +
+          ", " + utils.formatLongDate(config.date) + " at " + (config.venue || "") + ".");
+      }
+    }
+  }
+
+  var NAV_ITEMS = [
+    { id: "story", labelKey: "nav-story", flag: "storyEnabled" },
+    { id: "location", labelKey: "nav-location", flag: "locationEnabled" },
+    { id: "guidelines", labelKey: "nav-guidelines", flag: "guidelinesEnabled" },
+    { id: "gallery", labelKey: "nav-gallery", flag: "galleryEnabled" },
+    { id: "rsvp", labelKey: "nav-rsvp", flag: "rsvpEnabled" }
+  ];
+
+  function buildNav(config) {
+    var navLinks = document.getElementById("nav-links");
+    var drawerLinks = document.getElementById("drawer-links");
+    if (!navLinks || !drawerLinks) { return; }
+    navLinks.innerHTML = "";
+    drawerLinks.innerHTML = "";
+
+    NAV_ITEMS.filter(function (item) { return config[item.flag] !== false; })
+      .forEach(function (item) {
+        var a1 = document.createElement("a");
+        a1.href = "#" + item.id;
+        a1.setAttribute("data-i18n", item.labelKey);
+        navLinks.appendChild(a1);
+
+        var a2 = document.createElement("a");
+        a2.href = "#" + item.id;
+        a2.setAttribute("data-i18n", item.labelKey);
+        drawerLinks.appendChild(a2);
+      });
+  }al(names.second);
+    var seal = document.getElementById("seal-initials");
+    if (seal) { seal.textContent = utils.initial(names.first) + "&" + utils.initial(names.second); }
+    var navM = document.getElementById("nav-monogram");
+    if (navM) { navM.textContent = mark; }
+    var footM = document.getElementById("footer-monogram");
+    if (footM) { footM.textContent = mark; }
+  }
+
+  function renderHero(config) {
+    var names = orderedNames(config);
+    var nameA = document.getElementById("hero-name-a");
+    var nameB = document.getElementById("hero-name-b");
+    if (nameA) { nameA.textContent = names.first || ""; }
+    if (nameB) { nameB.textContent = names.second || ""; }
+
+    var dateEl = document.getElementById("hero-date");
+    if (dateEl) { dateEl.textContent = utils.formatLongDate(config.date); }
+
+    var subEl = document.getElementById("hero-subtitle");
+    if (subEl) { subEl.textContent = config.subtitle || ""; }
+
+    var eyebrowEl = utils.$(".hero-content .eyebrow");
+    if (eyebrowEl && config.tagline) { eyebrowEl.textContent = config.tagline; }
+
+    var heroBg = document.getElementById("hero-bg");
+    if (heroBg && config.heroImage) {
+      heroBg.style.setProperty("--hero-bg-image", 'url("' + config.heroImage + '")');
+    }
+
+    if (names.first && names.second) {
+      document.title = names.first + " & " + names.second + " Ã¢â‚¬â€ Wedding Invitation";
       var metaDesc = utils.$('meta[name="description"]');
       if (metaDesc) {
         metaDesc.setAttribute("content", "Join us as we celebrate the wedding of " + names.first + " & " + names.second +
@@ -319,11 +499,11 @@
   }
 
   var NAV_ITEMS = [
-    { id: "story", label: "قصتنا", flag: "storyEnabled" },
-    { id: "location", label: "الاحتفال", flag: "locationEnabled" },
-    { id: "guidelines", label: "معلومات تهمك", flag: "guidelinesEnabled" },
-    { id: "gallery", label: "معرض الصور", flag: "galleryEnabled" },
-    { id: "rsvp", label: "تأكيد الحضور", flag: "rsvpEnabled" }
+    { id: "story", label: "Ã™â€šÃ˜ÂµÃ˜ÂªÃ™â€ Ã˜Â§", flag: "storyEnabled" },
+    { id: "location", label: "Ã˜Â§Ã™â€žÃ˜Â§Ã˜Â­Ã˜ÂªÃ™ÂÃ˜Â§Ã™â€ž", flag: "locationEnabled" },
+    { id: "guidelines", label: "Ã™â€¦Ã˜Â¹Ã™â€žÃ™Ë†Ã™â€¦Ã˜Â§Ã˜Âª Ã˜ÂªÃ™â€¡Ã™â€¦Ã™Æ’", flag: "guidelinesEnabled" },
+    { id: "gallery", label: "Ã™â€¦Ã˜Â¹Ã˜Â±Ã˜Â¶ Ã˜Â§Ã™â€žÃ˜ÂµÃ™Ë†Ã˜Â±", flag: "galleryEnabled" },
+    { id: "rsvp", label: "Ã˜ÂªÃ˜Â£Ã™Æ’Ã™Å Ã˜Â¯ Ã˜Â§Ã™â€žÃ˜Â­Ã˜Â¶Ã™Ë†Ã˜Â±", flag: "rsvpEnabled" }
   ];
 
   function buildNav(config) {
@@ -424,7 +604,7 @@
     if (addrEl) { addrEl.textContent = config.address || ""; }
 
     var dtEl = document.getElementById("location-datetime");
-    if (dtEl) { dtEl.textContent = utils.formatLongDate(config.date) + "  ·  " + utils.formatTime(config.date); }
+    if (dtEl) { dtEl.textContent = utils.formatLongDate(config.date) + "  Ã‚Â·  " + utils.formatTime(config.date); }
 
     var mapsLinkEl = document.getElementById("maps-link");
     if (mapsLinkEl && config.mapsLink) { mapsLinkEl.href = config.mapsLink; }
@@ -443,7 +623,8 @@
   function renderRsvpDeadline(config) {
     var el = document.getElementById("rsvp-deadline");
     if (!el) { return; }
-    el.textContent = config.rsvpDeadline ? "نرجو الرد بحلول " + utils.formatLongDate(config.rsvpDeadline) : "";
+    var prefix = document.documentElement.lang === 'ar' ? "Ù†Ø±Ø¬Ùˆ Ø§Ù„Ø±Ø¯ Ø¨Ø­Ù„ÙˆÙ„ " : "Kindly respond by ";
+    el.textContent = config.rsvpDeadline ? prefix + utils.formatLongDate(config.rsvpDeadline) : "";
   }
 
   function renderFooter(config) {
@@ -489,7 +670,19 @@
     renderLocation(config);
     renderRsvpDeadline(config);
     renderFooter(config);
+    if(window.WS.translations && document.documentElement.lang) {
+      window.WS.setLanguage(document.documentElement.lang);
+    }
   };
+
+  window.addEventListener('languageChanged', function() {
+    var config = window.WS.config;
+    if (!config) return;
+    renderHero(config);
+    renderLocation(config);
+    renderRsvpDeadline(config);
+    renderFooter(config);
+  });
 })();
 
 /* =========================================================================
@@ -556,7 +749,7 @@
 
 /* =========================================================================
    PARTICLES & AMBIENT GLOW
-   Purely decorative — soft floating motes in the hero, and quiet radial
+   Purely decorative Ã¢â‚¬â€ soft floating motes in the hero, and quiet radial
    glows behind a couple of sections. Skips the moving particles (but
    keeps the static glows) when the visitor prefers reduced motion.
    ========================================================================= */
@@ -697,7 +890,7 @@
 
     if (!elDays) { return; }
 
-    // Previous values — only animate a digit when it actually changes.
+    // Previous values Ã¢â‚¬â€ only animate a digit when it actually changes.
     var prev = { days: null, hours: null, mins: null, secs: null };
 
     function flip(el, value) {
@@ -746,7 +939,7 @@
 
 /* =========================================================================
    MUSIC PLAYER
-   Floating bottom-left widget. The audio element never auto-plays —
+   Floating bottom-left widget. The audio element never auto-plays Ã¢â‚¬â€
    browsers block it. Instead, on the first deliberate user gesture
    anywhere on the page we attempt to play, which passes the browser's
    "user activation" requirement without being annoying.
@@ -885,7 +1078,7 @@
    GALLERY
    Masonry grid populated from config.gallery. Each image lazy-loads via
    IntersectionObserver (falls back to eager for browsers without it).
-   The full-screen lightbox supports keyboard navigation (←/→/Esc) and
+   The full-screen lightbox supports keyboard navigation (Ã¢â€ Â/Ã¢â€ â€™/Esc) and
    a mobile swipe gesture recognizer (no library needed).
    ========================================================================= */
 (function () {
@@ -1030,7 +1223,7 @@
       var dx = e.changedTouches[0].clientX - touchStartX;
       var dy = e.changedTouches[0].clientY - touchStartY;
       if (Math.abs(dx) < swipeThreshold) { return; }
-      if (Math.abs(dy) > Math.abs(dx))   { return; }   // vertical — ignore
+      if (Math.abs(dy) > Math.abs(dx))   { return; }   // vertical Ã¢â‚¬â€ ignore
       if (dx < 0) { showSlide(current + 1); } else { showSlide(current - 1); }
     }, { passive: true });
   };
@@ -1155,15 +1348,15 @@
 })();
 
 /* =========================================================================
-   MAIN — Orchestrator
+   MAIN Ã¢â‚¬â€ Orchestrator
    Calls every module's init function in dependency order once the DOM
    is ready. Each call is wrapped in utils.safeRun so a bug in one module
    can never crash the rest of the site.
 
    Load order (per <script defer> in the HTML):
-     config → utils → icons → render → preloader → particles →
-     scrollEffects → countdown → musicPlayer → gallery → rsvp →
-     navigation → main  (this file, last)
+     config Ã¢â€ â€™ utils Ã¢â€ â€™ icons Ã¢â€ â€™ render Ã¢â€ â€™ preloader Ã¢â€ â€™ particles Ã¢â€ â€™
+     scrollEffects Ã¢â€ â€™ countdown Ã¢â€ â€™ musicPlayer Ã¢â€ â€™ gallery Ã¢â€ â€™ rsvp Ã¢â€ â€™
+     navigation Ã¢â€ â€™ main  (this file, last)
    ========================================================================= */
 (function () {
   var WS = window.WS;
@@ -1193,7 +1386,7 @@
     // 8. RSVP form
     WS.utils.safeRun("rsvp",           WS.initRsvp);
 
-    // 9. Navigation (last — relies on sections being fully rendered)
+    // 9. Navigation (last Ã¢â‚¬â€ relies on sections being fully rendered)
     WS.utils.safeRun("navigation",     WS.initNavigation);
   }
 
@@ -1209,36 +1402,36 @@
 
   // ---- Pre-fill 30 guest RSVP entries on first load -------------------------
   var PREFILLED_MESSAGES = [
-    { name: "أحمد ومنى سلامة",        text: "مبروك يا ياسمين ويا كريم! ربنا يكملكم على خير ويرزقكم بالسعادة دائماً.", date: "15/10/2026" },
-    { name: "محمد وريم حسن",           text: "أجمل تهنئة لأجمل عروسين! كل سنة وأنتم بألف خير وعافية.", date: "16/10/2026" },
-    { name: "عمر وفاطمة علي",          text: "ربنا يبارك فيكم ويجعل حياتكم مليانة بالفرح والمحبة. مبروك!", date: "17/10/2026" },
-    { name: "يوسف وهنا إبراهيم",       text: "نتمنى لكم حياة مليانة بالحب والتفاهم والسعادة. ألف مبروك!", date: "18/10/2026" },
-    { name: "مصطفى وشيماء خالد",       text: "يا ياسمين ويا كريم، انتم أجمل زوجين عرفناهم. كل التوفيق والنجاح!", date: "19/10/2026" },
-    { name: "خالد وأميرة أحمد",        text: "مبروك الزواج! ربنا يخليكم لبعض ويجعل بيتكم مليان حب وبركة.", date: "20/10/2026" },
-    { name: "طارق وداليا عبد الله",    text: "أجمل الأماني لكم في بداية هذا الطريق الجميل. كل سنة وأنتم بألف خير.", date: "21/10/2026" },
-    { name: "هاني وسامية حبيب",        text: "ألف مبروك! ربنا يجعل زواجكم سعيداً ومباركاً ويرزقكم بالذرية الصالحة.", date: "22/10/2026" },
-    { name: "رامي ورانيا صادق",        text: "يا ياسمين، ربنا يسعدك كما أسعدتينا دائماً. مبروك لكما الاثنين!", date: "23/10/2026" },
-    { name: "وائل ومنى فؤاد",          text: "تهانينا الحارة لأجمل عروسين! عقبال ما نفرح بأولادكم.", date: "24/10/2026" },
-    { name: "بشير ونهى عادل",          text: "أسعد الله أوقاتكم ووفقكم لما يحبه ويرضاه. مبروك الزواج!", date: "25/10/2026" },
-    { name: "زياد وروان مصطفى",        text: "ألف ألف مبروك! ربنا يكمل عليكم نعمته ويجعل حياتكم دائماً في سعادة.", date: "26/10/2026" },
-    { name: "عصام وسهر عمر",           text: "يا كريم، أجمل إنسان يستاهل أجمل حياة. مبروك لكما الاثنين!", date: "27/10/2026" },
-    { name: "نبيل وهالة كمال",         text: "مبروك! يارب تعيشوا في هنا ومحبة وتربوا أولادكم في أحسن تربية.", date: "28/10/2026" },
-    { name: "ماهر وعبير سليم",         text: "ربنا يجمعكم دائماً على خير ويديم المحبة بينكم. كل التهاني!", date: "29/10/2026" },
-    { name: "فادي وميار رضا",          text: "تهنئة قلبية لكما يا غاليَيْن. ربنا يسعدكم ويبارك في زواجكم.", date: "30/10/2026" },
-    { name: "سامي وغادة جميل",         text: "أجمل تهانينا وأحر تبريكاتنا. عقبال ما نفرح بأفراح أولادكم!", date: "31/10/2026" },
-    { name: "حسام وإسراء ناصر",        text: "ألف مبروك يا ياسمين ويا كريم. ربنا يجعلكم سند لبعض طول العمر.", date: "01/11/2026" },
-    { name: "أشرف ونور الدين",         text: "مبروك الزواج! أتمنى لكما حياة مليانة بالمحبة والسعادة والبركة.", date: "02/11/2026" },
-    { name: "معتز وشروق منير",         text: "يا ياسمين ويا كريم، انتم من أحلى الناس ومستاهلين أحلى حياة. مبروك!", date: "03/11/2026" },
-    { name: "تامر وأسماء حجازي",       text: "ألف مبروك! عقبال ما نشوفكم مع أولادكم وتكونوا أسعد عيلة!", date: "04/11/2026" },
-    { name: "شريف ولمياء وهبة",        text: "ربنا يبارك في هذا الزواج ويجعله أساس حياة سعيدة وناجحة. مبروك!", date: "05/11/2026" },
-    { name: "أمجد ودينا رشدي",         text: "تهانينا الحارة لكما. ربنا يجعل بيتكم مليان بالفرح والمحبة دائماً.", date: "06/11/2026" },
-    { name: "جمال ومروة بدر",          text: "مبروك ألف مبروك! عقبال الأفراح الكبيرة وعقبال أولادكم.", date: "07/11/2026" },
-    { name: "عاطف وسحر طه",            text: "يارب يكملكم على خير ويجعل حياتكم المشتركة مليانة بالبركة والسعادة.", date: "08/11/2026" },
-    { name: "صلاح ولبنى يوسف",         text: "ألف مبروك يا جماعة! ربنا يديم فرحكم ويبارك في زواجكم السعيد.", date: "09/11/2026" },
-    { name: "علاء وآية رمزي",          text: "مبروك الزواج! أتمنى من القلب أن تكون حياتكم أجمل من أحلامكم.", date: "10/11/2026" },
-    { name: "وليد ونادية عزيز",        text: "ألف مبروك وربنا يسعدكم ويديم المحبة والوفاء بينكم طول العمر.", date: "11/11/2026" },
-    { name: "إياد وإلهام زكي",         text: "تهانينا القلبية لكما. عقبال ما نفرح بأفراح بيتكم الجديد!", date: "12/11/2026" },
-    { name: "كمال وعزيزة منصور",       text: "ربنا يجعل هذا الزواج بداية حياة جميلة مليانة بالفرح والمحبة. مبروك!", date: "13/11/2026" }
+    { name: "Ã˜Â£Ã˜Â­Ã™â€¦Ã˜Â¯ Ã™Ë†Ã™â€¦Ã™â€ Ã™â€° Ã˜Â³Ã™â€žÃ˜Â§Ã™â€¦Ã˜Â©",        text: "Ã™â€¦Ã˜Â¨Ã˜Â±Ã™Ë†Ã™Æ’ Ã™Å Ã˜Â§ Ã™Å Ã˜Â§Ã˜Â³Ã™â€¦Ã™Å Ã™â€  Ã™Ë†Ã™Å Ã˜Â§ Ã™Æ’Ã˜Â±Ã™Å Ã™â€¦! Ã˜Â±Ã˜Â¨Ã™â€ Ã˜Â§ Ã™Å Ã™Æ’Ã™â€¦Ã™â€žÃ™Æ’Ã™â€¦ Ã˜Â¹Ã™â€žÃ™â€° Ã˜Â®Ã™Å Ã˜Â± Ã™Ë†Ã™Å Ã˜Â±Ã˜Â²Ã™â€šÃ™Æ’Ã™â€¦ Ã˜Â¨Ã˜Â§Ã™â€žÃ˜Â³Ã˜Â¹Ã˜Â§Ã˜Â¯Ã˜Â© Ã˜Â¯Ã˜Â§Ã˜Â¦Ã™â€¦Ã˜Â§Ã™â€¹.", date: "15/10/2026" },
+    { name: "Ã™â€¦Ã˜Â­Ã™â€¦Ã˜Â¯ Ã™Ë†Ã˜Â±Ã™Å Ã™â€¦ Ã˜Â­Ã˜Â³Ã™â€ ",           text: "Ã˜Â£Ã˜Â¬Ã™â€¦Ã™â€ž Ã˜ÂªÃ™â€¡Ã™â€ Ã˜Â¦Ã˜Â© Ã™â€žÃ˜Â£Ã˜Â¬Ã™â€¦Ã™â€ž Ã˜Â¹Ã˜Â±Ã™Ë†Ã˜Â³Ã™Å Ã™â€ ! Ã™Æ’Ã™â€ž Ã˜Â³Ã™â€ Ã˜Â© Ã™Ë†Ã˜Â£Ã™â€ Ã˜ÂªÃ™â€¦ Ã˜Â¨Ã˜Â£Ã™â€žÃ™Â Ã˜Â®Ã™Å Ã˜Â± Ã™Ë†Ã˜Â¹Ã˜Â§Ã™ÂÃ™Å Ã˜Â©.", date: "16/10/2026" },
+    { name: "Ã˜Â¹Ã™â€¦Ã˜Â± Ã™Ë†Ã™ÂÃ˜Â§Ã˜Â·Ã™â€¦Ã˜Â© Ã˜Â¹Ã™â€žÃ™Å ",          text: "Ã˜Â±Ã˜Â¨Ã™â€ Ã˜Â§ Ã™Å Ã˜Â¨Ã˜Â§Ã˜Â±Ã™Æ’ Ã™ÂÃ™Å Ã™Æ’Ã™â€¦ Ã™Ë†Ã™Å Ã˜Â¬Ã˜Â¹Ã™â€ž Ã˜Â­Ã™Å Ã˜Â§Ã˜ÂªÃ™Æ’Ã™â€¦ Ã™â€¦Ã™â€žÃ™Å Ã˜Â§Ã™â€ Ã˜Â© Ã˜Â¨Ã˜Â§Ã™â€žÃ™ÂÃ˜Â±Ã˜Â­ Ã™Ë†Ã˜Â§Ã™â€žÃ™â€¦Ã˜Â­Ã˜Â¨Ã˜Â©. Ã™â€¦Ã˜Â¨Ã˜Â±Ã™Ë†Ã™Æ’!", date: "17/10/2026" },
+    { name: "Ã™Å Ã™Ë†Ã˜Â³Ã™Â Ã™Ë†Ã™â€¡Ã™â€ Ã˜Â§ Ã˜Â¥Ã˜Â¨Ã˜Â±Ã˜Â§Ã™â€¡Ã™Å Ã™â€¦",       text: "Ã™â€ Ã˜ÂªÃ™â€¦Ã™â€ Ã™â€° Ã™â€žÃ™Æ’Ã™â€¦ Ã˜Â­Ã™Å Ã˜Â§Ã˜Â© Ã™â€¦Ã™â€žÃ™Å Ã˜Â§Ã™â€ Ã˜Â© Ã˜Â¨Ã˜Â§Ã™â€žÃ˜Â­Ã˜Â¨ Ã™Ë†Ã˜Â§Ã™â€žÃ˜ÂªÃ™ÂÃ˜Â§Ã™â€¡Ã™â€¦ Ã™Ë†Ã˜Â§Ã™â€žÃ˜Â³Ã˜Â¹Ã˜Â§Ã˜Â¯Ã˜Â©. Ã˜Â£Ã™â€žÃ™Â Ã™â€¦Ã˜Â¨Ã˜Â±Ã™Ë†Ã™Æ’!", date: "18/10/2026" },
+    { name: "Ã™â€¦Ã˜ÂµÃ˜Â·Ã™ÂÃ™â€° Ã™Ë†Ã˜Â´Ã™Å Ã™â€¦Ã˜Â§Ã˜Â¡ Ã˜Â®Ã˜Â§Ã™â€žÃ˜Â¯",       text: "Ã™Å Ã˜Â§ Ã™Å Ã˜Â§Ã˜Â³Ã™â€¦Ã™Å Ã™â€  Ã™Ë†Ã™Å Ã˜Â§ Ã™Æ’Ã˜Â±Ã™Å Ã™â€¦Ã˜Å’ Ã˜Â§Ã™â€ Ã˜ÂªÃ™â€¦ Ã˜Â£Ã˜Â¬Ã™â€¦Ã™â€ž Ã˜Â²Ã™Ë†Ã˜Â¬Ã™Å Ã™â€  Ã˜Â¹Ã˜Â±Ã™ÂÃ™â€ Ã˜Â§Ã™â€¡Ã™â€¦. Ã™Æ’Ã™â€ž Ã˜Â§Ã™â€žÃ˜ÂªÃ™Ë†Ã™ÂÃ™Å Ã™â€š Ã™Ë†Ã˜Â§Ã™â€žÃ™â€ Ã˜Â¬Ã˜Â§Ã˜Â­!", date: "19/10/2026" },
+    { name: "Ã˜Â®Ã˜Â§Ã™â€žÃ˜Â¯ Ã™Ë†Ã˜Â£Ã™â€¦Ã™Å Ã˜Â±Ã˜Â© Ã˜Â£Ã˜Â­Ã™â€¦Ã˜Â¯",        text: "Ã™â€¦Ã˜Â¨Ã˜Â±Ã™Ë†Ã™Æ’ Ã˜Â§Ã™â€žÃ˜Â²Ã™Ë†Ã˜Â§Ã˜Â¬! Ã˜Â±Ã˜Â¨Ã™â€ Ã˜Â§ Ã™Å Ã˜Â®Ã™â€žÃ™Å Ã™Æ’Ã™â€¦ Ã™â€žÃ˜Â¨Ã˜Â¹Ã˜Â¶ Ã™Ë†Ã™Å Ã˜Â¬Ã˜Â¹Ã™â€ž Ã˜Â¨Ã™Å Ã˜ÂªÃ™Æ’Ã™â€¦ Ã™â€¦Ã™â€žÃ™Å Ã˜Â§Ã™â€  Ã˜Â­Ã˜Â¨ Ã™Ë†Ã˜Â¨Ã˜Â±Ã™Æ’Ã˜Â©.", date: "20/10/2026" },
+    { name: "Ã˜Â·Ã˜Â§Ã˜Â±Ã™â€š Ã™Ë†Ã˜Â¯Ã˜Â§Ã™â€žÃ™Å Ã˜Â§ Ã˜Â¹Ã˜Â¨Ã˜Â¯ Ã˜Â§Ã™â€žÃ™â€žÃ™â€¡",    text: "Ã˜Â£Ã˜Â¬Ã™â€¦Ã™â€ž Ã˜Â§Ã™â€žÃ˜Â£Ã™â€¦Ã˜Â§Ã™â€ Ã™Å  Ã™â€žÃ™Æ’Ã™â€¦ Ã™ÂÃ™Å  Ã˜Â¨Ã˜Â¯Ã˜Â§Ã™Å Ã˜Â© Ã™â€¡Ã˜Â°Ã˜Â§ Ã˜Â§Ã™â€žÃ˜Â·Ã˜Â±Ã™Å Ã™â€š Ã˜Â§Ã™â€žÃ˜Â¬Ã™â€¦Ã™Å Ã™â€ž. Ã™Æ’Ã™â€ž Ã˜Â³Ã™â€ Ã˜Â© Ã™Ë†Ã˜Â£Ã™â€ Ã˜ÂªÃ™â€¦ Ã˜Â¨Ã˜Â£Ã™â€žÃ™Â Ã˜Â®Ã™Å Ã˜Â±.", date: "21/10/2026" },
+    { name: "Ã™â€¡Ã˜Â§Ã™â€ Ã™Å  Ã™Ë†Ã˜Â³Ã˜Â§Ã™â€¦Ã™Å Ã˜Â© Ã˜Â­Ã˜Â¨Ã™Å Ã˜Â¨",        text: "Ã˜Â£Ã™â€žÃ™Â Ã™â€¦Ã˜Â¨Ã˜Â±Ã™Ë†Ã™Æ’! Ã˜Â±Ã˜Â¨Ã™â€ Ã˜Â§ Ã™Å Ã˜Â¬Ã˜Â¹Ã™â€ž Ã˜Â²Ã™Ë†Ã˜Â§Ã˜Â¬Ã™Æ’Ã™â€¦ Ã˜Â³Ã˜Â¹Ã™Å Ã˜Â¯Ã˜Â§Ã™â€¹ Ã™Ë†Ã™â€¦Ã˜Â¨Ã˜Â§Ã˜Â±Ã™Æ’Ã˜Â§Ã™â€¹ Ã™Ë†Ã™Å Ã˜Â±Ã˜Â²Ã™â€šÃ™Æ’Ã™â€¦ Ã˜Â¨Ã˜Â§Ã™â€žÃ˜Â°Ã˜Â±Ã™Å Ã˜Â© Ã˜Â§Ã™â€žÃ˜ÂµÃ˜Â§Ã™â€žÃ˜Â­Ã˜Â©.", date: "22/10/2026" },
+    { name: "Ã˜Â±Ã˜Â§Ã™â€¦Ã™Å  Ã™Ë†Ã˜Â±Ã˜Â§Ã™â€ Ã™Å Ã˜Â§ Ã˜ÂµÃ˜Â§Ã˜Â¯Ã™â€š",        text: "Ã™Å Ã˜Â§ Ã™Å Ã˜Â§Ã˜Â³Ã™â€¦Ã™Å Ã™â€ Ã˜Å’ Ã˜Â±Ã˜Â¨Ã™â€ Ã˜Â§ Ã™Å Ã˜Â³Ã˜Â¹Ã˜Â¯Ã™Æ’ Ã™Æ’Ã™â€¦Ã˜Â§ Ã˜Â£Ã˜Â³Ã˜Â¹Ã˜Â¯Ã˜ÂªÃ™Å Ã™â€ Ã˜Â§ Ã˜Â¯Ã˜Â§Ã˜Â¦Ã™â€¦Ã˜Â§Ã™â€¹. Ã™â€¦Ã˜Â¨Ã˜Â±Ã™Ë†Ã™Æ’ Ã™â€žÃ™Æ’Ã™â€¦Ã˜Â§ Ã˜Â§Ã™â€žÃ˜Â§Ã˜Â«Ã™â€ Ã™Å Ã™â€ !", date: "23/10/2026" },
+    { name: "Ã™Ë†Ã˜Â§Ã˜Â¦Ã™â€ž Ã™Ë†Ã™â€¦Ã™â€ Ã™â€° Ã™ÂÃ˜Â¤Ã˜Â§Ã˜Â¯",          text: "Ã˜ÂªÃ™â€¡Ã˜Â§Ã™â€ Ã™Å Ã™â€ Ã˜Â§ Ã˜Â§Ã™â€žÃ˜Â­Ã˜Â§Ã˜Â±Ã˜Â© Ã™â€žÃ˜Â£Ã˜Â¬Ã™â€¦Ã™â€ž Ã˜Â¹Ã˜Â±Ã™Ë†Ã˜Â³Ã™Å Ã™â€ ! Ã˜Â¹Ã™â€šÃ˜Â¨Ã˜Â§Ã™â€ž Ã™â€¦Ã˜Â§ Ã™â€ Ã™ÂÃ˜Â±Ã˜Â­ Ã˜Â¨Ã˜Â£Ã™Ë†Ã™â€žÃ˜Â§Ã˜Â¯Ã™Æ’Ã™â€¦.", date: "24/10/2026" },
+    { name: "Ã˜Â¨Ã˜Â´Ã™Å Ã˜Â± Ã™Ë†Ã™â€ Ã™â€¡Ã™â€° Ã˜Â¹Ã˜Â§Ã˜Â¯Ã™â€ž",          text: "Ã˜Â£Ã˜Â³Ã˜Â¹Ã˜Â¯ Ã˜Â§Ã™â€žÃ™â€žÃ™â€¡ Ã˜Â£Ã™Ë†Ã™â€šÃ˜Â§Ã˜ÂªÃ™Æ’Ã™â€¦ Ã™Ë†Ã™Ë†Ã™ÂÃ™â€šÃ™Æ’Ã™â€¦ Ã™â€žÃ™â€¦Ã˜Â§ Ã™Å Ã˜Â­Ã˜Â¨Ã™â€¡ Ã™Ë†Ã™Å Ã˜Â±Ã˜Â¶Ã˜Â§Ã™â€¡. Ã™â€¦Ã˜Â¨Ã˜Â±Ã™Ë†Ã™Æ’ Ã˜Â§Ã™â€žÃ˜Â²Ã™Ë†Ã˜Â§Ã˜Â¬!", date: "25/10/2026" },
+    { name: "Ã˜Â²Ã™Å Ã˜Â§Ã˜Â¯ Ã™Ë†Ã˜Â±Ã™Ë†Ã˜Â§Ã™â€  Ã™â€¦Ã˜ÂµÃ˜Â·Ã™ÂÃ™â€°",        text: "Ã˜Â£Ã™â€žÃ™Â Ã˜Â£Ã™â€žÃ™Â Ã™â€¦Ã˜Â¨Ã˜Â±Ã™Ë†Ã™Æ’! Ã˜Â±Ã˜Â¨Ã™â€ Ã˜Â§ Ã™Å Ã™Æ’Ã™â€¦Ã™â€ž Ã˜Â¹Ã™â€žÃ™Å Ã™Æ’Ã™â€¦ Ã™â€ Ã˜Â¹Ã™â€¦Ã˜ÂªÃ™â€¡ Ã™Ë†Ã™Å Ã˜Â¬Ã˜Â¹Ã™â€ž Ã˜Â­Ã™Å Ã˜Â§Ã˜ÂªÃ™Æ’Ã™â€¦ Ã˜Â¯Ã˜Â§Ã˜Â¦Ã™â€¦Ã˜Â§Ã™â€¹ Ã™ÂÃ™Å  Ã˜Â³Ã˜Â¹Ã˜Â§Ã˜Â¯Ã˜Â©.", date: "26/10/2026" },
+    { name: "Ã˜Â¹Ã˜ÂµÃ˜Â§Ã™â€¦ Ã™Ë†Ã˜Â³Ã™â€¡Ã˜Â± Ã˜Â¹Ã™â€¦Ã˜Â±",           text: "Ã™Å Ã˜Â§ Ã™Æ’Ã˜Â±Ã™Å Ã™â€¦Ã˜Å’ Ã˜Â£Ã˜Â¬Ã™â€¦Ã™â€ž Ã˜Â¥Ã™â€ Ã˜Â³Ã˜Â§Ã™â€  Ã™Å Ã˜Â³Ã˜ÂªÃ˜Â§Ã™â€¡Ã™â€ž Ã˜Â£Ã˜Â¬Ã™â€¦Ã™â€ž Ã˜Â­Ã™Å Ã˜Â§Ã˜Â©. Ã™â€¦Ã˜Â¨Ã˜Â±Ã™Ë†Ã™Æ’ Ã™â€žÃ™Æ’Ã™â€¦Ã˜Â§ Ã˜Â§Ã™â€žÃ˜Â§Ã˜Â«Ã™â€ Ã™Å Ã™â€ !", date: "27/10/2026" },
+    { name: "Ã™â€ Ã˜Â¨Ã™Å Ã™â€ž Ã™Ë†Ã™â€¡Ã˜Â§Ã™â€žÃ˜Â© Ã™Æ’Ã™â€¦Ã˜Â§Ã™â€ž",         text: "Ã™â€¦Ã˜Â¨Ã˜Â±Ã™Ë†Ã™Æ’! Ã™Å Ã˜Â§Ã˜Â±Ã˜Â¨ Ã˜ÂªÃ˜Â¹Ã™Å Ã˜Â´Ã™Ë†Ã˜Â§ Ã™ÂÃ™Å  Ã™â€¡Ã™â€ Ã˜Â§ Ã™Ë†Ã™â€¦Ã˜Â­Ã˜Â¨Ã˜Â© Ã™Ë†Ã˜ÂªÃ˜Â±Ã˜Â¨Ã™Ë†Ã˜Â§ Ã˜Â£Ã™Ë†Ã™â€žÃ˜Â§Ã˜Â¯Ã™Æ’Ã™â€¦ Ã™ÂÃ™Å  Ã˜Â£Ã˜Â­Ã˜Â³Ã™â€  Ã˜ÂªÃ˜Â±Ã˜Â¨Ã™Å Ã˜Â©.", date: "28/10/2026" },
+    { name: "Ã™â€¦Ã˜Â§Ã™â€¡Ã˜Â± Ã™Ë†Ã˜Â¹Ã˜Â¨Ã™Å Ã˜Â± Ã˜Â³Ã™â€žÃ™Å Ã™â€¦",         text: "Ã˜Â±Ã˜Â¨Ã™â€ Ã˜Â§ Ã™Å Ã˜Â¬Ã™â€¦Ã˜Â¹Ã™Æ’Ã™â€¦ Ã˜Â¯Ã˜Â§Ã˜Â¦Ã™â€¦Ã˜Â§Ã™â€¹ Ã˜Â¹Ã™â€žÃ™â€° Ã˜Â®Ã™Å Ã˜Â± Ã™Ë†Ã™Å Ã˜Â¯Ã™Å Ã™â€¦ Ã˜Â§Ã™â€žÃ™â€¦Ã˜Â­Ã˜Â¨Ã˜Â© Ã˜Â¨Ã™Å Ã™â€ Ã™Æ’Ã™â€¦. Ã™Æ’Ã™â€ž Ã˜Â§Ã™â€žÃ˜ÂªÃ™â€¡Ã˜Â§Ã™â€ Ã™Å !", date: "29/10/2026" },
+    { name: "Ã™ÂÃ˜Â§Ã˜Â¯Ã™Å  Ã™Ë†Ã™â€¦Ã™Å Ã˜Â§Ã˜Â± Ã˜Â±Ã˜Â¶Ã˜Â§",          text: "Ã˜ÂªÃ™â€¡Ã™â€ Ã˜Â¦Ã˜Â© Ã™â€šÃ™â€žÃ˜Â¨Ã™Å Ã˜Â© Ã™â€žÃ™Æ’Ã™â€¦Ã˜Â§ Ã™Å Ã˜Â§ Ã˜ÂºÃ˜Â§Ã™â€žÃ™Å Ã™Å½Ã™Å Ã™â€™Ã™â€ . Ã˜Â±Ã˜Â¨Ã™â€ Ã˜Â§ Ã™Å Ã˜Â³Ã˜Â¹Ã˜Â¯Ã™Æ’Ã™â€¦ Ã™Ë†Ã™Å Ã˜Â¨Ã˜Â§Ã˜Â±Ã™Æ’ Ã™ÂÃ™Å  Ã˜Â²Ã™Ë†Ã˜Â§Ã˜Â¬Ã™Æ’Ã™â€¦.", date: "30/10/2026" },
+    { name: "Ã˜Â³Ã˜Â§Ã™â€¦Ã™Å  Ã™Ë†Ã˜ÂºÃ˜Â§Ã˜Â¯Ã˜Â© Ã˜Â¬Ã™â€¦Ã™Å Ã™â€ž",         text: "Ã˜Â£Ã˜Â¬Ã™â€¦Ã™â€ž Ã˜ÂªÃ™â€¡Ã˜Â§Ã™â€ Ã™Å Ã™â€ Ã˜Â§ Ã™Ë†Ã˜Â£Ã˜Â­Ã˜Â± Ã˜ÂªÃ˜Â¨Ã˜Â±Ã™Å Ã™Æ’Ã˜Â§Ã˜ÂªÃ™â€ Ã˜Â§. Ã˜Â¹Ã™â€šÃ˜Â¨Ã˜Â§Ã™â€ž Ã™â€¦Ã˜Â§ Ã™â€ Ã™ÂÃ˜Â±Ã˜Â­ Ã˜Â¨Ã˜Â£Ã™ÂÃ˜Â±Ã˜Â§Ã˜Â­ Ã˜Â£Ã™Ë†Ã™â€žÃ˜Â§Ã˜Â¯Ã™Æ’Ã™â€¦!", date: "31/10/2026" },
+    { name: "Ã˜Â­Ã˜Â³Ã˜Â§Ã™â€¦ Ã™Ë†Ã˜Â¥Ã˜Â³Ã˜Â±Ã˜Â§Ã˜Â¡ Ã™â€ Ã˜Â§Ã˜ÂµÃ˜Â±",        text: "Ã˜Â£Ã™â€žÃ™Â Ã™â€¦Ã˜Â¨Ã˜Â±Ã™Ë†Ã™Æ’ Ã™Å Ã˜Â§ Ã™Å Ã˜Â§Ã˜Â³Ã™â€¦Ã™Å Ã™â€  Ã™Ë†Ã™Å Ã˜Â§ Ã™Æ’Ã˜Â±Ã™Å Ã™â€¦. Ã˜Â±Ã˜Â¨Ã™â€ Ã˜Â§ Ã™Å Ã˜Â¬Ã˜Â¹Ã™â€žÃ™Æ’Ã™â€¦ Ã˜Â³Ã™â€ Ã˜Â¯ Ã™â€žÃ˜Â¨Ã˜Â¹Ã˜Â¶ Ã˜Â·Ã™Ë†Ã™â€ž Ã˜Â§Ã™â€žÃ˜Â¹Ã™â€¦Ã˜Â±.", date: "01/11/2026" },
+    { name: "Ã˜Â£Ã˜Â´Ã˜Â±Ã™Â Ã™Ë†Ã™â€ Ã™Ë†Ã˜Â± Ã˜Â§Ã™â€žÃ˜Â¯Ã™Å Ã™â€ ",         text: "Ã™â€¦Ã˜Â¨Ã˜Â±Ã™Ë†Ã™Æ’ Ã˜Â§Ã™â€žÃ˜Â²Ã™Ë†Ã˜Â§Ã˜Â¬! Ã˜Â£Ã˜ÂªÃ™â€¦Ã™â€ Ã™â€° Ã™â€žÃ™Æ’Ã™â€¦Ã˜Â§ Ã˜Â­Ã™Å Ã˜Â§Ã˜Â© Ã™â€¦Ã™â€žÃ™Å Ã˜Â§Ã™â€ Ã˜Â© Ã˜Â¨Ã˜Â§Ã™â€žÃ™â€¦Ã˜Â­Ã˜Â¨Ã˜Â© Ã™Ë†Ã˜Â§Ã™â€žÃ˜Â³Ã˜Â¹Ã˜Â§Ã˜Â¯Ã˜Â© Ã™Ë†Ã˜Â§Ã™â€žÃ˜Â¨Ã˜Â±Ã™Æ’Ã˜Â©.", date: "02/11/2026" },
+    { name: "Ã™â€¦Ã˜Â¹Ã˜ÂªÃ˜Â² Ã™Ë†Ã˜Â´Ã˜Â±Ã™Ë†Ã™â€š Ã™â€¦Ã™â€ Ã™Å Ã˜Â±",         text: "Ã™Å Ã˜Â§ Ã™Å Ã˜Â§Ã˜Â³Ã™â€¦Ã™Å Ã™â€  Ã™Ë†Ã™Å Ã˜Â§ Ã™Æ’Ã˜Â±Ã™Å Ã™â€¦Ã˜Å’ Ã˜Â§Ã™â€ Ã˜ÂªÃ™â€¦ Ã™â€¦Ã™â€  Ã˜Â£Ã˜Â­Ã™â€žÃ™â€° Ã˜Â§Ã™â€žÃ™â€ Ã˜Â§Ã˜Â³ Ã™Ë†Ã™â€¦Ã˜Â³Ã˜ÂªÃ˜Â§Ã™â€¡Ã™â€žÃ™Å Ã™â€  Ã˜Â£Ã˜Â­Ã™â€žÃ™â€° Ã˜Â­Ã™Å Ã˜Â§Ã˜Â©. Ã™â€¦Ã˜Â¨Ã˜Â±Ã™Ë†Ã™Æ’!", date: "03/11/2026" },
+    { name: "Ã˜ÂªÃ˜Â§Ã™â€¦Ã˜Â± Ã™Ë†Ã˜Â£Ã˜Â³Ã™â€¦Ã˜Â§Ã˜Â¡ Ã˜Â­Ã˜Â¬Ã˜Â§Ã˜Â²Ã™Å ",       text: "Ã˜Â£Ã™â€žÃ™Â Ã™â€¦Ã˜Â¨Ã˜Â±Ã™Ë†Ã™Æ’! Ã˜Â¹Ã™â€šÃ˜Â¨Ã˜Â§Ã™â€ž Ã™â€¦Ã˜Â§ Ã™â€ Ã˜Â´Ã™Ë†Ã™ÂÃ™Æ’Ã™â€¦ Ã™â€¦Ã˜Â¹ Ã˜Â£Ã™Ë†Ã™â€žÃ˜Â§Ã˜Â¯Ã™Æ’Ã™â€¦ Ã™Ë†Ã˜ÂªÃ™Æ’Ã™Ë†Ã™â€ Ã™Ë†Ã˜Â§ Ã˜Â£Ã˜Â³Ã˜Â¹Ã˜Â¯ Ã˜Â¹Ã™Å Ã™â€žÃ˜Â©!", date: "04/11/2026" },
+    { name: "Ã˜Â´Ã˜Â±Ã™Å Ã™Â Ã™Ë†Ã™â€žÃ™â€¦Ã™Å Ã˜Â§Ã˜Â¡ Ã™Ë†Ã™â€¡Ã˜Â¨Ã˜Â©",        text: "Ã˜Â±Ã˜Â¨Ã™â€ Ã˜Â§ Ã™Å Ã˜Â¨Ã˜Â§Ã˜Â±Ã™Æ’ Ã™ÂÃ™Å  Ã™â€¡Ã˜Â°Ã˜Â§ Ã˜Â§Ã™â€žÃ˜Â²Ã™Ë†Ã˜Â§Ã˜Â¬ Ã™Ë†Ã™Å Ã˜Â¬Ã˜Â¹Ã™â€žÃ™â€¡ Ã˜Â£Ã˜Â³Ã˜Â§Ã˜Â³ Ã˜Â­Ã™Å Ã˜Â§Ã˜Â© Ã˜Â³Ã˜Â¹Ã™Å Ã˜Â¯Ã˜Â© Ã™Ë†Ã™â€ Ã˜Â§Ã˜Â¬Ã˜Â­Ã˜Â©. Ã™â€¦Ã˜Â¨Ã˜Â±Ã™Ë†Ã™Æ’!", date: "05/11/2026" },
+    { name: "Ã˜Â£Ã™â€¦Ã˜Â¬Ã˜Â¯ Ã™Ë†Ã˜Â¯Ã™Å Ã™â€ Ã˜Â§ Ã˜Â±Ã˜Â´Ã˜Â¯Ã™Å ",         text: "Ã˜ÂªÃ™â€¡Ã˜Â§Ã™â€ Ã™Å Ã™â€ Ã˜Â§ Ã˜Â§Ã™â€žÃ˜Â­Ã˜Â§Ã˜Â±Ã˜Â© Ã™â€žÃ™Æ’Ã™â€¦Ã˜Â§. Ã˜Â±Ã˜Â¨Ã™â€ Ã˜Â§ Ã™Å Ã˜Â¬Ã˜Â¹Ã™â€ž Ã˜Â¨Ã™Å Ã˜ÂªÃ™Æ’Ã™â€¦ Ã™â€¦Ã™â€žÃ™Å Ã˜Â§Ã™â€  Ã˜Â¨Ã˜Â§Ã™â€žÃ™ÂÃ˜Â±Ã˜Â­ Ã™Ë†Ã˜Â§Ã™â€žÃ™â€¦Ã˜Â­Ã˜Â¨Ã˜Â© Ã˜Â¯Ã˜Â§Ã˜Â¦Ã™â€¦Ã˜Â§Ã™â€¹.", date: "06/11/2026" },
+    { name: "Ã˜Â¬Ã™â€¦Ã˜Â§Ã™â€ž Ã™Ë†Ã™â€¦Ã˜Â±Ã™Ë†Ã˜Â© Ã˜Â¨Ã˜Â¯Ã˜Â±",          text: "Ã™â€¦Ã˜Â¨Ã˜Â±Ã™Ë†Ã™Æ’ Ã˜Â£Ã™â€žÃ™Â Ã™â€¦Ã˜Â¨Ã˜Â±Ã™Ë†Ã™Æ’! Ã˜Â¹Ã™â€šÃ˜Â¨Ã˜Â§Ã™â€ž Ã˜Â§Ã™â€žÃ˜Â£Ã™ÂÃ˜Â±Ã˜Â§Ã˜Â­ Ã˜Â§Ã™â€žÃ™Æ’Ã˜Â¨Ã™Å Ã˜Â±Ã˜Â© Ã™Ë†Ã˜Â¹Ã™â€šÃ˜Â¨Ã˜Â§Ã™â€ž Ã˜Â£Ã™Ë†Ã™â€žÃ˜Â§Ã˜Â¯Ã™Æ’Ã™â€¦.", date: "07/11/2026" },
+    { name: "Ã˜Â¹Ã˜Â§Ã˜Â·Ã™Â Ã™Ë†Ã˜Â³Ã˜Â­Ã˜Â± Ã˜Â·Ã™â€¡",            text: "Ã™Å Ã˜Â§Ã˜Â±Ã˜Â¨ Ã™Å Ã™Æ’Ã™â€¦Ã™â€žÃ™Æ’Ã™â€¦ Ã˜Â¹Ã™â€žÃ™â€° Ã˜Â®Ã™Å Ã˜Â± Ã™Ë†Ã™Å Ã˜Â¬Ã˜Â¹Ã™â€ž Ã˜Â­Ã™Å Ã˜Â§Ã˜ÂªÃ™Æ’Ã™â€¦ Ã˜Â§Ã™â€žÃ™â€¦Ã˜Â´Ã˜ÂªÃ˜Â±Ã™Æ’Ã˜Â© Ã™â€¦Ã™â€žÃ™Å Ã˜Â§Ã™â€ Ã˜Â© Ã˜Â¨Ã˜Â§Ã™â€žÃ˜Â¨Ã˜Â±Ã™Æ’Ã˜Â© Ã™Ë†Ã˜Â§Ã™â€žÃ˜Â³Ã˜Â¹Ã˜Â§Ã˜Â¯Ã˜Â©.", date: "08/11/2026" },
+    { name: "Ã˜ÂµÃ™â€žÃ˜Â§Ã˜Â­ Ã™Ë†Ã™â€žÃ˜Â¨Ã™â€ Ã™â€° Ã™Å Ã™Ë†Ã˜Â³Ã™Â",         text: "Ã˜Â£Ã™â€žÃ™Â Ã™â€¦Ã˜Â¨Ã˜Â±Ã™Ë†Ã™Æ’ Ã™Å Ã˜Â§ Ã˜Â¬Ã™â€¦Ã˜Â§Ã˜Â¹Ã˜Â©! Ã˜Â±Ã˜Â¨Ã™â€ Ã˜Â§ Ã™Å Ã˜Â¯Ã™Å Ã™â€¦ Ã™ÂÃ˜Â±Ã˜Â­Ã™Æ’Ã™â€¦ Ã™Ë†Ã™Å Ã˜Â¨Ã˜Â§Ã˜Â±Ã™Æ’ Ã™ÂÃ™Å  Ã˜Â²Ã™Ë†Ã˜Â§Ã˜Â¬Ã™Æ’Ã™â€¦ Ã˜Â§Ã™â€žÃ˜Â³Ã˜Â¹Ã™Å Ã˜Â¯.", date: "09/11/2026" },
+    { name: "Ã˜Â¹Ã™â€žÃ˜Â§Ã˜Â¡ Ã™Ë†Ã˜Â¢Ã™Å Ã˜Â© Ã˜Â±Ã™â€¦Ã˜Â²Ã™Å ",          text: "Ã™â€¦Ã˜Â¨Ã˜Â±Ã™Ë†Ã™Æ’ Ã˜Â§Ã™â€žÃ˜Â²Ã™Ë†Ã˜Â§Ã˜Â¬! Ã˜Â£Ã˜ÂªÃ™â€¦Ã™â€ Ã™â€° Ã™â€¦Ã™â€  Ã˜Â§Ã™â€žÃ™â€šÃ™â€žÃ˜Â¨ Ã˜Â£Ã™â€  Ã˜ÂªÃ™Æ’Ã™Ë†Ã™â€  Ã˜Â­Ã™Å Ã˜Â§Ã˜ÂªÃ™Æ’Ã™â€¦ Ã˜Â£Ã˜Â¬Ã™â€¦Ã™â€ž Ã™â€¦Ã™â€  Ã˜Â£Ã˜Â­Ã™â€žÃ˜Â§Ã™â€¦Ã™Æ’Ã™â€¦.", date: "10/11/2026" },
+    { name: "Ã™Ë†Ã™â€žÃ™Å Ã˜Â¯ Ã™Ë†Ã™â€ Ã˜Â§Ã˜Â¯Ã™Å Ã˜Â© Ã˜Â¹Ã˜Â²Ã™Å Ã˜Â²",        text: "Ã˜Â£Ã™â€žÃ™Â Ã™â€¦Ã˜Â¨Ã˜Â±Ã™Ë†Ã™Æ’ Ã™Ë†Ã˜Â±Ã˜Â¨Ã™â€ Ã˜Â§ Ã™Å Ã˜Â³Ã˜Â¹Ã˜Â¯Ã™Æ’Ã™â€¦ Ã™Ë†Ã™Å Ã˜Â¯Ã™Å Ã™â€¦ Ã˜Â§Ã™â€žÃ™â€¦Ã˜Â­Ã˜Â¨Ã˜Â© Ã™Ë†Ã˜Â§Ã™â€žÃ™Ë†Ã™ÂÃ˜Â§Ã˜Â¡ Ã˜Â¨Ã™Å Ã™â€ Ã™Æ’Ã™â€¦ Ã˜Â·Ã™Ë†Ã™â€ž Ã˜Â§Ã™â€žÃ˜Â¹Ã™â€¦Ã˜Â±.", date: "11/11/2026" },
+    { name: "Ã˜Â¥Ã™Å Ã˜Â§Ã˜Â¯ Ã™Ë†Ã˜Â¥Ã™â€žÃ™â€¡Ã˜Â§Ã™â€¦ Ã˜Â²Ã™Æ’Ã™Å ",         text: "Ã˜ÂªÃ™â€¡Ã˜Â§Ã™â€ Ã™Å Ã™â€ Ã˜Â§ Ã˜Â§Ã™â€žÃ™â€šÃ™â€žÃ˜Â¨Ã™Å Ã˜Â© Ã™â€žÃ™Æ’Ã™â€¦Ã˜Â§. Ã˜Â¹Ã™â€šÃ˜Â¨Ã˜Â§Ã™â€ž Ã™â€¦Ã˜Â§ Ã™â€ Ã™ÂÃ˜Â±Ã˜Â­ Ã˜Â¨Ã˜Â£Ã™ÂÃ˜Â±Ã˜Â§Ã˜Â­ Ã˜Â¨Ã™Å Ã˜ÂªÃ™Æ’Ã™â€¦ Ã˜Â§Ã™â€žÃ˜Â¬Ã˜Â¯Ã™Å Ã˜Â¯!", date: "12/11/2026" },
+    { name: "Ã™Æ’Ã™â€¦Ã˜Â§Ã™â€ž Ã™Ë†Ã˜Â¹Ã˜Â²Ã™Å Ã˜Â²Ã˜Â© Ã™â€¦Ã™â€ Ã˜ÂµÃ™Ë†Ã˜Â±",       text: "Ã˜Â±Ã˜Â¨Ã™â€ Ã˜Â§ Ã™Å Ã˜Â¬Ã˜Â¹Ã™â€ž Ã™â€¡Ã˜Â°Ã˜Â§ Ã˜Â§Ã™â€žÃ˜Â²Ã™Ë†Ã˜Â§Ã˜Â¬ Ã˜Â¨Ã˜Â¯Ã˜Â§Ã™Å Ã˜Â© Ã˜Â­Ã™Å Ã˜Â§Ã˜Â© Ã˜Â¬Ã™â€¦Ã™Å Ã™â€žÃ˜Â© Ã™â€¦Ã™â€žÃ™Å Ã˜Â§Ã™â€ Ã˜Â© Ã˜Â¨Ã˜Â§Ã™â€žÃ™ÂÃ˜Â±Ã˜Â­ Ã™Ë†Ã˜Â§Ã™â€žÃ™â€¦Ã˜Â­Ã˜Â¨Ã˜Â©. Ã™â€¦Ã˜Â¨Ã˜Â±Ã™Ë†Ã™Æ’!", date: "13/11/2026" }
   ];
 
   // Seed localStorage only on first visit (don't overwrite real guest entries)
@@ -1252,18 +1445,28 @@
   var rsvpSuccess = document.getElementById('rsvp-success');
   var rsvpNameInput = document.getElementById('rsvp-name');
   var rsvpMessageInput = document.getElementById('rsvp-message');
+  var rsvpGuestsInput = document.getElementById('rsvp-guests');
+  var rsvpAcceptRadio = document.getElementById('rsvp-accept');
 
   if (rsvpForm) {
     rsvpForm.addEventListener('submit', function(e) {
       e.preventDefault();
 
-      var name = rsvpNameInput && rsvpNameInput.value ? rsvpNameInput.value.trim() : 'ضيف';
+      var name = rsvpNameInput && rsvpNameInput.value ? rsvpNameInput.value.trim() : 'Guest';
       var msg  = rsvpMessageInput && rsvpMessageInput.value ? rsvpMessageInput.value.trim() : '';
+      var guestsCount = rsvpGuestsInput && rsvpGuestsInput.value ? parseInt(rsvpGuestsInput.value, 10) : 0;
+      var isAttending = rsvpAcceptRadio && rsvpAcceptRadio.checked;
 
       if (msg) {
         var saved = JSON.parse(localStorage.getItem('guestMessages') || '[]');
-        saved.push({ name: name, text: msg, date: new Date().toLocaleDateString('ar-EG') });
+        var lang = document.documentElement.lang === 'ar' ? 'ar-EG' : 'en-US';
+        saved.push({ name: name, text: msg, date: new Date().toLocaleDateString(lang) });
         localStorage.setItem('guestMessages', JSON.stringify(saved));
+      }
+      
+      if (isAttending && !isNaN(guestsCount)) {
+        var totalGuests = parseInt(localStorage.getItem('guestTotalCount') || '0', 10);
+        localStorage.setItem('guestTotalCount', totalGuests + guestsCount);
       }
 
       rsvpForm.style.display = 'none';
@@ -1272,76 +1475,9 @@
       if (dLine) dLine.style.display = 'none';
     });
   }
-
-  // ---- Messages Modal -------------------------------------------------------
-  var viewLink    = document.getElementById('view-messages-link');
-  var modal       = document.getElementById('messages-modal');
-  var closeBtn    = document.getElementById('close-messages');
-  var passInput   = document.getElementById('messages-pass-input');
-  var submitBtn   = document.getElementById('messages-pass-submit');
-  var errorMsg    = document.getElementById('messages-pass-error');
-  var passContainer = document.getElementById('messages-pass-container');
-  var messagesList  = document.getElementById('messages-list');
-
-  function renderMessages() {
-    messagesList.innerHTML = '';
-    var saved = JSON.parse(localStorage.getItem('guestMessages') || '[]');
-
-    if (saved.length === 0) {
-      messagesList.innerHTML = '<p style="text-align:center;color:var(--text-soft);" dir="rtl">لا توجد رسائل بعد.</p>';
-      return;
-    }
-
-    // Show newest first
-    saved.slice().reverse().forEach(function(m) {
-      var div = document.createElement('div');
-      div.className = 'message-card';
-
-      var p = document.createElement('p');
-      p.className = 'message-text';
-      p.textContent = '\u201C' + m.text + '\u201D';
-
-      var strong = document.createElement('strong');
-      strong.className = 'message-author';
-      strong.textContent = m.name + (m.date ? '  —  ' + m.date : '');
-
-      div.appendChild(p);
-      div.appendChild(strong);
-      messagesList.appendChild(div);
-    });
-  }
-
-  if (viewLink && modal) {
-    viewLink.addEventListener('click', function(e) {
-      e.preventDefault();
-      modal.style.display = 'flex';
-      // tiny delay for transitions
-      setTimeout(function() { modal.classList.add('is-visible'); }, 10);
-    });
-
-    closeBtn.addEventListener('click', function() {
-      modal.classList.remove('is-visible');
-      setTimeout(function() {
-        modal.style.display = 'none';
-        passInput.value = '';
-        errorMsg.style.display = 'none';
-        passContainer.style.display = 'block';
-        messagesList.style.display = 'none';
-      }, 300);
-    });
-
-    submitBtn.addEventListener('click', function() {
-      if (passInput.value.trim().toLowerCase() === 'love' || passInput.value.trim() === 'حب') {
-        passContainer.style.display = 'none';
-        renderMessages();
-        messagesList.style.display = 'flex';
-      } else {
-        errorMsg.style.display = 'block';
-      }
-    });
-
-    passInput.addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') { submitBtn.click(); }
-    });
-  }
 })();
+
+
+
+
+

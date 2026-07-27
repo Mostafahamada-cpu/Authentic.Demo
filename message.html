@@ -1,17 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Guest Messages — Isabella &amp; Alexander</title>
-<meta name="description" content="Sweet notes and well-wishes for Isabella &amp; Alexander from family and friends.">
+<title>Guest Messages — Yasmine &amp; Karim</title>
+<meta name="description" content="Sweet notes and well-wishes from family and friends.">
 <meta name="theme-color" content="#AD8A4E">
-<meta name="robots" content="noindex, nofollow">
 
-<!-- Favicon (inline SVG — no asset file needed) -->
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='47' fill='%23AD8A4E'/%3E%3Ctext x='50' y='66' font-size='52' text-anchor='middle' fill='%23FAF6EF' font-family='Georgia,serif' font-style='italic'%3E%26amp;%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
 
-<!-- Fonts: same set as index.html, for a consistent look -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Beau+Rivage&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -19,60 +16,182 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<noscript><div style="padding:2rem;font-family:sans-serif;text-align:center;">Please enable JavaScript to view these messages.</div></noscript>
 
-<header class="simple-nav">
-  <div class="container simple-nav-inner">
-    <a href="index.html" class="nav-monogram" id="nav-monogram" aria-label="Back to invitation"></a>
-    <a href="index.html" class="back-link">
-      <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span>Back to Invitation</span>
+<header class="site-nav" id="site-nav">
+  <div class="nav-inner" style="justify-content: center; position: relative;">
+    <a href="index.html" class="nav-monogram" aria-label="Back to top">Y&amp;K</a>
+    <a href="index.html" style="position: absolute; left: 2rem; display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: var(--text-main); font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase;">
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span data-i18n="msg-back">The Invitation</span>
     </a>
+    <button id="lang-toggle" class="lang-toggle" aria-label="Switch Language" style="position: absolute; right: 2rem;">EN</button>
   </div>
 </header>
 
-<main id="main">
-  <section class="messages-hero container">
-    <p class="eyebrow">With Love</p>
-    <h1 class="section-title">Messages From Our Friends</h1>
-    <p>Every note here means more to us than we can say. Thank you for being part of our story.</p>
+<main id="main" style="padding-top: 100px;">
+  
+  <!-- Banner -->
+  <section class="container" style="text-align: center; padding: 4rem 1rem;">
+    <p class="eyebrow" data-i18n="msg-eyebrow">With Love</p>
+    <h1 class="section-title" data-i18n="msg-title">Guest Messages</h1>
+    <p data-i18n="msg-desc">Every wish, note, and blessing our family and friends have left for the two of us.</p>
   </section>
 
-  <section class="messages-gate container" id="messages-gate">
-    <p>This page is just for us — enter the password to read your notes.</p>
-    <div class="messages-gate-row">
-      <input type="password" id="messages-pass-input" placeholder="Password (hint: love)" autocomplete="off">
-      <button type="button" id="messages-pass-submit" class="btn btn-primary">Unlock</button>
+  <!-- Stats Grid -->
+  <section class="container" style="max-width: 900px; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
+    <div class="stat-card" style="background: var(--bg-ivory, #FAF6EF); padding: 2rem; border-radius: var(--radius-md, 12px); text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.03); border: 1px solid rgba(173,138,78,0.1);">
+      <svg viewBox="0 0 24 24" width="28" height="28" style="color: var(--accent); margin-bottom: 1rem;" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 21s-7.5-4.7-10.2-9.3C.3 8.8 1.6 5 5.3 4.1c2-.5 4 .3 5.2 2 1.2-1.7 3.2-2.5 5.2-2 3.7.9 5 4.7 3.5 7.6C19.5 16.3 12 21 12 21z"/></svg>
+      <div id="stat-total-messages" style="font-size: 2.5rem; font-family: var(--font-heading); color: var(--text-main); line-height: 1;">0</div>
+      <div style="font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; color: var(--text-soft); margin-top: 0.5rem;" data-i18n="msg-stat-messages">Messages</div>
     </div>
-    <p class="messages-gate-error" id="messages-pass-error" hidden>Incorrect password. Try again.</p>
+    
+    <div class="stat-card" style="background: var(--bg-ivory, #FAF6EF); padding: 2rem; border-radius: var(--radius-md, 12px); text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.03); border: 1px solid rgba(173,138,78,0.1);">
+      <svg viewBox="0 0 24 24" width="28" height="28" style="color: var(--accent); margin-bottom: 1rem;" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><circle cx="17" cy="9" r="2.6"/><path d="M15.5 14.2c2.8.4 4.9 2.4 4.9 5.8"/></svg>
+      <div id="stat-total-guests" style="font-size: 2.5rem; font-family: var(--font-heading); color: var(--text-main); line-height: 1;">0</div>
+      <div style="font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; color: var(--text-soft); margin-top: 0.5rem;" data-i18n="msg-stat-guests">Guests Joining</div>
+    </div>
+    
+    <div class="stat-card" style="background: var(--bg-ivory, #FAF6EF); padding: 2rem; border-radius: var(--radius-md, 12px); text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.03); border: 1px solid rgba(173,138,78,0.1);">
+      <svg viewBox="0 0 24 24" width="28" height="28" style="color: var(--accent); margin-bottom: 1rem;" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 6.5l9 6.5 9-6.5"/></svg>
+      <div id="stat-latest-message" style="font-size: 1.25rem; font-family: var(--font-heading); color: var(--text-main); line-height: 1.2; min-height: 2.5rem; display: flex; align-items: center; justify-content: center;">—</div>
+      <div style="font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; color: var(--text-soft); margin-top: 0.5rem;" data-i18n="msg-stat-latest">Latest Message</div>
+    </div>
   </section>
 
-  <section class="messages-list-section container" id="messages-list-section" hidden>
-    <div class="messages-grid" id="messages-grid"></div>
+  <!-- Search & Sort -->
+  <section class="container" style="max-width: 900px; display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin-bottom: 3rem;">
+    <div style="flex: 1; position: relative; min-width: 250px;">
+      <svg viewBox="0 0 24 24" width="20" height="20" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--accent);" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input type="text" id="msg-search" placeholder="Search by guest name..." style="width: 100%; padding: 1rem 1rem 1rem 3rem; border-radius: 50px; border: 1px solid rgba(173,138,78,0.4); background: transparent; font-family: var(--font-body); color: var(--text-main); outline: none;">
+    </div>
+    <select id="msg-sort" style="padding: 1rem 2rem; border-radius: 50px; border: 1px solid rgba(173,138,78,0.4); background: transparent; font-family: var(--font-body); color: var(--text-main); outline: none; cursor: pointer;">
+      <option value="newest" data-i18n="msg-sort-newest">Newest First</option>
+      <option value="oldest" data-i18n="msg-sort-oldest">Oldest First</option>
+    </select>
   </section>
+
+  <!-- Messages Grid -->
+  <section class="container" style="max-width: 1100px; padding-bottom: 5rem;">
+    <div id="messages-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem;"></div>
+  </section>
+
 </main>
 
-<footer class="site-footer" id="site-footer">
-  <div class="container footer-inner">
-    <div class="footer-monogram" id="footer-monogram"></div>
-    <p class="footer-names" id="footer-names"></p>
-    <p class="footer-date" id="footer-date"></p>
-    <p class="footer-thanks">With love and gratitude for being part of our story.</p>
-    <p class="footer-credit">Crafted with love &middot; <span id="footer-year"></span></p>
-  </div>
-</footer>
-
-<script defer src="script.js"></script>
+<script src="script.js"></script>
 <script>
-  // script.js's renderHero() sets document.title generically for the whole
-  // site — restore a page-specific title once it (and the rest of init())
-  // has had its turn.
-  window.addEventListener("load", function () {
-    var cfg = window.WS && window.WS.config;
-    if (cfg && cfg.brideName && cfg.groomName) {
-      document.title = "Guest Messages — " + cfg.brideName + " & " + cfg.groomName;
-    }
+(function(){
+  // Add translations for the messages page
+  var dictEn = window.WS.translations.en;
+  var dictAr = window.WS.translations.ar;
+  
+  Object.assign(dictEn, {
+    "msg-back": "The Invitation",
+    "msg-eyebrow": "With Love",
+    "msg-title": "Guest Messages",
+    "msg-desc": "Every wish, note, and blessing our family and friends have left for the two of us.",
+    "msg-stat-messages": "Messages",
+    "msg-stat-guests": "Guests Joining",
+    "msg-stat-latest": "Latest Message",
+    "msg-sort-newest": "Newest First",
+    "msg-sort-oldest": "Oldest First",
+    "msg-search-placeholder": "Search by guest name..."
   });
+
+  Object.assign(dictAr, {
+    "msg-back": "الدعوة",
+    "msg-eyebrow": "بكل الحب",
+    "msg-title": "رسائل الضيوف",
+    "msg-desc": "كل أمنية وكلمة ودعاء تركها لنا أهلنا وأصدقاؤنا.",
+    "msg-stat-messages": "الرسائل",
+    "msg-stat-guests": "الضيوف",
+    "msg-stat-latest": "أحدث رسالة",
+    "msg-sort-newest": "الأحدث أولاً",
+    "msg-sort-oldest": "الأقدم أولاً",
+    "msg-search-placeholder": "ابحث باسم الضيف..."
+  });
+
+  // Handle Placeholder Translation Manually
+  window.addEventListener('languageChanged', function(e) {
+    var lang = e.detail;
+    var searchInput = document.getElementById('msg-search');
+    if(searchInput) {
+      searchInput.placeholder = window.WS.translations[lang]["msg-search-placeholder"];
+      // Also adjust icon padding based on direction
+      if (lang === 'ar') {
+        searchInput.style.padding = "1rem 3rem 1rem 1rem";
+        searchInput.previousElementSibling.style.left = "auto";
+        searchInput.previousElementSibling.style.right = "1rem";
+      } else {
+        searchInput.style.padding = "1rem 1rem 1rem 3rem";
+        searchInput.previousElementSibling.style.right = "auto";
+        searchInput.previousElementSibling.style.left = "1rem";
+      }
+    }
+    renderGrid();
+  });
+
+  // Fetch logic
+  var messages = [];
+  var totalGuests = 0;
+  var searchInput = document.getElementById('msg-search');
+  var sortSelect = document.getElementById('msg-sort');
+  var grid = document.getElementById('messages-grid');
+  
+  function initMessages() {
+    var saved = JSON.parse(localStorage.getItem('guestMessages') || '[]');
+    messages = saved;
+    totalGuests = parseInt(localStorage.getItem('guestTotalCount') || '0', 10);
+    
+    // Add mock guests count if empty just for show
+    if (totalGuests === 0 && messages.length > 0) {
+      totalGuests = messages.length * 2;
+    }
+
+    document.getElementById('stat-total-messages').textContent = messages.length;
+    document.getElementById('stat-total-guests').textContent = totalGuests;
+    
+    if (messages.length > 0) {
+      var latest = messages[messages.length - 1];
+      document.getElementById('stat-latest-message').textContent = latest.name + " · " + latest.date;
+    }
+
+    renderGrid();
+  }
+
+  function renderGrid() {
+    if (!grid) return;
+    var query = searchInput.value.trim().toLowerCase();
+    var sortOrder = sortSelect.value;
+
+    var filtered = messages.filter(function(m) {
+      return !query || m.name.toLowerCase().indexOf(query) !== -1;
+    });
+
+    if (sortOrder === 'newest') {
+      filtered.reverse(); // assuming messages is oldest-first chronologically
+    }
+
+    grid.innerHTML = filtered.map(function(m, i) {
+      var initial = m.name ? m.name.charAt(0).toUpperCase() : '?';
+      return '<div style="background: var(--bg-ivory, #FAF6EF); padding: 2rem; border-radius: var(--radius-md, 12px); border: 1px solid rgba(173,138,78,0.1); box-shadow: 0 10px 30px rgba(0,0,0,0.03); position: relative;">' +
+        '<div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">' +
+          '<div style="width: 48px; height: 48px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-size: 1.25rem;">' + initial + '</div>' +
+          '<div>' +
+            '<div style="font-family: var(--font-heading); font-weight: 600; color: var(--text-main); font-size: 1.2rem;">' + m.name + '</div>' +
+            '<div style="font-size: 0.85rem; color: var(--text-soft);">' + (m.date || '') + '</div>' +
+          '</div>' +
+        '</div>' +
+        '<svg viewBox="0 0 24 24" width="20" height="20" style="position: absolute; top: 2rem; right: ' + (document.documentElement.dir === 'rtl' ? 'auto' : '2rem') + '; left: ' + (document.documentElement.dir === 'rtl' ? '2rem' : 'auto') + '; color: var(--accent); opacity: 0.5;" fill="currentColor"><path d="M12 21s-7.5-4.7-10.2-9.3C.3 8.8 1.6 5 5.3 4.1c2-.5 4 .3 5.2 2 1.2-1.7 3.2-2.5 5.2-2 3.7.9 5 4.7 3.5 7.6C19.5 16.3 12 21 12 21z"/></svg>' +
+        '<p style="margin: 0; font-family: var(--font-heading); font-style: italic; font-size: 1.1rem; line-height: 1.6; color: var(--text-main);">' + m.text + '</p>' +
+      '</div>';
+    }).join('');
+  }
+
+  searchInput.addEventListener('input', renderGrid);
+  sortSelect.addEventListener('change', renderGrid);
+
+  initMessages();
+})();
 </script>
 </body>
 </html>
