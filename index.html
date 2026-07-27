@@ -13,14 +13,14 @@
 <meta property="og:type" content="website">
 
 <!-- Favicon -->
-<link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>💍</text></svg>">
 
-<!-- Fonts: Italiana (eyebrows), Cormorant Garamond (headings), Beau Rivage (calligraphy), Jost (body) -->
+<!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Beau+Rivage&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Beau+Rivage&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-<!-- Styles (order matters: tokens → base → animation utilities → components → layout → responsive) -->
+<!-- Styles -->
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -45,10 +45,13 @@
 <header class="site-nav" id="site-nav">
   <div class="nav-inner">
     <a href="#hero" class="nav-monogram" id="nav-monogram" aria-label="Back to top"></a>
-    <nav class="nav-links" id="nav-links" aria-label="Primary"></nav><button id="lang-toggle" class="lang-toggle" aria-label="Switch Language">EN</button>
-    <button class="nav-toggle" id="nav-toggle" aria-label="افتح القائمة" aria-expanded="false" aria-controls="nav-drawer">
-      <span></span><span></span><span></span>
-    </button>
+    <nav class="nav-links" id="nav-links" aria-label="Primary"></nav>
+    <div class="nav-actions">
+      <button id="lang-toggle" class="lang-toggle" aria-label="Switch Language">EN</button>
+      <button class="nav-toggle" id="nav-toggle" aria-label="افتح القائمة" aria-expanded="false" aria-controls="nav-drawer">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </div>
 </header>
 
@@ -65,17 +68,24 @@
     <div class="hero-overlay"></div>
     <div class="hero-particles" id="hero-particles" aria-hidden="true"></div>
     <div class="hero-content">
-      <p class="eyebrow" data-reveal="fade-up">حفل زفاف</p>
+      <p class="eyebrow hero-eyebrow" data-reveal="fade-up">حفل زفاف</p>
       <h1 class="hero-names" style="color: var(--accent);">
         <span class="hero-name" id="hero-name-a" data-reveal="fade-up" data-reveal-delay="80"></span>
         <span class="hero-amp" data-reveal="scale-in" data-reveal-delay="200">&amp;</span>
         <span class="hero-name" id="hero-name-b" data-reveal="fade-up" data-reveal-delay="160"></span>
       </h1>
-      <div class="hero-date" id="hero-date" data-reveal="fade-up" data-reveal-delay="280"></div>
+      <div class="hero-date-wrap" data-reveal="fade-up" data-reveal-delay="260">
+        <div class="hero-date" id="hero-date"></div>
+      </div>
       <p class="hero-subtitle" id="hero-subtitle" data-reveal="fade-up" data-reveal-delay="340"></p>
-      <a href="#rsvp" class="btn btn-primary" data-reveal="fade-up" data-reveal-delay="420">
-        <span>تأكيد الحضور</span>
-      </a>
+      <div class="hero-cta-group" data-reveal="fade-up" data-reveal-delay="420">
+        <a href="#rsvp" class="btn btn-primary">
+          <span>تأكيد الحضور</span>
+        </a>
+        <a href="#story" class="btn btn-ghost">
+          <span>قصتنا</span>
+        </a>
+      </div>
     </div>
     <button class="scroll-indicator" id="scroll-indicator" aria-label="مرر لأسفل">
       <span class="scroll-indicator-line"></span>
@@ -132,6 +142,7 @@
         <p class="location-address" id="venue-address"></p>
         <p class="location-datetime" id="location-datetime"></p>
         <a href="#" class="btn btn-outline" id="maps-link" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7.5-6.5-7.5-11A7.5 7.5 0 0119.5 10c0 4.5-7.5 11-7.5 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
           <span>احصل على الاتجاهات</span>
         </a>
       </div>
@@ -166,12 +177,18 @@
     <div class="container couple-container">
       <div class="couple-image-wrapper" data-reveal="fade-right">
         <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="ياسمين وكريم" class="couple-image" loading="lazy">
+        <div class="couple-image-badge">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 21s-7.5-4.7-10.2-9.3C.3 8.8 1.6 5 5.3 4.1c2-.5 4 .3 5.2 2 1.2-1.7 3.2-2.5 5.2-2 3.7.9 5 4.7 3.5 7.6C19.5 16.3 12 21 12 21z" fill="currentColor"/></svg>
+          <span>٢٠٢٦</span>
+        </div>
       </div>
       <div class="couple-content" data-reveal="fade-left">
         <p class="eyebrow">العروسان</p>
-        <h2 class="section-title" style="color: var(--accent);">ياسمين وكريم</h2>
-        <p class="couple-desc" dir="rtl">"لا نستطيع الانتظار حتى نحتفل بيومنا المميز مع أحبابنا. شكراً من القلب لأنكم جزء من حياتنا وقصتنا."</p>
-        <a href="message.html" id="view-messages-link" style="display: inline-block; margin-top: 1rem; font-size: 0.85rem; color: var(--accent); text-decoration: underline;" dir="rtl" data-i18n="couple-link">عرض الرسائل (للعروسين فقط)</a>
+        <h2 class="section-title" id="couple-names" style="color: var(--accent);">ياسمين وكريم</h2>
+        <p class="couple-desc" id="couple-desc" dir="rtl">"لا نستطيع الانتظار حتى نحتفل بيومنا المميز مع أحبابنا. شكراً من القلب لأنكم جزء من حياتنا وقصتنا."</p>
+        <div class="couple-actions">
+          <a href="message.html" id="view-messages-link" class="btn btn-outline-gold" dir="rtl" data-i18n="couple-link">عرض رسائل الضيوف</a>
+        </div>
       </div>
     </div>
   </section>
@@ -208,9 +225,11 @@
           <span class="form-label-static" id="attendance-label">هل ستحضر؟</span>
           <div class="attendance-toggle" role="radiogroup" aria-labelledby="attendance-label">
             <button type="button" class="attend-btn" data-value="attending" role="radio" aria-checked="false">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
               <span>سأحضر بكل سرور</span>
             </button>
             <button type="button" class="attend-btn" data-value="declining" role="radio" aria-checked="false">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
               <span>نعتذر عن الحضور</span>
             </button>
           </div>
@@ -219,7 +238,7 @@
 
         <div class="form-row">
           <label for="rsvp-message">رسالة <span class="optional">(اختياري)</span></label>
-          <textarea id="rsvp-message" name="message" rows="3"></textarea>
+          <textarea id="rsvp-message" name="message" rows="3" placeholder="اتركوا لنا كلمة من القلب…"></textarea>
         </div>
 
         <button type="submit" class="btn btn-primary rsvp-submit" id="rsvp-submit">
@@ -229,7 +248,9 @@
       </form>
 
       <div class="rsvp-success" id="rsvp-success" hidden>
-        <svg viewBox="0 0 24 24" class="rsvp-success-icon" aria-hidden="true"><path d="M12 21s-7.5-4.6-10-9.3C.5 8.4 2.3 5 5.8 5c2 0 3.4 1 6.2 4 2.8-3 4.2-4 6.2-4 3.5 0 5.3 3.4 3.8 6.7C19.5 16.4 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        <div class="rsvp-success-icon-wrap">
+          <svg viewBox="0 0 24 24" class="rsvp-success-icon" aria-hidden="true"><path d="M12 21s-7.5-4.6-10-9.3C.5 8.4 2.3 5 5.8 5c2 0 3.4 1 6.2 4 2.8-3 4.2-4 6.2-4 3.5 0 5.3 3.4 3.8 6.7C19.5 16.4 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        </div>
         <h3>شكراً لك</h3>
         <p id="rsvp-success-msg"></p>
       </div>
@@ -241,6 +262,12 @@
 <!-- ============ FOOTER ============ -->
 <footer class="site-footer" id="site-footer">
   <div class="container footer-inner">
+    <div class="footer-seal-ring" aria-hidden="true">
+      <svg viewBox="0 0 100 100" width="80" height="80">
+        <circle cx="50" cy="50" r="44" fill="none" stroke="rgba(220,199,147,0.25)" stroke-width="1"/>
+        <circle cx="50" cy="50" r="38" fill="none" stroke="rgba(220,199,147,0.15)" stroke-width="1"/>
+      </svg>
+    </div>
     <div class="footer-monogram" id="footer-monogram"></div>
     <p class="footer-names" id="footer-names"></p>
     <p class="footer-date" id="footer-date"></p>
@@ -297,7 +324,7 @@
   <div class="messages-modal-card">
     <button id="close-messages" class="messages-modal-close" aria-label="إغلاق">&times;</button>
     <h3 class="section-title messages-modal-title" dir="rtl">رسائل الضيوف</h3>
-    
+
     <div id="messages-pass-container" class="messages-pass-container">
       <p dir="rtl">أدخل كلمة المرور لقراءة الرسائل:</p>
       <input type="password" id="messages-pass-input" placeholder="كلمة السر (تلميح: حب)">
@@ -310,8 +337,7 @@
   </div>
 </div>
 
-<!-- Scripts: dependency order matters. Config first, main.js orchestrates init last. -->
+<!-- Scripts -->
 <script defer src="script.js"></script>
 </body>
 </html>
-
