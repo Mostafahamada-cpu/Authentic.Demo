@@ -1813,3 +1813,143 @@ p { color: var(--text-soft); }
   outline: 1px solid rgba(185, 150, 85, 0.16);
   outline-offset: 3px;
 }
+
+/* =========================================================================
+   MESSAGES MODAL ENHANCEMENTS
+   ========================================================================= */
+.messages-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(46, 42, 34, 0.85); /* Dark charcoal overlay */
+  backdrop-filter: blur(8px);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.messages-modal-overlay.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.messages-modal-card {
+  background: var(--bg-base);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.24 0 0 0 0 0.2 0 0 0 0 0.14 0 0 0 0.045 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
+  padding: 3rem 2.5rem;
+  border-radius: var(--radius-lg, 28px);
+  max-width: 550px;
+  width: 90%;
+  max-height: 85vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: var(--shadow-elevated, 0 25px 70px -15px rgba(46, 42, 34, 0.28));
+  border: 1px solid rgba(173, 138, 78, 0.2);
+  transform: translateY(20px) scale(0.95);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) transparent;
+}
+
+.messages-modal-overlay.is-visible .messages-modal-card {
+  transform: translateY(0) scale(1);
+}
+
+.messages-modal-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: rgba(173, 138, 78, 0.1);
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--accent);
+  transition: background 0.2s ease, transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.messages-modal-close:hover {
+  background: var(--accent);
+  color: var(--color-white, #FFF);
+  transform: rotate(90deg);
+}
+
+.messages-modal-title {
+  margin-bottom: 2rem;
+  text-align: center;
+  color: var(--accent);
+  font-size: var(--fs-xl, 2rem);
+}
+
+.messages-pass-container {
+  text-align: center;
+  color: var(--text-main);
+}
+.messages-pass-container p {
+  margin-bottom: 1rem;
+}
+.messages-pass-container input {
+  width: 100%;
+  max-width: 300px;
+  padding: 0.8rem 1rem;
+  border: 1px solid rgba(173, 138, 78, 0.4);
+  border-radius: var(--radius-pill, 999px);
+  margin-bottom: 1.5rem;
+  background: transparent;
+  color: var(--text-main);
+  text-align: center;
+  transition: border-color 0.2s;
+}
+.messages-pass-container input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.messages-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.message-card {
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: var(--radius-md, 10px);
+  border-right: 4px solid var(--accent);
+  direction: rtl;
+  text-align: right;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+}
+
+.message-text {
+  margin: 0 0 1rem 0;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--text-main);
+  font-family: var(--font-heading);
+  font-style: italic;
+}
+
+.message-author {
+  display: block;
+  color: var(--accent-deep);
+  font-size: 0.9rem;
+  font-family: var(--font-body);
+}
+
+/* Scrollbar for modal */
+.messages-modal-card::-webkit-scrollbar {
+  width: 6px;
+}
+.messages-modal-card::-webkit-scrollbar-thumb {
+  background-color: var(--accent);
+  border-radius: 10px;
+}
+

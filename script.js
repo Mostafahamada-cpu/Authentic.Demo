@@ -38,7 +38,7 @@
     },
 
     // ---- Music -----------------------------------------------------------------
-    backgroundMusic: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+    backgroundMusic: "music.mp3",
     musicTitle: "معاك — عمرو دياب",
 
     // ---- Love Story timeline --------------------------------------------------
@@ -188,19 +188,19 @@
   utils.formatLongDate = function (isoString) {
     var d = new Date(isoString);
     if (isNaN(d.getTime())) { return ""; }
-    return new Intl.DateTimeFormat("en-US", { day: "numeric", month: "long", year: "numeric" }).format(d);
+    return new Intl.DateTimeFormat("ar-EG", { day: "numeric", month: "long", year: "numeric" }).format(d);
   };
 
   utils.formatShortDate = function (isoString) {
     var d = new Date(isoString);
     if (isNaN(d.getTime())) { return ""; }
-    return new Intl.DateTimeFormat("en-US", { day: "2-digit", month: "2-digit", year: "numeric" }).format(d).replace(/\//g, " . ");
+    return new Intl.DateTimeFormat("ar-EG", { day: "2-digit", month: "2-digit", year: "numeric" }).format(d).replace(/\//g, " . ");
   };
 
   utils.formatTime = function (isoString) {
     var d = new Date(isoString);
     if (isNaN(d.getTime())) { return ""; }
-    return new Intl.DateTimeFormat("en-US", { hour: "numeric", minute: "2-digit" }).format(d);
+    return new Intl.DateTimeFormat("ar-EG", { hour: "numeric", minute: "2-digit" }).format(d);
   };
 
   utils.pad2 = function (n) {
@@ -319,11 +319,11 @@
   }
 
   var NAV_ITEMS = [
-    { id: "story", label: "Our Story", flag: "storyEnabled" },
-    { id: "location", label: "The Celebration", flag: "locationEnabled" },
-    { id: "guidelines", label: "Good To Know", flag: "guidelinesEnabled" },
-    { id: "gallery", label: "Gallery", flag: "galleryEnabled" },
-    { id: "rsvp", label: "RSVP", flag: "rsvpEnabled" }
+    { id: "story", label: "قصتنا", flag: "storyEnabled" },
+    { id: "location", label: "الاحتفال", flag: "locationEnabled" },
+    { id: "guidelines", label: "معلومات تهمك", flag: "guidelinesEnabled" },
+    { id: "gallery", label: "معرض الصور", flag: "galleryEnabled" },
+    { id: "rsvp", label: "تأكيد الحضور", flag: "rsvpEnabled" }
   ];
 
   function buildNav(config) {
@@ -443,7 +443,7 @@
   function renderRsvpDeadline(config) {
     var el = document.getElementById("rsvp-deadline");
     if (!el) { return; }
-    el.textContent = config.rsvpDeadline ? "Kindly respond by " + utils.formatLongDate(config.rsvpDeadline) : "";
+    el.textContent = config.rsvpDeadline ? "نرجو الرد بحلول " + utils.formatLongDate(config.rsvpDeadline) : "";
   }
 
   function renderFooter(config) {
@@ -1295,18 +1295,18 @@
     // Show newest first
     saved.slice().reverse().forEach(function(m) {
       var div = document.createElement('div');
-      div.style.cssText = 'padding:1rem;background:var(--bg-alt,#EFE1C1);border-radius:8px;direction:rtl;text-align:right;';
-
-      var strong = document.createElement('strong');
-      strong.style.cssText = 'display:block;margin-bottom:0.35rem;color:var(--accent-deep,#8A6A38);font-family:var(--font-heading);font-style:italic;';
-      strong.textContent = m.name + (m.date ? '  —  ' + m.date : '');
+      div.className = 'message-card';
 
       var p = document.createElement('p');
-      p.style.cssText = 'margin:0;font-size:0.93rem;line-height:1.65;';
+      p.className = 'message-text';
       p.textContent = '\u201C' + m.text + '\u201D';
 
-      div.appendChild(strong);
+      var strong = document.createElement('strong');
+      strong.className = 'message-author';
+      strong.textContent = m.name + (m.date ? '  —  ' + m.date : '');
+
       div.appendChild(p);
+      div.appendChild(strong);
       messagesList.appendChild(div);
     });
   }
@@ -1315,14 +1315,19 @@
     viewLink.addEventListener('click', function(e) {
       e.preventDefault();
       modal.style.display = 'flex';
+      // tiny delay for transitions
+      setTimeout(function() { modal.classList.add('is-visible'); }, 10);
     });
 
     closeBtn.addEventListener('click', function() {
-      modal.style.display = 'none';
-      passInput.value = '';
-      errorMsg.style.display = 'none';
-      passContainer.style.display = 'block';
-      messagesList.style.display = 'none';
+      modal.classList.remove('is-visible');
+      setTimeout(function() {
+        modal.style.display = 'none';
+        passInput.value = '';
+        errorMsg.style.display = 'none';
+        passContainer.style.display = 'block';
+        messagesList.style.display = 'none';
+      }, 300);
     });
 
     submitBtn.addEventListener('click', function() {
