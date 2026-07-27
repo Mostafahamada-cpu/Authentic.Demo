@@ -14,27 +14,23 @@
   window.WS.config = {
 
     // ---- The couple -------------------------------------------------------
-    groomName: "Alexander",
-    brideName: "Isabella",
+    groomName: "كريم",
+    brideName: "ياسمين",
     nameOrder: "bride-groom",   // "bride-groom" or "groom-bride" — controls display order everywhere
 
     // ---- Hero copy ----------------------------------------------------------
-    tagline: "The Wedding Of",
-    subtitle: "Together with their families, request the pleasure of your company as they begin their forever.",
+    tagline: "حفل زفاف",
+    subtitle: "مع عائلتيهما، يتشرفان بدعوتكم للاحتفال بزواجهما وبداية حياتهما المشتركة.",
     heroImage: "",   // e.g. "assets/images/my-photo.jpg" — leave blank to use the generated backdrop
 
     // ---- Date & venue ---------------------------------------------------------
-    // `date` is the single source of truth (ISO 8601, includes time) — the
-    // countdown, hero date line, and location section all derive from it.
     date: "2026-12-12T17:00:00",
-    venue: "The Rosewood Estate",
-    address: "1420 Vineyard Hill Road, Napa Valley, CA 94558",
-    mapsLink: "https://maps.google.com/?q=The+Rosewood+Estate+Napa+Valley",
-    mapEmbedSrc: "",   // optional explicit Google Maps embed URL; auto-built from the address if left blank
+    venue: "ماريوت ميناهاوس",
+    address: "شارع الأهرام، الجيزة، القاهرة، مصر",
+    mapsLink: "https://maps.google.com/?q=Marriott+Mena+House+Giza+Egypt",
+    mapEmbedSrc: "https://www.google.com/maps?q=Marriott+Mena+House+Giza+Egypt&output=embed",
 
     // ---- Theme ---------------------------------------------------------------
-    // Reassigns the site's CSS custom properties at runtime. Change these
-    // three values to re-theme the entire site — no CSS editing required.
     colors: {
       accent: "#AD8A4E",
       accentDeep: "#8A6A38",
@@ -43,50 +39,42 @@
 
     // ---- Music -----------------------------------------------------------------
     backgroundMusic: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-    musicTitle: "Our Romantic Song",
-
-    // ---- Envelope opening experience (see envelope.js) ---------------------------
-    // Optional sound effects — leave any blank to skip that sound entirely.
-    envelopeSounds: {
-      seal: "",   // played the instant the wax seal cracks
-      flap: "",   // played as the flap folds open
-      unfold: ""  // played as the card unfolds
-    },
+    musicTitle: "معاك — عمرو دياب",
 
     // ---- Love Story timeline --------------------------------------------------
     story: [
       {
-        date: "August 2019",
-        title: "How We Met",
-        description: "A mutual friend's rooftop dinner in the city — Alexander arrived late, took the only open seat next to Isabella, and stayed until the restaurant turned the lights on.",
+        date: "أغسطس ٢٠١٩",
+        title: "أول لقاء",
+        description: "في حفل عشاء على سطح أحد المنازل بوسط القاهرة — وصل كريم متأخراً، فلم يجد مقعداً إلا بجانب ياسمين، وبقيا يتحدثان حتى أُطفئت الأنوار.",
         icon: "sparkle",
         image: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=600&q=80"
       },
       {
-        date: "March 2021",
-        title: "Our First Trip",
-        description: "A long-delayed flight to Lisbon turned into ten days of getting lost on purpose. They still argue, lovingly, about who picked the better viewpoint.",
+        date: "مارس ٢٠٢١",
+        title: "أول رحلة معاً",
+        description: "رحلة إلى الأقصر والأسوان تحوّلت إلى أسبوعين من الضحكات والذكريات الجميلة على ضفاف النيل.",
         icon: "plane",
         image: "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=600&q=80"
       },
       {
-        date: "June 2023",
-        title: "Moving In Together",
-        description: "A one-bedroom with a temperamental radiator and a view of absolutely nothing — it became the first place that felt entirely theirs.",
+        date: "يونيو ٢٠٢٣",
+        title: "بيتنا الأول",
+        description: "شقة دافئة في الزمالك بإطلالة على النيل — صارت أول مكان يشعران فيه أنهما في بيتهما معاً.",
         icon: "home",
         image: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=600&q=80"
       },
       {
-        date: "February 2026",
-        title: "The Proposal",
-        description: "Back at that same rooftop, seven years later. Alexander asked before dessert arrived; Isabella said yes before he finished the question.",
+        date: "فبراير ٢٠٢٦",
+        title: "طلب الزواج",
+        description: "على كورنيش النيل تحت النجوم، طلب كريم يد ياسمين قبل أن تُقدَّم الحلوى، وقبلت ياسمين قبل أن يُكمل الجملة.",
         icon: "rings",
         image: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=600&q=80"
       },
       {
-        date: "December 12, 2026",
-        title: "Happily Ever After",
-        description: "And now, surrounded by the people who mean the most, they begin the next chapter — with all of you there to see it start.",
+        date: "١٢ ديسمبر ٢٠٢٦",
+        title: "بداية الحكاية",
+        description: "ومحاطَيْن بأحبابهما، يبدآن فصلاً جديداً — وأنتم شهود هذه البداية الجميلة.",
         icon: "heart",
         image: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80"
       }
@@ -94,60 +82,26 @@
 
     // ---- Guidelines cards -------------------------------------------------------
     guidelines: [
-      { icon: "dress-code", title: "Dress Code", description: "Black tie optional. We'd love to see the garden in soft, elegant tones — think champagne, sage, and dusty blue." },
-      { icon: "arrival", title: "Arrival Time", description: "Please arrive by 4:30 PM. The ceremony begins promptly at 5:00 PM, and the garden gate closes shortly after." },
-      { icon: "parking", title: "Parking", description: "Complimentary valet is available at the estate's main entrance from 4:00 PM onward." },
-      { icon: "no-smoking", title: "No Smoking", description: "The gardens and vineyard are smoke-free. A designated area is available near the west courtyard." },
-      { icon: "gift", title: "Gifts", description: "Your presence is the only present we need. For those who'd still like to, a registry is linked in your invitation card." },
-      { icon: "contact", title: "Questions", description: "For anything at all, reach our wedding coordinator, Maria, at (555) 013-2029." }
+      { icon: "dress-code", title: "كود الأناقة", description: "السهرة الرسمية. نتمنى أن نراكم في أبهى حلة — الألوان المقترحة: الشامبانيا والأخضر الرمادي والأزرق الفاتح." },
+      { icon: "arrival", title: "موعد الحضور", description: "يُرجى الحضور في موعد أقصاه الساعة ٤:٣٠ مساءً. تبدأ مراسم الزفاف في تمام الساعة ٥:٠٠ مساءً." },
+      { icon: "parking", title: "مواقف السيارات", description: "خدمة الفاليه متاحة مجاناً عند المدخل الرئيسي من الساعة ٤:٠٠ مساءً." },
+      { icon: "no-smoking", title: "منطقة خالية من التدخين", description: "الحدائق قاطبةً خالية من التدخين. توجد منطقة مخصصة للتدخين بالقرب من الباحة الغربية." },
+      { icon: "gift", title: "الهدايا", description: "حضوركم هو أغلى هدية. لمن يرغب في المشاركة، توجد قائمة هدايا مُرفقة ببطاقة الدعوة." },
+      { icon: "contact", title: "للاستفسار", description: "للتواصل مع منسقة حفل الزفاف مريم على الرقم: 01000123456." }
     ],
 
     // ---- Gallery ------------------------------------------------------------------
-    // Curated romantic/wedding-toned stock photos (swap in your own anytime —
-    // this is demo content like everything else here). Two slots use a
-    // generic placeholder service since they're the easiest to spot and swap.
-  gallery: [
-  {
-    src: "./Gallery/photo1.jpg",
-    alt: "Golden hour together",
-    caption: "Golden Hour"
-  },
-  {
-    src: "./Gallery/photo2.jpg",
-    alt: "The proposal",
-    caption: "The Proposal"
-  },
-  {
-    src: "./Gallery/photo3.jpg",
-    alt: "Where it began",
-    caption: "Where It Began"
-  },
-  {
-    src: "./Gallery/photo4.jpg",
-    alt: "The venue",
-    caption: "The Rosewood Estate"
-  },
-  {
-    src: "./Gallery/photo5.jpg",
-    alt: "Quiet evenings",
-    caption: "Quiet Evenings"
-  },
-  {
-    src: "./Gallery/photo6.jpg",
-    alt: "Lisbon getaway",
-    caption: "Lisbon, 2021"
-  },
-  {
-    src: "./Gallery/photo7.jpg",
-    alt: "Wedding details",
-    caption: "The Details"
-  },
-  {
-    src: "./Gallery/photo8.jpg",
-    alt: "Forever starts here",
-    caption: "Forever Starts Here"
-  }
-],
+    gallery: [
+      { src: "https://picsum.photos/800/600?random=1", alt: "صورة ١", caption: "ضوء الغروب" },
+      { src: "https://picsum.photos/800/600?random=2", alt: "صورة ٢", caption: "طلب الزواج" },
+      { src: "https://picsum.photos/800/600?random=3", alt: "صورة ٣", caption: "أول لقاء" },
+      { src: "https://picsum.photos/800/600?random=4", alt: "صورة ٤", caption: "ماريوت ميناهاوس" },
+      { src: "https://picsum.photos/800/600?random=5", alt: "صورة ٥", caption: "أمسيات هادئة" },
+      { src: "https://picsum.photos/800/600?random=6", alt: "صورة ٦", caption: "الأقصر، ٢٠٢١" },
+      { src: "https://picsum.photos/800/600?random=7", alt: "صورة ٧", caption: "التفاصيل" },
+      { src: "https://picsum.photos/800/600?random=8", alt: "صورة ٨", caption: "هنا تبدأ الحكاية" }
+    ],
+
     // ---- RSVP -----------------------------------------------------------------------
     rsvpDeadline: "2026-11-01",
     socialLinks: {
@@ -164,8 +118,7 @@
     locationEnabled: true,
     guidelinesEnabled: true,
     musicEnabled: true,
-    rsvpEnabled: true,
-    envelopeEnabled: true
+    rsvpEnabled: true
   };
 })();
 
@@ -572,22 +525,11 @@
     }, 90);
 
     function revealHero() {
-      var els = utils.$all(".hero [data-reveal]");
-      els.forEach(function (el) {
+      utils.$all(".hero [data-reveal]").forEach(function (el) {
         var delay = el.getAttribute("data-reveal-delay") || "0";
         el.style.setProperty("--reveal-delay", delay + "ms");
+        requestAnimationFrame(function () { el.classList.add("is-visible"); });
       });
-      // Add the class a beat later so the transition from the hidden state
-      // animates. rAF for the normal case, plus a timer fallback because
-      // throttled/background tabs can suspend rAF indefinitely.
-      var shown = false;
-      function show() {
-        if (shown) { return; }
-        shown = true;
-        els.forEach(function (el) { el.classList.add("is-visible"); });
-      }
-      requestAnimationFrame(show);
-      setTimeout(show, 120);
     }
 
     function finish() {
@@ -603,20 +545,7 @@
         preloader.classList.add("is-hidden");
         preloader.setAttribute("aria-hidden", "true");
         document.body.classList.remove("is-loading");
-
-        // Hand off to the envelope experience (envelope.js) if it's present
-        // and decides to run. It calls revealHero() itself once its own
-        // sequence finishes. If it's missing, disabled, skipped (reduced
-        // motion / already seen this session), or throws, fall back to the
-        // original behavior so the hero is never left unrevealed.
-        var tookOver = false;
-        try {
-          tookOver = !!(window.WS.initEnvelope && window.WS.initEnvelope(revealHero));
-        } catch (err) {
-          console.error("[WeddingSite] envelope failed to initialize:", err);
-          tookOver = false;
-        }
-        if (!tookOver) { revealHero(); }
+        revealHero();
       }, wait);
     }
 
@@ -940,14 +869,6 @@
     document.addEventListener("touchstart", onFirstGesture, { once: false, passive: true });
     document.addEventListener("keydown",   onFirstGesture, { once: false });
 
-    // If the envelope experience ran, its own click already satisfied the
-    // browser's gesture requirement — start music right as it finishes
-    // rather than waiting on the generic first-gesture timer above.
-    document.addEventListener("envelope:opened", function () {
-      firstGestureFired = true;
-      if (!isPlaying) { doPlay(); openPanel(); }
-    });
-
     /* ---- Keyboard: Space to toggle when player is focused ------------------- */
     toggle.addEventListener("keydown", function (e) {
       if (e.key === " " || e.key === "Enter") {
@@ -1153,9 +1074,7 @@
     }
 
     function closeDrawer() {
-      // No-op unless actually open — this also runs on every anchor click,
-      // and must not steal focus to the (hidden) hamburger on desktop.
-      if (!drawer || !drawer.classList.contains("is-open")) { return; }
+      if (!drawer) { return; }
       drawer.classList.remove("is-open");
       scrim.classList.remove("is-open");
       toggle.setAttribute("aria-expanded", "false");
@@ -1194,7 +1113,6 @@
       window.scrollTo({ top: top, behavior: reduce ? "auto" : "smooth" });
       setTimeout(function () {
         history.replaceState(null, "", hash);
-        if (!target.hasAttribute("tabindex")) { target.setAttribute("tabindex", "-1"); }
         target.focus({ preventScroll: true });
       }, reduce ? 0 : 700);
     });
@@ -1233,210 +1151,6 @@
       });
       window.addEventListener("scroll", hideSI, { passive: true });
     }
-  };
-})();
-
-/* =========================================================================
-   GUEST MESSAGES PAGE
-   Powers message.html — a lightweight "Couples Only" password gate in
-   front of the well-wishes friends and family have left. Combines a
-   short curated set of sample notes with anything guests have saved via
-   the RSVP form's optional message field (see the bottom of this file),
-   stored in localStorage under 'guestMessages'. No-ops everywhere except
-   message.html, so it's safe to ship in the same shared bundle as the
-   rest of the site.
-   ========================================================================= */
-(function () {
-  window.WS = window.WS || {};
-
-  // Sample well-wishes shown alongside real RSVP messages. Demo content —
-  // edit or remove freely, same as everything else in config.js.
-  var CURATED_MESSAGES = [
-    { name: "Uncle John & Aunt Mary", text: "We are so thrilled for you both! Can't wait to see you walk down the aisle." },
-    { name: "Sarah (Bridesmaid)", text: "Ready to party!! Love you guys so much \u2764\ufe0f" },
-    { name: "The Smith Family", text: "Wishing you a lifetime of happiness and joy. Sorry we can't make it, but we'll be thinking of you." }
-  ];
-
-  window.WS.initMessagesPage = function () {
-    var utils = window.WS.utils;
-    var gate = document.getElementById("messages-gate");
-    var passInput = document.getElementById("messages-pass-input");
-    var submitBtn = document.getElementById("messages-pass-submit");
-    var errorMsg = document.getElementById("messages-pass-error");
-    var listSection = document.getElementById("messages-list-section");
-    var grid = document.getElementById("messages-grid");
-    if (!gate || !passInput || !submitBtn || !listSection || !grid) { return; } // not this page
-
-    function renderMessages() {
-      grid.innerHTML = "";
-
-      var saved = [];
-      try { saved = JSON.parse(localStorage.getItem("guestMessages") || "[]"); } catch (e) { saved = []; }
-
-      var all = CURATED_MESSAGES.concat(saved.filter(function (m) { return m && m.text; }));
-
-      if (!all.length) {
-        var empty = document.createElement("p");
-        empty.textContent = "No messages yet — check back after the RSVPs start rolling in.";
-        empty.style.textAlign = "center";
-        grid.appendChild(empty);
-        return;
-      }
-
-      all.forEach(function (m, i) {
-        var card = document.createElement("div");
-        card.className = "guideline-card message-card";
-        card.setAttribute("data-reveal", "fade-up");
-        card.style.setProperty("--reveal-delay", (i % 4) * 80 + "ms");
-
-        var strong = document.createElement("strong");
-        strong.textContent = m.name + (m.date ? " \u00B7 " + m.date : "");
-
-        var p = document.createElement("p");
-        p.textContent = "\u201C" + m.text + "\u201D";
-
-        card.appendChild(strong);
-        card.appendChild(p);
-        grid.appendChild(card);
-      });
-
-      // These cards are created after the page's own scroll-reveal observer
-      // already ran its initial pass, so reveal them directly rather than
-      // relying on an observer that was never told they exist. rAF with a
-      // timer fallback (throttled tabs can suspend rAF).
-      var shown = false;
-      function show() {
-        if (shown) { return; }
-        shown = true;
-        utils.$all("[data-reveal]", grid).forEach(function (el) { el.classList.add("is-visible"); });
-      }
-      requestAnimationFrame(function () { requestAnimationFrame(show); });
-      setTimeout(show, 150);
-    }
-
-    function unlock() {
-      var val = (passInput.value || "").trim().toLowerCase();
-      if (val === "love") {
-        gate.hidden = true;
-        listSection.hidden = false;
-        renderMessages();
-      } else if (errorMsg) {
-        errorMsg.hidden = false;
-      }
-    }
-
-    submitBtn.addEventListener("click", unlock);
-    passInput.addEventListener("keypress", function (e) {
-      if (errorMsg) { errorMsg.hidden = true; }
-      if (e.key === "Enter") { e.preventDefault(); unlock(); }
-    });
-  };
-})();
-
-/* =========================================================================
-   RSVP FORM
-   Client-side validation (name, phone, guest count, attendance choice),
-   a spinner beat on submit, and a personalized thank-you card. Any
-   optional message is saved to localStorage under 'guestMessages' so it
-   appears on the Guest Messages page (message.html) alongside the
-   curated notes.
-   ========================================================================= */
-(function () {
-  window.WS = window.WS || {};
-
-  window.WS.initRsvp = function () {
-    var config = window.WS.config;
-    var utils = window.WS.utils;
-    if (!config || config.rsvpEnabled === false) { return; }
-
-    var form = document.getElementById("rsvp-form");
-    if (!form) { return; } // not on this page
-
-    var nameInput    = document.getElementById("rsvp-name");
-    var phoneInput   = document.getElementById("rsvp-phone");
-    var guestsInput  = document.getElementById("rsvp-guests");
-    var messageInput = document.getElementById("rsvp-message");
-    var submitBtn    = document.getElementById("rsvp-submit");
-    var success      = document.getElementById("rsvp-success");
-    var successMsg   = document.getElementById("rsvp-success-msg");
-    var deadline     = document.getElementById("rsvp-deadline");
-    var attendance   = "";
-
-    /* ---- Attendance toggle (radiogroup) ------------------------------------ */
-    var attendBtns = utils.$all(".attend-btn", form);
-    attendBtns.forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        attendance = btn.getAttribute("data-value");
-        attendBtns.forEach(function (b) {
-          var active = b === btn;
-          b.classList.toggle("is-active", active);
-          b.setAttribute("aria-checked", active ? "true" : "false");
-        });
-        setError("err-attendance", "");
-      });
-    });
-
-    /* ---- Validation --------------------------------------------------------- */
-    function setError(id, msg) {
-      var el = document.getElementById(id);
-      if (!el) { return !!msg; }
-      el.textContent = msg;
-      var row = el.closest(".form-row");
-      if (row) { row.classList.toggle("has-error", !!msg); }
-      return !!msg;
-    }
-
-    function validate() {
-      var bad = false;
-      bad = setError("err-name", nameInput.value.trim() ? "" : "Please enter your full name.") || bad;
-      bad = setError("err-phone", phoneInput.value.trim() ? "" : "Please enter your phone number.") || bad;
-      var guests = parseInt(guestsInput.value, 10);
-      bad = setError("err-guests", (guests >= 1 && guests <= 10) ? "" : "Please enter between 1 and 10 guests.") || bad;
-      bad = setError("err-attendance", attendance ? "" : "Please choose an option.") || bad;
-      return !bad;
-    }
-
-    // Clear a field's error as soon as the guest starts fixing it
-    [nameInput, phoneInput, guestsInput].forEach(function (input) {
-      if (!input) { return; }
-      input.addEventListener("input", function () {
-        var row = input.closest(".form-row");
-        if (row) { row.classList.remove("has-error"); }
-        var err = row && row.querySelector(".form-error");
-        if (err) { err.textContent = ""; }
-      });
-    });
-
-    /* ---- Submit ------------------------------------------------------------- */
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      if (!validate()) { return; }
-
-      submitBtn.disabled = true;
-      submitBtn.classList.add("is-loading");
-
-      var name = nameInput.value.trim();
-      var msg = messageInput ? messageInput.value.trim() : "";
-      if (msg) {
-        try {
-          var saved = JSON.parse(localStorage.getItem("guestMessages") || "[]");
-          saved.push({ name: name || "Guest", text: msg, date: new Date().toLocaleDateString() });
-          localStorage.setItem("guestMessages", JSON.stringify(saved));
-        } catch (err) { /* private mode — skip persisting */ }
-      }
-
-      // Brief beat so the spinner reads as a real confirmation
-      setTimeout(function () {
-        form.hidden = true;
-        if (deadline) { deadline.hidden = true; }
-        if (successMsg) {
-          successMsg.textContent = attendance === "attending"
-            ? "We can't wait to celebrate with you, " + name + "!"
-            : "Thank you for letting us know, " + name + ". You'll be missed.";
-        }
-        if (success) { success.hidden = false; }
-      }, 700);
-    });
   };
 })();
 
@@ -1481,9 +1195,6 @@
 
     // 9. Navigation (last — relies on sections being fully rendered)
     WS.utils.safeRun("navigation",     WS.initNavigation);
-
-    // 10. Guest messages page (message.html only — no-ops elsewhere)
-    WS.utils.safeRun("messagesPage",   WS.initMessagesPage);
   }
 
   if (document.readyState === "loading") {
@@ -1493,298 +1204,139 @@
   }
 })();
 
-/* =============================================================================
-   ENVELOPE OPENING EXPERIENCE (inlined component)
-   Injects the envelope overlay, runs the opening sequence, then reveals the
-   page. Dependency-free.
+// Dynamic Guest Messages Logic
+(function() {
 
-   - Reads window.ENVELOPE_CONFIG { groomName, brideName, displayDate,
-     initials, hideSeal, theme, sounds: { seal, flap, unfold } }.
-   - Exposes window.WS.initEnvelope(onDone) for templates that orchestrate the
-     hand-off themselves. Returns true if the envelope takes over, false if
-     skipped (reduced motion / already seen this session) so the caller can
-     reveal directly.
-   - Auto-runs only on pages that define ENVELOPE_CONFIG: immediately on
-     DOMContentLoaded when there is no #preloader, otherwise once the
-     preloader hides.
-   - On completion: unhides #invitation (if present), dispatches
-     "envelope:opened" on document, and invokes any registered callbacks.
-   ============================================================================= */
-(function () {
-  "use strict";
+  // ---- Pre-fill 30 guest RSVP entries on first load -------------------------
+  var PREFILLED_MESSAGES = [
+    { name: "أحمد ومنى سلامة",        text: "مبروك يا ياسمين ويا كريم! ربنا يكملكم على خير ويرزقكم بالسعادة دائماً.", date: "15/10/2026" },
+    { name: "محمد وريم حسن",           text: "أجمل تهنئة لأجمل عروسين! كل سنة وأنتم بألف خير وعافية.", date: "16/10/2026" },
+    { name: "عمر وفاطمة علي",          text: "ربنا يبارك فيكم ويجعل حياتكم مليانة بالفرح والمحبة. مبروك!", date: "17/10/2026" },
+    { name: "يوسف وهنا إبراهيم",       text: "نتمنى لكم حياة مليانة بالحب والتفاهم والسعادة. ألف مبروك!", date: "18/10/2026" },
+    { name: "مصطفى وشيماء خالد",       text: "يا ياسمين ويا كريم، انتم أجمل زوجين عرفناهم. كل التوفيق والنجاح!", date: "19/10/2026" },
+    { name: "خالد وأميرة أحمد",        text: "مبروك الزواج! ربنا يخليكم لبعض ويجعل بيتكم مليان حب وبركة.", date: "20/10/2026" },
+    { name: "طارق وداليا عبد الله",    text: "أجمل الأماني لكم في بداية هذا الطريق الجميل. كل سنة وأنتم بألف خير.", date: "21/10/2026" },
+    { name: "هاني وسامية حبيب",        text: "ألف مبروك! ربنا يجعل زواجكم سعيداً ومباركاً ويرزقكم بالذرية الصالحة.", date: "22/10/2026" },
+    { name: "رامي ورانيا صادق",        text: "يا ياسمين، ربنا يسعدك كما أسعدتينا دائماً. مبروك لكما الاثنين!", date: "23/10/2026" },
+    { name: "وائل ومنى فؤاد",          text: "تهانينا الحارة لأجمل عروسين! عقبال ما نفرح بأولادكم.", date: "24/10/2026" },
+    { name: "بشير ونهى عادل",          text: "أسعد الله أوقاتكم ووفقكم لما يحبه ويرضاه. مبروك الزواج!", date: "25/10/2026" },
+    { name: "زياد وروان مصطفى",        text: "ألف ألف مبروك! ربنا يكمل عليكم نعمته ويجعل حياتكم دائماً في سعادة.", date: "26/10/2026" },
+    { name: "عصام وسهر عمر",           text: "يا كريم، أجمل إنسان يستاهل أجمل حياة. مبروك لكما الاثنين!", date: "27/10/2026" },
+    { name: "نبيل وهالة كمال",         text: "مبروك! يارب تعيشوا في هنا ومحبة وتربوا أولادكم في أحسن تربية.", date: "28/10/2026" },
+    { name: "ماهر وعبير سليم",         text: "ربنا يجمعكم دائماً على خير ويديم المحبة بينكم. كل التهاني!", date: "29/10/2026" },
+    { name: "فادي وميار رضا",          text: "تهنئة قلبية لكما يا غاليَيْن. ربنا يسعدكم ويبارك في زواجكم.", date: "30/10/2026" },
+    { name: "سامي وغادة جميل",         text: "أجمل تهانينا وأحر تبريكاتنا. عقبال ما نفرح بأفراح أولادكم!", date: "31/10/2026" },
+    { name: "حسام وإسراء ناصر",        text: "ألف مبروك يا ياسمين ويا كريم. ربنا يجعلكم سند لبعض طول العمر.", date: "01/11/2026" },
+    { name: "أشرف ونور الدين",         text: "مبروك الزواج! أتمنى لكما حياة مليانة بالمحبة والسعادة والبركة.", date: "02/11/2026" },
+    { name: "معتز وشروق منير",         text: "يا ياسمين ويا كريم، انتم من أحلى الناس ومستاهلين أحلى حياة. مبروك!", date: "03/11/2026" },
+    { name: "تامر وأسماء حجازي",       text: "ألف مبروك! عقبال ما نشوفكم مع أولادكم وتكونوا أسعد عيلة!", date: "04/11/2026" },
+    { name: "شريف ولمياء وهبة",        text: "ربنا يبارك في هذا الزواج ويجعله أساس حياة سعيدة وناجحة. مبروك!", date: "05/11/2026" },
+    { name: "أمجد ودينا رشدي",         text: "تهانينا الحارة لكما. ربنا يجعل بيتكم مليان بالفرح والمحبة دائماً.", date: "06/11/2026" },
+    { name: "جمال ومروة بدر",          text: "مبروك ألف مبروك! عقبال الأفراح الكبيرة وعقبال أولادكم.", date: "07/11/2026" },
+    { name: "عاطف وسحر طه",            text: "يارب يكملكم على خير ويجعل حياتكم المشتركة مليانة بالبركة والسعادة.", date: "08/11/2026" },
+    { name: "صلاح ولبنى يوسف",         text: "ألف مبروك يا جماعة! ربنا يديم فرحكم ويبارك في زواجكم السعيد.", date: "09/11/2026" },
+    { name: "علاء وآية رمزي",          text: "مبروك الزواج! أتمنى من القلب أن تكون حياتكم أجمل من أحلامكم.", date: "10/11/2026" },
+    { name: "وليد ونادية عزيز",        text: "ألف مبروك وربنا يسعدكم ويديم المحبة والوفاء بينكم طول العمر.", date: "11/11/2026" },
+    { name: "إياد وإلهام زكي",         text: "تهانينا القلبية لكما. عقبال ما نفرح بأفراح بيتكم الجديد!", date: "12/11/2026" },
+    { name: "كمال وعزيزة منصور",       text: "ربنا يجعل هذا الزواج بداية حياة جميلة مليانة بالفرح والمحبة. مبروك!", date: "13/11/2026" }
+  ];
 
-  var SEEN_KEY = "envlp-seen";
-  var initialized = false;
-  var finished = false;
-  var callbacks = [];
-  var overlay = null;
-
-  /* ---------------------------------------------------------------- helpers */
-
-  function getConfig() {
-    var c = window.ENVELOPE_CONFIG || {};
-    return {
-      groom: c.groomName || "",
-      bride: c.brideName || "",
-      date: c.displayDate || "",
-      initials: c.initials || "",
-      hideSeal: !!c.hideSeal,
-      theme: /^[a-z][a-z-]*$/.test(c.theme || "") ? c.theme : "",
-      sounds: c.sounds || c.envelopeSounds || {}
-    };
+  // Seed localStorage only on first visit (don't overwrite real guest entries)
+  if (!localStorage.getItem('guestMessagesSeeded')) {
+    localStorage.setItem('guestMessages', JSON.stringify(PREFILLED_MESSAGES));
+    localStorage.setItem('guestMessagesSeeded', '1');
   }
 
-  function prefersReducedMotion() {
-    return !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
-  }
+  // ---- Handle RSVP Form Submission ------------------------------------------
+  var rsvpForm = document.getElementById('rsvp-form');
+  var rsvpSuccess = document.getElementById('rsvp-success');
+  var rsvpNameInput = document.getElementById('rsvp-name');
+  var rsvpMessageInput = document.getElementById('rsvp-message');
 
-  function seenThisSession() {
-    try { return sessionStorage.getItem(SEEN_KEY) === "1"; } catch (e) { return false; }
-  }
+  if (rsvpForm) {
+    rsvpForm.addEventListener('submit', function(e) {
+      e.preventDefault();
 
-  function markSeen() {
-    try { sessionStorage.setItem(SEEN_KEY, "1"); } catch (e) { /* private mode */ }
-  }
+      var name = rsvpNameInput && rsvpNameInput.value ? rsvpNameInput.value.trim() : 'ضيف';
+      var msg  = rsvpMessageInput && rsvpMessageInput.value ? rsvpMessageInput.value.trim() : '';
 
-  function playSound(src) {
-    if (!src) { return; }
-    try {
-      var a = new Audio(src);
-      a.volume = 0.55;
-      var p = a.play();
-      if (p && p.catch) { p.catch(function () {}); }
-    } catch (e) { /* autoplay blocked or bad src — silent */ }
-  }
-
-  function el(tag, className, text) {
-    var node = document.createElement(tag);
-    if (className) { node.className = className; }
-    if (text) { node.textContent = text; }
-    return node;
-  }
-
-  /* ------------------------------------------------------------- completion */
-
-  function revealSite() {
-    if (finished) { return; }
-    finished = true;
-    markSeen();
-
-    var main = document.getElementById("invitation");
-    if (main) { main.classList.remove("hidden"); }
-
-    var evt;
-    try {
-      evt = new CustomEvent("envelope:opened");
-    } catch (e) {
-      evt = document.createEvent("Event");
-      evt.initEvent("envelope:opened", true, true);
-    }
-    document.dispatchEvent(evt);
-
-    for (var i = 0; i < callbacks.length; i++) {
-      try { callbacks[i](); } catch (err) { console.error("[envelope] onDone callback failed:", err); }
-    }
-    callbacks = [];
-  }
-
-  /* ------------------------------------------------------------------ build */
-
-  function buildOverlay(cfg) {
-    var root = el("div", "envlp-overlay");
-    if (cfg.theme) { root.classList.add("envlp-theme-" + cfg.theme); }
-    root.appendChild(el("div", "envlp-vignette"));
-
-    var stage = el("div", "envlp-stage");
-    var scene = el("div", "envlp-scene");
-
-    var env = el("div", "envlp");
-    env.setAttribute("role", "button");
-    env.setAttribute("tabindex", "0");
-    env.setAttribute("aria-label", "Open the wedding invitation");
-
-    env.appendChild(el("div", "envlp-back"));
-
-    /* Letter card */
-    var letter = el("div", "envlp-letter");
-    var inner = el("div", "envlp-letter-inner");
-    inner.appendChild(el("p", "envlp-kicker", "Together with their families"));
-
-    var names = el("h1", "envlp-names");
-    names.appendChild(el("span", null, cfg.groom));
-    names.appendChild(el("span", "envlp-amp", "&"));
-    names.appendChild(el("span", null, cfg.bride));
-    inner.appendChild(names);
-
-    var rule = el("div", "envlp-rule");
-    rule.appendChild(el("span"));
-    rule.appendChild(el("i"));
-    rule.appendChild(el("span"));
-    inner.appendChild(rule);
-
-    if (cfg.date) { inner.appendChild(el("p", "envlp-date", cfg.date)); }
-    inner.appendChild(el("p", "envlp-line", "request the honour of your presence"));
-    letter.appendChild(inner);
-    env.appendChild(letter);
-
-    /* Pocket folds */
-    var pocket = el("div", "envlp-pocket");
-    pocket.appendChild(el("div", "envlp-fold envlp-fold-left"));
-    pocket.appendChild(el("div", "envlp-fold envlp-fold-right"));
-    pocket.appendChild(el("div", "envlp-fold envlp-fold-bottom"));
-    env.appendChild(pocket);
-
-    env.appendChild(el("div", "envlp-flap"));
-
-    if (cfg.hideSeal) {
-      if (cfg.initials) { env.appendChild(el("div", "envlp-monogram", cfg.initials)); }
-    } else {
-      env.appendChild(el("div", "envlp-seal", cfg.initials));
-    }
-
-    scene.appendChild(env);
-    stage.appendChild(scene);
-    stage.appendChild(el("p", "envlp-hint", "Tap to open your invitation"));
-    root.appendChild(stage);
-
-    return { root: root, env: env };
-  }
-
-  /* --------------------------------------------------------------- sequence */
-
-  function open(cfg) {
-    if (overlay.classList.contains("is-opening")) { return; }
-    overlay.classList.add("is-opening");
-
-    var env = overlay.querySelector(".envlp");
-    var hasSeal = !cfg.hideSeal && !!cfg.initials;
-    var t = 0;
-
-    if (hasSeal) {
-      env.classList.add("stage-seal");
-      playSound(cfg.sounds.seal);
-      t += 450;
-    } else {
-      env.classList.add("stage-seal"); /* fades the monogram */
-    }
-
-    setTimeout(function () {
-      env.classList.add("stage-flap");
-      playSound(cfg.sounds.flap);
-    }, t);
-
-    setTimeout(function () {
-      env.classList.add("stage-letter");
-      playSound(cfg.sounds.unfold);
-    }, t + 950);
-
-    setTimeout(function () {
-      env.classList.add("stage-card");
-    }, t + 1950);
-
-    /* Hold the card, then fade the overlay and reveal the site */
-    setTimeout(function () {
-      overlay.classList.add("is-leaving");
-      revealSite();
-    }, t + 3600);
-
-    setTimeout(function () {
-      if (overlay && overlay.parentNode) { overlay.parentNode.removeChild(overlay); }
-      overlay = null;
-    }, t + 4600);
-  }
-
-  function start() {
-    if (initialized) { return true; }
-    initialized = true;
-
-    var cfg = getConfig();
-    var built = buildOverlay(cfg);
-    overlay = built.root;
-    document.body.appendChild(overlay);
-
-    var trigger = function () { open(cfg); };
-    built.env.addEventListener("click", trigger);
-    built.env.addEventListener("keydown", function (e) {
-      if (e.key === "Enter" || e.key === " " || e.keyCode === 13 || e.keyCode === 32) {
-        e.preventDefault();
-        trigger();
+      if (msg) {
+        var saved = JSON.parse(localStorage.getItem('guestMessages') || '[]');
+        saved.push({ name: name, text: msg, date: new Date().toLocaleDateString('ar-EG') });
+        localStorage.setItem('guestMessages', JSON.stringify(saved));
       }
+
+      rsvpForm.style.display = 'none';
+      if (rsvpSuccess) rsvpSuccess.style.display = 'block';
+      var dLine = document.getElementById('rsvp-deadline');
+      if (dLine) dLine.style.display = 'none';
     });
-    try { built.env.focus({ preventScroll: true }); } catch (e) { /* older browsers */ }
-    return true;
   }
 
-  /* ------------------------------------------------------------- public API */
+  // ---- Messages Modal -------------------------------------------------------
+  var viewLink    = document.getElementById('view-messages-link');
+  var modal       = document.getElementById('messages-modal');
+  var closeBtn    = document.getElementById('close-messages');
+  var passInput   = document.getElementById('messages-pass-input');
+  var submitBtn   = document.getElementById('messages-pass-submit');
+  var errorMsg    = document.getElementById('messages-pass-error');
+  var passContainer = document.getElementById('messages-pass-container');
+  var messagesList  = document.getElementById('messages-list');
 
-  window.WS = window.WS || {};
-  window.WS.initEnvelope = function (onDone) {
-    /* Decline before registering the callback: when we return false the
-       caller reveals the page itself, and holding its callback too would
-       fire the reveal twice once autoStart() settles. */
-    if (!initialized && (prefersReducedMotion() || seenThisSession())) { return false; }
-    if (typeof onDone === "function") {
-      if (finished) { onDone(); } else { callbacks.push(onDone); }
-    }
-    if (initialized) { return true; }
-    return start();
-  };
+  function renderMessages() {
+    messagesList.innerHTML = '';
+    var saved = JSON.parse(localStorage.getItem('guestMessages') || '[]');
 
-  /* -------------------------------------------------------------- auto-init */
-
-  function autoStart() {
-    if (initialized || finished) { return; }
-    if (prefersReducedMotion() || seenThisSession()) {
-      revealSite();
+    if (saved.length === 0) {
+      messagesList.innerHTML = '<p style="text-align:center;color:var(--text-soft);" dir="rtl">لا توجد رسائل بعد.</p>';
       return;
     }
-    start();
+
+    // Show newest first
+    saved.slice().reverse().forEach(function(m) {
+      var div = document.createElement('div');
+      div.style.cssText = 'padding:1rem;background:var(--bg-alt,#EFE1C1);border-radius:8px;direction:rtl;text-align:right;';
+
+      var strong = document.createElement('strong');
+      strong.style.cssText = 'display:block;margin-bottom:0.35rem;color:var(--accent-deep,#8A6A38);font-family:var(--font-heading);font-style:italic;';
+      strong.textContent = m.name + (m.date ? '  —  ' + m.date : '');
+
+      var p = document.createElement('p');
+      p.style.cssText = 'margin:0;font-size:0.93rem;line-height:1.65;';
+      p.textContent = '\u201C' + m.text + '\u201D';
+
+      div.appendChild(strong);
+      div.appendChild(p);
+      messagesList.appendChild(div);
+    });
   }
 
-  function watchPreloader(pre) {
-    var done = false;
-    var kick = function () {
-      if (done) { return; }
-      done = true;
-      /* Small beat so the preloader's fade-out and the envelope don't fight */
-      setTimeout(autoStart, 150);
-    };
+  if (viewLink && modal) {
+    viewLink.addEventListener('click', function(e) {
+      e.preventDefault();
+      modal.style.display = 'flex';
+    });
 
-    var isHidden = function () {
-      return pre.classList.contains("hide") ||
-             pre.classList.contains("is-hidden") ||
-             pre.getAttribute("aria-hidden") === "true" ||
-             getComputedStyle(pre).display === "none" ||
-             getComputedStyle(pre).opacity === "0";
-    };
+    closeBtn.addEventListener('click', function() {
+      modal.style.display = 'none';
+      passInput.value = '';
+      errorMsg.style.display = 'none';
+      passContainer.style.display = 'block';
+      messagesList.style.display = 'none';
+    });
 
-    if (isHidden()) { kick(); return; }
+    submitBtn.addEventListener('click', function() {
+      if (passInput.value.trim().toLowerCase() === 'love' || passInput.value.trim() === 'حب') {
+        passContainer.style.display = 'none';
+        renderMessages();
+        messagesList.style.display = 'flex';
+      } else {
+        errorMsg.style.display = 'block';
+      }
+    });
 
-    if (window.MutationObserver) {
-      var mo = new MutationObserver(function () {
-        if (isHidden()) { mo.disconnect(); kick(); }
-      });
-      mo.observe(pre, { attributes: true, attributeFilter: ["class", "style", "aria-hidden"] });
-    }
-    /* Safety net: never leave the page stuck behind a wedged preloader */
-    setTimeout(kick, 8000);
-  }
-
-  function boot() {
-    /* Only auto-run on pages that configure the envelope — secondary pages
-       (guest messages) share this bundle but must never show it. */
-    if (!window.ENVELOPE_CONFIG) { return; }
-    var pre = document.getElementById("preloader");
-    if (pre) {
-      watchPreloader(pre);
-    } else {
-      autoStart();
-    }
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", boot);
-  } else {
-    boot();
+    passInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') { submitBtn.click(); }
+    });
   }
 })();
